@@ -9,15 +9,23 @@ See here for more information about the [course project][project]
 
 ## TODO
 - [ ] Milestone 1
-    - [ ] Introduction (1-2 paragraph)
+    - [ ] Introduction/Description (1-2 paragraph)
         - problem & solution
         - technologies used in project
+            - c++ (obviously)
+            - if we do c++ CLI, I can make the GUI using React & Tauri
+            - ?
     - [ ] Features
         - [ ] Core (0/2+)
+            - ?
+            - ?
         - [ ] Viable (0/2+)
-        - [ ] Strech (0/2+)
+            - ?
+            - ?
+        - [ ] Strech (0/2+) (optional)
     - [ ] Team name
         - [ ] members' role & responsibility for each milestone (can be updated later)
+            - Leadership for each milestone
     - [ ] System Requirement (idk what this mean tbh)
     - [ ] User Stories (0/1+)
         - We want to create a fun & engaging adventure game?
@@ -26,8 +34,13 @@ See here for more information about the [course project][project]
         - [ ] What if a member is unable to meet in person/unavailable (temporary or permanently)?
             - [ ] temporary
                 - [ ] cannot attend in person - use discord vc or text?
-                - [ ] unavailable - use discord vc or text?
+                - [ ] unavailable - ?
             - [ ] permanently - ?
+    - [ ] Project plan (will get updated in milestone 2)
+        - For each task
+            - dependencies
+            - level of effort
+            - start & completion dates
 
 ## Idea
 So here's some topics about for our text-based adventure game to get us started.
