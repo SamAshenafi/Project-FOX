@@ -7,11 +7,11 @@ See here for more information about the [course project][project]
 [project]: https://teaching.hkaiser.org/fall2023/csc3380/assignments/project.html
 
 
-# Idea
+## Idea
 So here's some topics about for our text-based adventure game to get us started.
-Feel free to answer, add more, or edit them here or on Discord
+Feel free to add more, edit them, or answer them here or on Discord
 
-## Questions
+### Questions
 - Will it be CLI or GUI?
     - CLI means the user/player can only interact using text
         - pros: simple, easy
@@ -24,12 +24,12 @@ Feel free to answer, add more, or edit them here or on Discord
         - i can do the art for the project if we can use sprite
 - What is the general Theme/Story? (we can change this later on)
 
-## General Mechanics
+### General Mechanics
 - Dialog (back & forth between the player & the game)
 - Dialog Choice (player should have multiple options to reply back)
 
-## Optional Mechanics
-which one should we do?
+### Optional Mechanics
+which one should we do? how will it be implemented?
 - Navigation
     - move to new area -> something happen
 - Quest System
