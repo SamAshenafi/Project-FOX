@@ -7,6 +7,28 @@ See here for more information about the [course project][project]
 [project]: https://teaching.hkaiser.org/fall2023/csc3380/assignments/project.html
 
 
+## TODO
+- [ ] Milestone 1
+    - [ ] Introduction (1-2 paragraph)
+        - problem & solution
+        - technologies used in project
+    - [ ] Features
+        - [ ] Core (0/2+)
+        - [ ] Viable (0/2+)
+        - [ ] Strech (0/2+)
+    - [ ] Team name
+        - [ ] members' role & responsibility for each milestone (can be updated later)
+    - [ ] System Requirement (idk what this mean tbh)
+    - [ ] User Stories (0/1+)
+        - We want to create a fun & engaging adventure game?
+    - [ ] Continuity of Operations Plan (COOP) (1-2 paragraph)
+        - We communicate through group chat or the group's server channel in discord
+        - [ ] What if a member is unable to meet in person/unavailable (temporary or permanently)?
+            - [ ] temporary
+                - [ ] cannot attend in person - use discord vc or text?
+                - [ ] unavailable - use discord vc or text?
+            - [ ] permanently - ?
+
 ## Idea
 So here's some topics about for our text-based adventure game to get us started.
 Feel free to add more, edit them, or answer them here or on Discord
