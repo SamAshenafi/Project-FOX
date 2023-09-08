@@ -32,7 +32,7 @@ Ryan Trinh | | 1
 ## TODO
 > To keep track of what need to be done
 - [ ] Milestone 1
-    - [ ] Introduction/Description (1-2 paragraph)
+    - [X] Introduction/Description (1-2 paragraph)
         - problem & solution
         - technologies used in project
             - C++ (obviously)
@@ -42,16 +42,22 @@ Ryan Trinh | | 1
                     - pixel art? (Aseprite)
                     - normal (GIMP/CSP/Photoshop)
             - Other?
-    - [ ] Features
-        - [X] Core (2/2+)
+    - [X] Features
+        - [X] Core (3/2+)
             - Dialogue, the back-&-forth
             - GUI
-        - [ ] Viable (0/2+)
-            - ?
-            - ?
-        - [ ] Strech (0/2+) (optional)
+            - Player Input
+        - [X] Viable (3/2+)
+            - Turn Based Combat System
+            - Inventory System
+            - Tile-Based Movement System
+        - [X] Strech (3/2+) (optional)
+            - Multiple Characters Party
+            - Save System
+            - Expansive World
+            - Side Quests System
     - [ ] Team name
-        - [ ] members' role & responsibility for each milestone (can be updated later)
+        - [ ] members' role & responsibility for each milestone (can be updated later) (3/6 filled out their role)
             - Leadership for each milestone
     - [ ] System Requirement (idk what this mean tbh)
     - [ ] User Stories (0/1+)
