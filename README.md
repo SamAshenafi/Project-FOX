@@ -16,9 +16,9 @@ See here for more information about the [course project][project]
 
 ## Team
 
-Team Name: ?
+### Team Name: Aang Gang
 
-Members
+### Members
 | Name | Role | Milestone |
 |------|------|-----------|
 Alton Dupre | Leader, Structure Management | 1
@@ -56,20 +56,18 @@ Ryan Trinh | | 1
             - Save System
             - Expansive World
             - Side Quests System
-    - [ ] Team name
-        - [ ] members' role & responsibility for each milestone (can be updated later) (3/6 filled out their role)
-            - Leadership for each milestone
-    - [ ] System Requirement (idk what this mean tbh)
+    - [X] Team name
+    - [ ] Members' role & responsibility for each milestone (can be updated later) (WIP) (3/6 filled out their role)
+        - Leadership for each milestone (goes to Alton by default)
     - [ ] User Stories (0/1+)
         - We want to create a fun & engaging adventure game?
-    - [ ] Continuity of Operations Plan (COOP) (1-2 paragraph)
+    - [X] Continuity of Operations Plan (COOP) (1-2 paragraph)
         - We communicate through group chat or the group's server channel in discord
-        - [ ] What if a member is unable to meet in person/unavailable (temporary or permanently)?
-            - [ ] temporary
-                - [ ] cannot attend in person - use discord vc or text?
-                - [ ] unavailable - ?
-            - [ ] permanently - ?
-    - [ ] Project plan (will get updated in milestone 2)
+        - [X] What if a member is unable to meet in person/unavailable (temporary or permanently)?
+            - [X] temporary
+                - cannot attend meeting -> check meeting notes
+            - [X] permanently - the work will be split to other member evenly
+    - [ ] Project plan (will get updated in milestone 2) (WIP)
         - For each task
             - dependencies
             - level of effort
@@ -127,8 +125,10 @@ If we decided to do GUI, SDL 2 is an option to build our game engine from.
 - [Official Website Installation Guide](https://wiki.libsdl.org/SDL2/Installation)
 
 - [SDL 2 Tutorial by Lazyfoo](https://lazyfoo.net/tutorials/SDL/)
+    - [Set up guide for Windows & Linux](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/index.php)
     - In-depth & up-to-date tutorial.
     - Provide source file for its codes.
+    - @ganhaque if you need the Makefile or general help to build the tutorials' code
 
 - [Game Engine using C++ SDL 2 Blog]https://www.gamedeveloper.com/blogs/how-to-make-your-own-c-game-engine
 
