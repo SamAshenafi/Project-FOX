@@ -103,6 +103,8 @@ which one should we do? how will it be implemented?
 ### SDL 2
 If we decided to do GUI, SDL 2 is an option to build our game engine from.
 
+- [Official Website Installation Guide](https://wiki.libsdl.org/SDL2/Installation)
+
 - [SDL 2 Tutorial by Lazyfoo](https://lazyfoo.net/tutorials/SDL/)
     - In-depth & up-to-date tutorial.
     - Provide source file for its codes.
