@@ -14,6 +14,21 @@ See here for more information about the [course project][project]
     - [Helpful/Convenience Links](#helpfulconvenience-links)
 
 
+## Team
+
+Team Name: ?
+
+Members
+| Name | Role | Milestone |
+|------|------|-----------|
+Alton Dupre | Leader, Structure Management | 1
+Blaire Newburger | Tile-Based Movement System | 1
+Christian Che | Art Lead (backgrounds, sprites, music, & sfx) | 1
+Sam Ashenafi | | 1
+Robert Smith | | 1
+Ryan Trinh | | 1
+
+
 ## TODO
 > To keep track of what need to be done
 - [ ] Milestone 1
@@ -28,9 +43,9 @@ See here for more information about the [course project][project]
                     - normal (GIMP/CSP/Photoshop)
             - Other?
     - [ ] Features
-        - [ ] Core (0/2+)
-            - ?
-            - ?
+        - [X] Core (2/2+)
+            - Dialogue, the back-&-forth
+            - GUI
         - [ ] Viable (0/2+)
             - ?
             - ?
@@ -109,10 +124,15 @@ If we decided to do GUI, SDL 2 is an option to build our game engine from.
     - In-depth & up-to-date tutorial.
     - Provide source file for its codes.
 
+- [Game Engine using C++ SDL 2 Blog]https://www.gamedeveloper.com/blogs/how-to-make-your-own-c-game-engine
+
 - [TwinklebearDev SDL 2 Tutorial](https://www.willusher.io/pages/sdl2/)
     - [Github lessons repo link](https://github.com/Twinklebear/TwinklebearDev-Lessons)
     - Short, basic
     - Old (last update to github repo is 3 years ago) tutorial
+
+### Tools
+[SFX Maker](https://sfxr.me/)
 
 ### Helpful/Convenience Links
 
