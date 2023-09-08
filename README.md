@@ -11,7 +11,7 @@ See here for more information about the [course project][project]
 - [Drafting Area](#drafting-area)
 - [Resources](#resources)
     - [SDL2](#sdl-2)
-    - [Helpful/Convenience Links](helpful%2Fconvenience-links)
+    - [Helpful/Convenience Links](helpfulconvenience-links)
 
 
 ## TODO
