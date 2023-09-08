@@ -6,15 +6,27 @@ See here for more information about the [course project][project]
 
 [project]: https://teaching.hkaiser.org/fall2023/csc3380/assignments/project.html
 
+# Table of Contents
+- [TODO](#todo)
+- [Drafting Area](#drafting-area)
+- [Resources](#resources)
+    - [SDL2](#sdl-2)
+    - [Helpful/Convenience Links](helpful%2Fconvenience-links)
+
 
 ## TODO
+> To keep track of what need to be done
 - [ ] Milestone 1
     - [ ] Introduction/Description (1-2 paragraph)
         - problem & solution
         - technologies used in project
-            - c++ (obviously)
-            - if we do c++ CLI, I can make the GUI using React & Tauri
-            - ?
+            - C++ (obviously)
+            - if we do GUI
+                - SDL 2? (if we do GUI)
+                - Drawing software for sprites
+                    - pixel art? (Aseprite)
+                    - normal (GIMP/CSP/Photoshop)
+            - Other?
     - [ ] Features
         - [ ] Core (0/2+)
             - ?
@@ -42,8 +54,10 @@ See here for more information about the [course project][project]
             - level of effort
             - start & completion dates
 
-## Idea
-So here's some topics about for our text-based adventure game to get us started.
+## Drafting Area
+> A place for your ideas
+
+So here's some topics about for our game to get us started.
 Feel free to add more, edit them, or answer them here or on Discord
 
 ### Questions
@@ -81,3 +95,25 @@ which one should we do? how will it be implemented?
         - Level/EXP?
         - Consumable/Items?
         - Undertale act/spare mechanic?
+
+
+## Resource
+> Convenience way to find help/inspiration outside of the group
+
+### SDL 2
+If we decided to do GUI, SDL 2 is an option to build our game engine from.
+
+- [SDL 2 Tutorial by Lazyfoo](https://lazyfoo.net/tutorials/SDL/)
+    - In-depth & up-to-date tutorial.
+    - Provide source file for its codes.
+
+- [TwinklebearDev SDL 2 Tutorial](https://www.willusher.io/pages/sdl2/)
+    - [Github lessons repo link](https://github.com/Twinklebear/TwinklebearDev-Lessons)
+    - Short, basic
+    - Old (last update to github repo is 3 years ago) tutorial
+
+### Helpful/Convenience Links
+
+[Class website](https://teaching.hkaiser.org/fall2023/csc3380/)
+
+
