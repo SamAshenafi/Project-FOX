@@ -1,14 +1,94 @@
 # Game Overview
+## Game Terms/Phrasing
+> Word can mean many thing
+
+| Word | Explanation |
+|------|-------------|
+Room | Refers to the current location relative to the world map grid
+Tile | Within a room, there are tile
+Round | At a new round, roll for initiative, after every units turn, round end & advance to next round. Some effects may happen on round start or end.
+Turn | Units can only act when it is their turn. At the start or end of the unit's turn, some effects may proc/trigger (DOTs, Buff/Debuff duration decrease, etc.)
 ## Genres / General Mechanics
 - Adventure RPG
 - Turn-based combat
 - Grid-based movement
+- Multiple Party Characters
+## Plot, Narrative, Story
+### Act/Arc
+- We can follow the Hero's Journey template (classic for RPG).
+Maybe get rid of the god intervention stuffs because those are silly & lame.
+
+<!-- <div align='center'> -->
+<!-- <object style="filter: invert(100%);" type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/1/1b/Heroesjourney.svg"/> -->
+<!-- </div> -->
+
+- 1
+    - Call to adventure - how does the character get to the adventure
+- 2
+    - First victory (minor, but a victory nonetheless!)
+- 3
+    - Fight more dangerous enemies. Better equipment. Better loots. etc....
+- Endgame
+    - Defeat final boss?
+
+### Setting
+- Not cyberpunk/futuristic/scifi (Hard to draw/shade & need shader to look good)
+- ...
+### Main Characters
+- Are they anti-hero? DnD murder hobo? Or just a classic hero
+- What are their motivations, backgrounds, personality, character arc through the story?
+- ...
+### Enemy
+- ...
+
+## Similar Games
+- Epic Battle Fantasy Series (3-5)
+    - Adventure RPG
+    - Turn-based combat
+    - Grid-based movement
+    - Multiple Party Characters
+    - World Map Tiled/Grid
+    - Interactive objects
+- Darkest Dungeon (1-2)
+    - Turn-based combat
+    - Multiple Party Characters
 
 ## Game Flow (including interface)
+### Navigation
+
+<div align='center'>
+<img width=600 src="./assets/EBF5-Map.png">
+<p>Part of the EBF5 world map (from wiki)</p>
+<img width=600 src="./assets/EBF5-Map-B5.png">
+<p>Room Info (from wiki)</p>
+<img width=600 src="./assets/EBF5-Loot-Popup-and-Transition.png">
+<p>How it look in game + White arrow indicate room change tile</p>
+<img width=600 src="./assets/EBF5-Movement.png">
+<p>Internal room (Matt's House)(not on the world map)</p>
+</div>
+
+- Inspiration 1: **EBF World Map**
+    - World map is tiled
+        - Every room has the same size => same amount of tiles to navigate
+        - Room have transition tiles that move the player to another room
+    - Undiscovered rooms does not show up on world map until visited.
+    - Both the world map and the room tiling uses a chest-like coordinate system (A0, B5, etc.)
+    - Has other rooms not visible on the world map
+
+### Cutscene
 ...
+### Interface
+**Settings**
+- Resolution
+- Fullscreen/Windowed
+- Graphic Quality
+- Volume
+    - Music
+    - SFX
+    - Voiceline?
+    
 
-
-## Mechanics
+## Gamplay & Mechanics
 > Mechanics from other games, to consider, to criticize
 
 
@@ -35,6 +115,9 @@
 
 <div align='center'>
     <img width=600 src="./assets/DD2.jpg">
+    <p> Top right is initiative. It's currently the Dagger lady's turn. </p>
+    <p> Bottom is abilities. </p>
+    <p> Yellow bar indicate they still have an action/turn. </p>
 </div>
 
 - Inspiration 1: **Darkest Dungeon Turn-based Combat System**
@@ -90,7 +173,7 @@
         - Charge (EBF) (Indicate a strong ability will be cast when it reaches 1) (usually take a lesser action to gain charge)
     - Buff/Debuff changes the unit core stats
 - General: **Achievements/Medals**
-    - For completetionist
+    - For completionist
 - Inspiration 5: **EBF5 Spell Cooldown**
     - Turn-based combat system (action economy) limit ability design
         - Previous versions of EBF uses a mana (FP) system. Better abilities have higher mana cost.
@@ -107,11 +190,6 @@
     - This got rid of the frustrating aspect of DD1, where a 97% chance to hit atk missed. Or when a 10% crit atk from the enemy crit-ed.
     - This make AoE abilities strong as they can clear out the token with the most action economy.
 
-### Game Terms/Phrasing
-| Word | Explanation |
-|------|-------------|
-Round | At a new round, roll for initiative, after every units turn, round end & advance to next round. Some effects may happen on round start or end.
-Turn | Units can only act when it is their turn. At the start or end of the unit's turn, some effects may proc/trigger (DOTs, Buff/Debuff duration decrease, etc.)
 
 ### Objects & Attributes
 
@@ -144,11 +222,6 @@ castable_round | int | current_round must be < castable_round to be able to cast
 
 <!-- current_cooldown | int | Use to keep track of the ability cooldown. Ability can only be cast if current cooldown is < 0. Set to -1 for abilities with no cooldown | EBF5 -->
 
-
-## Interface
-**Settings**
-- Maybe no resolution change, windowed mode only
-    - Less bug, make dev & artist happy, a more consistent experience for players
 
 # Notes
 I have the inspiration column so that it's easier to keep track & imagine the mechanic/idea in case you are familiar with those games.
