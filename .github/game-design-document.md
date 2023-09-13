@@ -1,6 +1,28 @@
-# Game Overview
-## Game Terms/Phrasing
-> Word can mean many thing
+# Game Design Document
+> Something to develop & keep track of ideas & mechanics
+
+<h2 id='toc'>
+Table of Contents
+</h2>
+
+- [Jargon/Technical Terminology](#jargon)
+- [Genres & Mechanics](#genres)
+- [Plot, Narrative, Story](#genres)
+    - [Act/Arc, Story Flow](#act)
+    - [Setting](#setting)
+    - [Main Characters / Party Members](#party-members)
+- [Similar Games](#similar-game)
+- [Game Flow](#game-flow)
+- [Gameplay & Mechanics](#mechanics)
+    - [Movement](#movement)
+    - [Combat](#combat)
+- [Objects & Attributes](#combat)
+- [Notes](#notes)
+
+<h2 id='jargon'>
+    Jargon/Technical Terminology
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h2>
 
 | Word | Explanation |
 |------|-------------|
@@ -8,40 +30,107 @@ Room | Refers to the current location relative to the world map grid
 Tile | Within a room, there are tile
 Round | At a new round, roll for initiative, after every units turn, round end & advance to next round. Some effects may happen on round start or end.
 Turn | Units can only act when it is their turn. At the start or end of the unit's turn, some effects may proc/trigger (DOTs, Buff/Debuff duration decrease, etc.)
-## Genres / General Mechanics
+
+<h2 id='genres'>
+    Genres & Mechanics
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h2>
+
 - Adventure RPG
 - Turn-based combat
 - Grid-based movement
 - Multiple Party Characters
-## Plot, Narrative, Story
-### Act/Arc
+
+<h2 id='story'>
+    Plot, Narrative, Story
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h2>
+
+<h3 id='story'>
+    Arc/Act, Story Flow
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h3>
+
 - We can follow the Hero's Journey template (classic for RPG).
 Maybe get rid of the god intervention stuffs because those are silly & lame.
-
-<!-- <div align='center'> -->
-<!-- <object style="filter: invert(100%);" type="image/svg+xml" data="https://upload.wikimedia.org/wikipedia/commons/1/1b/Heroesjourney.svg"/> -->
-<!-- </div> -->
-
-- 1
     - Call to adventure - how does the character get to the adventure
-- 2
     - First victory (minor, but a victory nonetheless!)
-- 3
     - Fight more dangerous enemies. Better equipment. Better loots. etc....
-- Endgame
-    - Defeat final boss?
+    - Endgame
+        - Defeat final boss?
 
-### Setting
+Or maybe something similar to EBF or One Piece.
+We have a character at the start, they go on adventure & meet other party members.
+
+Maybe something like this:
+- There was an orphan girl named [CHARACTER_1]
+- She was a bookworm(nerd) for mythical tales and legends. [Name], the storyteller of her village, would always tell her stories of the Great [Name] or ...
+
+- One day, the prophecy of the Fates tell her that she will die a forgettable death, be forgotten by everyone, her family, her friends, etc. (Olaf)
+- > how she comes to the prophecy part is a bit unclear, maybe I will write something better
+
+- Instead of living out her pitiful life like the prophecy, she want to embark on a conquest of the greatest figures of myths & legends.
+She want to take down evil threats of those stories, protect those who cannot protect themselves, but most importantly, she want to be remembered as a great warrior.
+
+- ...
+
+- On her adventure, she was ambushed by a group of bandits.
+She defeated them, but did not killed them (it's not their fault, it's the system they live under
+& in this case, it's a monster who caused drought & thus poverty in the region)
+(in poverty & hunger, moral is a luxury)
+
+- The bandits escaped, all except one.
+Requesting her to kill him so he can die an honorable death instead of fleeing and live a dishonorable life of a coward.
+She insist on him joining her on her quest to fight against [FINAL_BOSS or SOME_BOSS]
+
+- ... Defeated the boss, move on to next region
+
+- When the party entered the grove, they come across the caretaker of the grove, weeping.
+- This caretaker is a wolf who was rescued by the Tree of [SOMETHING] after being abandoned by [PACK_OR_OWNER?] in the grove & become its caretaker eversince
+- This wolf is larger than normal & can cast magic (& able to speak human tongue, obviously).
+- When learned that the party is going to take down the [BOSS], The wolf, [CHARACTER_3], insist on joining them to defeat that.
+
+- ...
+
+- After the defeat of [BOSS], the Tree of [SOMETHING] want [CHARACTER_3] to go and adventure
+instead of keep taking care of it. [CHARACTER_3] has already paid back its debt to the Tree with all those years of care-taking?
+
+- ...
+
+
+<h3 id='setting'>
+    Setting
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h3>
+
 - Not cyberpunk/futuristic/scifi (Hard to draw/shade & need shader to look good)
 - ...
-### Main Characters
+- Region 1 Theme, Region 2 Theme, etc.
+
+<h3 id='party-members'>
+    Main Characters / Party Members
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h3>
+
 - Are they anti-hero? DnD murder hobo? Or just a classic hero
 - What are their motivations, backgrounds, personality, character arc through the story?
 - ...
+
+**Party Members**
+| Order | Name | Summary | Inspiration | Design Inspiration | Role |
+|-------|------|---------|-------------|--------------------|------|
+1 | [CHARACTER_1] | Fate-defying bookworm | Nilah & Olaf (League), Luffy (One Piece) | Valkyrie (For Honor), Freya or Thrud (God of War) | Warrior
+2 | [CHARACTER_2] | Repenting Sinner | Highwayman (DD), Zoro (One Piece) | Highwayman (DD) | Archer/Gunner
+3 | [CHARACTER_3] | Foul-mouthed but Kind-hearted Wolf Mage | Ratatoskr & Brok (God of War) | Sif (Dark Souls) | Support Mage
+
 ### Enemy
 - ...
 
-## Similar Games
+<h2 id='similar-game'>
+    Similar Games
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h2>
+
 - Epic Battle Fantasy Series (3-5)
     - Adventure RPG
     - Turn-based combat
@@ -53,8 +142,11 @@ Maybe get rid of the god intervention stuffs because those are silly & lame.
     - Turn-based combat
     - Multiple Party Characters
 
-## Game Flow (including interface)
-### Navigation
+
+<h2 id='game-flow'>
+    Game Flow
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h2>
 
 <div align='center'>
 <img width=600 src="./assets/EBF5-Map.png">
@@ -77,7 +169,21 @@ Maybe get rid of the god intervention stuffs because those are silly & lame.
 
 ### Cutscene
 ...
-### Interface
+<h3 id='interface'>
+    Interface
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h3>
+
+**Equipment Page**
+
+<div align='center'>
+<img width=600 src="./assets/EBF5-Equipment-Screen.png">
+</div>
+
+**Inventory Page**
+
+**Abilities Page**
+
 **Settings**
 - Resolution
 - Fullscreen/Windowed
@@ -88,11 +194,20 @@ Maybe get rid of the god intervention stuffs because those are silly & lame.
     - Voiceline?
     
 
-## Gamplay & Mechanics
+
+<h2 id='mechanics'>
+    Gameplay & Mechanics
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h2>
+
 > Mechanics from other games, to consider, to criticize
 
 
-### Movement
+
+<h3 id='movement'>
+    Movement
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h3>
 
 <div align='center'>
 <img width=600 src="./assets/EBF5-Movement.png">
@@ -111,7 +226,11 @@ Maybe get rid of the god intervention stuffs because those are silly & lame.
         - Allows real-time combat vs enemies (bullet hell/heaven)
         - Need more precise collision box?
 
-### Combat
+
+<h3 id='combat'>
+    Combat
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h3>
 
 <div align='center'>
     <img width=600 src="./assets/DD2.jpg">
@@ -190,8 +309,10 @@ Maybe get rid of the god intervention stuffs because those are silly & lame.
     - This got rid of the frustrating aspect of DD1, where a 97% chance to hit atk missed. Or when a 10% crit atk from the enemy crit-ed.
     - This make AoE abilities strong as they can clear out the token with the most action economy.
 
-
-### Objects & Attributes
+<h2 id='objects'>
+    Objects & Attributes
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h2>
 
 **Player's Characters / Party's Member**
 | Attribute | Type | Description | Inspiration |
@@ -223,7 +344,11 @@ castable_round | int | current_round must be < castable_round to be able to cast
 <!-- current_cooldown | int | Use to keep track of the ability cooldown. Ability can only be cast if current cooldown is < 0. Set to -1 for abilities with no cooldown | EBF5 -->
 
 
-# Notes
+<h2 id='notes'>
+    Notes
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h2>
+
 I have the inspiration column so that it's easier to keep track & imagine the mechanic/idea in case you are familiar with those games.
 
 EBF3-5 is really close to what our current game description want:
