@@ -16,6 +16,7 @@ Table of Contents
 - [Gameplay & Mechanics](#mechanics)
     - [Movement](#movement)
     - [Combat](#combat)
+    - [Interface](#interface)
 - [Objects & Attributes](#objects)
 - [Notes](#notes)
 
@@ -169,32 +170,6 @@ instead of keep taking care of it. [CHARACTER_3] has already paid back its debt 
 
 ### Cutscene
 ...
-<h3 id='interface'>
-    Interface
-    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
-</h3>
-
-**Equipment Page**
-
-<div align='center'>
-<img width=600 src="./assets/EBF5-Equipment-Screen.png">
-</div>
-
-**Inventory Page**
-
-**Abilities Page**
-
-**Settings**
-- Resolution
-- Fullscreen/Windowed
-- Graphic Quality
-- Volume
-    - Music
-    - SFX
-    - Voiceline?
-    
-
-
 <h2 id='mechanics'>
     Gameplay & Mechanics
     <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
@@ -218,8 +193,11 @@ instead of keep taking care of it. [CHARACTER_3] has already paid back its debt 
     - Player can move around by WASD or by clicking on a tile using a mouse (EBF4-5)
     - If click on a tile, the player character will navigate to that tile
     - We can do keyboard first, then mouse later if we have time since the auto-navigation can be difficult?
+    - ...
     - Player's last facing direction is kept.
-    - Pressing the interact key would interact with the tile infront of the player's direction
+    - Pressing the interact key would interact with the tile in front of the player's direction
+    - There are also puzzles that can be constructed from this
+    - A tile can be temporary un-walk-able until the player obtained an item to clear it. (Metroidvania) (Ex: Tree need Axe key item to cut down & walk over)
     - **Luxury:** Party member trail behind the player character
 - **Non-grid Movement System**
     - In comparision to grid:
@@ -309,10 +287,88 @@ instead of keep taking care of it. [CHARACTER_3] has already paid back its debt 
     - This got rid of the frustrating aspect of DD1, where a 97% chance to hit atk missed. Or when a 10% crit atk from the enemy crit-ed.
     - This make AoE abilities strong as they can clear out the token with the most action economy.
 
+<h3 id='interface'>
+    Interface
+    <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
+</h3>
+
+**How it can look like**
+
+Our game resolution is 1600x1200 (4:3 ratio). It's easier to calculate coordinates (divisible by 100).
+We can go with some unconventional resolution & add more width (like 1900px) to have a bigger room.
+
+We get 16 columns & 10 rows of tiles.
+Each tile is 100x100px.
+UI has height of 200px.
+There will be an 1600x1000 image for the background of the room.
+
+We will use a 2D array to keep track of the tile. It will be a 2D array of the Tile object.
+
+<div style="
+    display:flex;
+    flex-direction:column;
+    background-color:blue;
+    width:400px;
+    height:300px;
+">
+    <div style="
+        background-color:deepskyblue;
+        color:black;
+        display: flex;
+        flex-wrap:wrap;
+        flex-grow:1;
+    ">
+        <div style=" background-color:mediumseagreen; height:25px; width:25px; border: 1px solid black;"></div>
+        <div style=" background-color:mediumseagreen; height:25px; width:25px; border: 1px solid black;"></div>
+        <div style=" background-color:mediumseagreen; height:25px; width:25px; border: 1px solid black;"></div>
+        <div style=" background-color:mediumseagreen; height:25px; width:25px; border: 1px solid black;"></div>
+        <div style=" background-color:mediumseagreen; height:25px; width:25px; border: 1px solid black;"></div>
+    </div>
+    <div style="
+        background-color:sienna;
+        height:50px;
+        color:black;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
+        Interfaces here
+    </div>
+</div>
+
+<img width=400 src="./assets/EBF5-Map-B5.png">
+
+<br>
+<br>
+
+**Equipment Page**
+
+<div align='center'>
+<img width=600 src="./assets/EBF5-Equipment-Screen.png">
+</div>
+
+**Inventory Page**
+
+**Abilities Page**
+
+**Settings**
+- Resolution
+- Fullscreen/Windowed
+- Graphic Quality
+- Volume
+    - Music
+    - SFX
+    - Voiceline?
+    
+
+
+
 <h2 id='objects'>
     Objects & Attributes
     <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
 </h2>
+
+> this might be helpful for coding stuffs in
 
 **Player's Characters / Party's Member**
 | Attribute | Type | Description | Inspiration |
@@ -342,6 +398,42 @@ ability_cooldown | unsigned int | Amount of round before the ability can be cast
 castable_round | int | current_round must be < castable_round to be able to cast. After ability cast, set to current_round + ability_cooldown + 1 | EBF5
 
 <!-- current_cooldown | int | Use to keep track of the ability cooldown. Ability can only be cast if current cooldown is < 0. Set to -1 for abilities with no cooldown | EBF5 -->
+
+
+**Tile**
+| Attribute | Type | Description | Inspiration |
+|-----------|------|-------------|-------------|
+x_coordinate | unsigned int (0-15) | x-coordinate of the tile in relative to the room
+y_coordinate | unsigned int (0-9) | y-coordinate of the tile in relative to the room
+walkable | bool | check if tile is walkable or not. Maybe have this calculate at the start of the scene? |
+never_walkable | bool | some tiles will never be walkable on |
+require_[keyitem] | bool | tile is not walkable unless player obtained the [keyitem] | EBF
+transition_room | string? | room that the player will get to if stepped on. If "" then don't do anything
+
+PROBLEM: How will the room get stored? Some rooms are outside the map.
+So maybe just have a hashmap of [Coordinate] to [Room]?
+Ex:
+- "A00" -> "Some room on the map"
+- "A00E1" -> "Some room outside the map, accessible from A00"
+
+**Room**
+| Attribute | Type | Description | Inspiration |
+|-----------|------|-------------|-------------|
+title | string | 
+background_image | string | which background image will be loaded
+tilemap | 2D array of Tile or just string | if string, the tilemap will be interpreted when loaded in. otherwise, it might takes too much memory
+
+PROBLEM: How will the tilemap of a room get stored? We can't just have all the 2D array of Tile loaded at once.
+
+**Functions**
+| Name | Parameters | Description |
+|------|-------|-------------|
+room_transition | current_room (str), new_room(str), direction(str), room_coordinate(int) | 
+
+We can separate the movement & combat into 2 separate prototypes.
+
+When player interact with a monster. It will go to the combat game.
+
 
 
 <h2 id='notes'>
