@@ -7,6 +7,7 @@ See here for more information about the [course project][project]
 [project]: https://teaching.hkaiser.org/fall2023/csc3380/assignments/project.html
 
 # Table of Contents
+- [Game Design Document](./.github/game-design-document.md)
 - [TODO](#todo)
 - [Drafting Area](#drafting-area)
 - [Resources](#resources)
