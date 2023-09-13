@@ -16,7 +16,7 @@ Table of Contents
 - [Gameplay & Mechanics](#mechanics)
     - [Movement](#movement)
     - [Combat](#combat)
-- [Objects & Attributes](#combat)
+- [Objects & Attributes](#objects)
 - [Notes](#notes)
 
 <h2 id='jargon'>
@@ -46,7 +46,7 @@ Turn | Units can only act when it is their turn. At the start or end of the unit
     <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
 </h2>
 
-<h3 id='story'>
+<h3 id='act'>
     Arc/Act, Story Flow
     <span style="font-size:12px;"><a href="#toc">[back to toc]</a></span>
 </h3>
