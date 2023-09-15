@@ -3,7 +3,7 @@
 #and may not be redistributed without written permission.
 
 #OBJS specifies which files to compile as part of the project
-OBJS = ./first-window.cpp
+OBJS = ./room.cpp
 
 #CC specifies which compiler we're using
 CC = g++
@@ -16,7 +16,7 @@ COMPILER_FLAGS = -w
 LINKER_FLAGS = -lraylib -lGL -lopenal -lm -pthread -ldl -lX11 -lXrandr -l Xinerama -lXi -l Xxf86vm -lXcursor
 
 #OBJ_NAME specifies the name of our exectuable
-OBJ_NAME = a.out
+OBJ_NAME = a.exe
 
 #This is the target that compiles our executable
 all : $(OBJS)
