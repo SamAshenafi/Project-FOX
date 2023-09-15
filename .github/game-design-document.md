@@ -409,12 +409,13 @@ walkable | bool | check if tile is walkable or not. Maybe have this calculate at
 never_walkable | bool | some tiles will never be walkable on |
 require_[keyitem] | bool | tile is not walkable unless player obtained the [keyitem] | EBF
 transition_room | string? | room that the player will get to if stepped on. If "" then don't do anything
+what_is_on_top | ? | the object on top, be it an interactable object or monster
 
 PROBLEM: How will the room get stored? Some rooms are outside the map.
 So maybe just have a hashmap of [Coordinate] to [Room]?
 Ex:
-- "A00" -> "Some room on the map"
-- "A00E1" -> "Some room outside the map, accessible from A00"
+- "01-00" -> "Some room on the map"
+- "01-00-E1" -> "Some room outside the map, accessible from A00"
 
 **Room**
 | Attribute | Type | Description | Inspiration |
@@ -424,15 +425,52 @@ background_image | string | which background image will be loaded
 tilemap | 2D array of Tile or just string | if string, the tilemap will be interpreted when loaded in. otherwise, it might takes too much memory
 
 PROBLEM: How will the tilemap of a room get stored? We can't just have all the 2D array of Tile loaded at once.
+SOLUTION1: Instead of hashing, which take memory, we will save Room data in a folder. It will look like this.
+
+```
+Room_JSON
+├─ A0.json
+├─ A1.json
+├─ A2.json
+└─ ...
+```
+
+When going to a new room. We will find the json matching with the coordinate of the new room & parse/interpret it as our Room Object.
+
+I will be working on a Room Tile Editor. This will make it easier to edit our rooms & save them as JSON.
 
 **Functions**
 | Name | Parameters | Description |
 |------|-------|-------------|
-room_transition | current_room (str), new_room(str), direction(str), room_coordinate(int) | 
+room_transition | current_room (str), new_room(str) | 
+
+```cpp
+int room_transition(
+    string current_room_id,
+    string new_room_id,
+    ) {
+    // Load room from new_room_id into current_room
+
+    // Handle player position
+    if (new_room_id.length >= 6) { // Special room
+        // get the player new coordinate from the new room object
+    }
+    else {
+        // Handle player position in a normal room
+        if (Player.x_coordinate == 15) Player.x_coordinate = 0;
+        else if (Player.y_coordinate == 9) Player.x_coordinate = 0;
+        else if (Player.x_coordinate == 0) Player.x_coordinate = 15;
+        else if (Player.y_coordinate == 0) Player.x_coordinate = 9;
+    }
+    
+}
+
+```
 
 We can separate the movement & combat into 2 separate prototypes.
-
 When player interact with a monster. It will go to the combat game.
+
+
 
 
 
@@ -474,3 +512,15 @@ The EBF5 is a bit different from the 3 & 4 version (Combat, etc.).
 4 is a more polished 3 (especially the UI).
 
 Luxury => This feature is not necessary but can be implemented to improve the game's polish.
+
+## Room Editor Design Notes
+> Ignore this
+
+```mermaid
+graph LR;
+    Setters-->MainNewTile
+    MainNewTile-->Render-->TileDataChange
+    TileDataChange-->Setters
+    OnTileClick-->Coordinate-->Setters-->MainNewTile-->AddNewTileToRoom
+
+```

@@ -24,54 +24,48 @@ See here for more information about the [course project][project]
 |------|------|-----------|
 Alton Dupre | Leader, Structure Management | 1
 Blaire Newburger | Tile-Based Movement System | 1
-Christian Che | Art Lead (backgrounds, sprites, music, & sfx) & Planner | 1
+Christian Che (ganhaque) | Art Lead (backgrounds, sprites, music, & sfx) & Planner | 1
 Sam Ashenafi | Story Guidelines| 1
 Ryan Trinh | Backend Dev | 1
-Robert Smith | | 1
+Robert Smith | Backend Dev | 1
+
+### Jobs
+> Specific jobs/tasks to be done. A job can have multiple people doing it.
+
+**Combat Prototype**
+| Job | Who | Notes? |
+|-----|-----|-------------|
+
+**Movement Prototype**
+| Job | Who | Notes? |
+|-----|-----|-------------|
+Room Tile Editor | Christian | Optional. A tool to generate a room's tilemap, instead of manually typing out the 2D array of the room's Tiles. It will be saved as a JSON file to be interpreted
+
+**Arts**
+| Job | Who | Notes? |
+|-----|-----|-------------|
+Narrative/Story | ? |
+Dialogue | ? |
+Art | Christian | 
+SoundFX | Christian | 
+OST | Christian? | 
 
 ## TODO
 > To keep track of what need to be done
-- [ ] Milestone 1
-    - [X] Introduction/Description (1-2 paragraph)
-        - problem & solution
-        - technologies used in project
-            - C++ (obviously)
-            - if we do GUI
-                - SDL 2? (if we do GUI)
-                - Drawing software for sprites
-                    - pixel art? (Aseprite)
-                    - normal (GIMP/CSP/Photoshop)
-            - Other?
-    - [X] Features
-        - [X] Core (3/2+)
-            - Dialogue, the back-&-forth
-            - GUI
-            - Player Input
-        - [X] Viable (3/2+)
-            - Turn Based Combat System
-            - Inventory System
-            - Tile-Based Movement System
-        - [X] Strech (3/2+) (optional)
-            - Multiple Characters Party
-            - Save System
-            - Expansive World
-            - Side Quests System
-    - [X] Team name
-    - [ ] Members' role & responsibility for each milestone (can be updated later) (WIP) (3/6 filled out their role)
-        - Leadership for each milestone (goes to Alton by default)
-    - [ ] User Stories (0/1+)
-        - We want to create a fun & engaging adventure game?
-    - [X] Continuity of Operations Plan (COOP) (1-2 paragraph)
-        - We communicate through group chat or the group's server channel in discord
-        - [X] What if a member is unable to meet in person/unavailable (temporary or permanently)?
-            - [X] temporary
-                - cannot attend meeting -> check meeting notes
-            - [X] permanently - the work will be split to other member evenly
-    - [ ] Project plan (will get updated in milestone 2) (WIP)
-        - For each task
-            - dependencies
-            - level of effort
-            - start & completion dates
+- [ ] Combat Prototype
+- [ ] Movement Prototype
+    - [ ] Optional: Room Tile Editor
+- [ ] Art
+    - [ ] Character Design/Concept Art
+    - [ ] Character Spritesheet (Animation)
+    - [ ] Ability animation
+    - [ ] Ability Icons
+    - [ ] UI Icons
+    - [ ] Enemy Spritesheet
+    - [ ] Room Background Image
+- [ ] Music & Sounds
+    - [ ] SFX
+    - [ ] OST
 
 ## Drafting Area
 > A place for your ideas
