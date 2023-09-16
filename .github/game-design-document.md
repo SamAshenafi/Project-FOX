@@ -512,15 +512,3 @@ The EBF5 is a bit different from the 3 & 4 version (Combat, etc.).
 4 is a more polished 3 (especially the UI).
 
 Luxury => This feature is not necessary but can be implemented to improve the game's polish.
-
-## Room Editor Design Notes
-> Ignore this
-
-```mermaid
-graph LR;
-    Setters-->MainNewTile
-    MainNewTile-->Render-->TileDataChange
-    TileDataChange-->Setters
-    OnTileClick-->Coordinate-->Setters-->MainNewTile-->AddNewTileToRoom
-
-```

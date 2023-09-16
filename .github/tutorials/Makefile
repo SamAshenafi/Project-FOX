@@ -3,7 +3,7 @@
 #and may not be redistributed without written permission.
 
 #OBJS specifies which files to compile as part of the project
-OBJS = ./room.cpp
+OBJS = ./your_code_here.cpp
 
 #CC specifies which compiler we're using
 CC = g++
