@@ -8,10 +8,10 @@ See here for more information about the [course project][project]
 
 # Table of Contents
 - [Game Design Document](./.github/game-design-document.md)
+- [raylib setup tutorial](./.github/tutorials/raylib-setup.md)
 - [TODO](#todo)
 - [Drafting Area](#drafting-area)
 - [Resources](#resources)
-    - [SDL2](#sdl-2)
     - [Helpful/Convenience Links](#helpfulconvenience-links)
 
 
