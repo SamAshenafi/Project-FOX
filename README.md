@@ -8,10 +8,10 @@ See here for more information about the [course project][project]
 
 # Table of Contents
 - [Game Design Document](./.github/game-design-document.md)
+- [raylib setup tutorial](./.github/tutorials/raylib-setup.md)
 - [TODO](#todo)
 - [Drafting Area](#drafting-area)
 - [Resources](#resources)
-    - [SDL2](#sdl-2)
     - [Helpful/Convenience Links](#helpfulconvenience-links)
 
 
@@ -39,7 +39,7 @@ Robert Smith | Backend Dev | 1
 **Movement Prototype**
 | Job | Who | Notes? |
 |-----|-----|-------------|
-Room Tile Editor | Christian | Optional. A tool to generate a room's tilemap, instead of manually typing out the 2D array of the room's Tiles. It will be saved as a JSON file to be interpreted
+[Room Tile Editor](https://github.com/ganhaque/room-editor) | Christian | Optional. A tool to generate a room's tilemap, instead of manually typing out the 2D array of the room's Tiles. It will be saved as a JSON file to be interpreted
 
 **Arts**
 | Job | Who | Notes? |
@@ -54,7 +54,7 @@ OST | Christian? |
 > To keep track of what need to be done
 - [ ] Combat Prototype
 - [ ] Movement Prototype
-    - [ ] Optional: Room Tile Editor
+    - [X] Optional: Room Tile Editor
 - [ ] Art
     - [ ] Character Design/Concept Art
     - [ ] Character Spritesheet (Animation)
@@ -72,41 +72,6 @@ OST | Christian? |
 
 So here's some topics about for our game to get us started.
 Feel free to add more, edit them, or answer them here or on Discord
-
-### Options when it comes to developing a game in C++
-- [SDL2 (tested)](https://wiki.libsdl.org/SDL2/FrontPage)
-    - Pros:
-        - There's tutorial on the basics
-        - Found several games made w/ SDL2 w/ their source code available
-    - Cons:
-        - No game engine -> we will have to build the game from scratch, which includes:
-            - Manually loading in & interpreting the texture/sprites/sounds
-            - Manually implementing common game features such as TileMap, SpriteAnimation, Hitbox/Collision, etc.
-        - This can be difficult considering our group's skill in C++ & limited amount of tutorials for SDL2
-- [raylib (tested)](https://www.raylib.com/)
-    - Work
-    - Might be better than SDL2
-    - Pros:
-        - Less complicated compared to SDL 2
-<!-- - [Gosu (not tested)](https://www.libgosu.org/cpp.html) -->
-- Godot
-    - There's 2 way to do C++ in Godot:
-        - [GDExtension (attempted)](https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/gdextension_cpp_example.html)
-            - Pros:
-                - Don't need to recompile the game engine after every changes to the code
-                - Can build the game entirely in C++ (no gdscript)
-            - Cons:
-                - your editor might scream at you (file not found, etc.)
-                - no tutorial except the example in the documentation
-                - dll is platform specific (need a different dll for Windows, Linux, Mac)
-                - need to carry the dll in the game folder
-        - [C++ Custom Modules (not tested)](https://docs.godotengine.org/en/stable/contributing/development/core_and_modules/custom_modules_in_cpp.html)
-            - Pros:
-                - don't need dll for each platform
-            - Cons:
-                - Have to rebuild the game engine for every changes to the code
-                - Need GDScript to use the module in the game engine (Not pure c++)
-
 
 ### Questions
 - What is the general Theme/Story? (we can change this later on)
@@ -133,24 +98,6 @@ which one should we do? how will it be implemented?
 
 ## Resources
 > Convenience way to find help/inspiration outside of the group
-
-### SDL 2
-If we decided to do GUI, SDL 2 is an option to build our game engine from.
-
-- [Official Website Installation Guide](https://wiki.libsdl.org/SDL2/Installation)
-
-- [SDL 2 Tutorial by Lazyfoo](https://lazyfoo.net/tutorials/SDL/)
-    - [Set up guide for Windows & Linux](https://lazyfoo.net/tutorials/SDL/01_hello_SDL/index.php)
-    - In-depth & up-to-date tutorial.
-    - Provide source file for its codes.
-    - @ganhaque if you need the Makefile or general help to build the tutorials' code
-
-- [Game Engine using C++ SDL 2 Blog]https://www.gamedeveloper.com/blogs/how-to-make-your-own-c-game-engine
-
-- [TwinklebearDev SDL 2 Tutorial](https://www.willusher.io/pages/sdl2/)
-    - [Github lessons repo link](https://github.com/Twinklebear/TwinklebearDev-Lessons)
-    - Short, basic
-    - Old (last update to github repo is 3 years ago) tutorial
 
 ### Tools
 [SFX Maker](https://sfxr.me/)
