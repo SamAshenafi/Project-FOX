@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Dell\github-classroom\hkaiserteaching\csc3380-fall-2023-project-group-12\build\CMakeFiles\0f0a870132499b37746d66d44fc11c76\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{A1AAB30A-8309-3B96-B566-08C42C2434F9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

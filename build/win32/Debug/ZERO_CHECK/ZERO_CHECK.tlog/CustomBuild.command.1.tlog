@@ -1,0 +1,10 @@
+^C:\USERS\DELL\GITHUB-CLASSROOM\HKAISERTEACHING\CSC3380-FALL-2023-PROJECT-GROUP-12\BUILD\CMAKEFILES\0F0A870132499B37746D66D44FC11C76\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/Users/Dell/github-classroom/hkaiserteaching/csc3380-fall-2023-project-group-12 -BC:/Users/Dell/github-classroom/hkaiserteaching/csc3380-fall-2023-project-group-12/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/Dell/github-classroom/hkaiserteaching/csc3380-fall-2023-project-group-12/build/fall2023-csc3380-project.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
