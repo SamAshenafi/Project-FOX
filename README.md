@@ -107,3 +107,8 @@ which one should we do? how will it be implemented?
 [Class website](https://teaching.hkaiser.org/fall2023/csc3380/)
 
 
+Changelog
+- ✨ created room-edit-v1.0. A tool to help making room JSON.
+- 🧪 New prototype: JSON parser using jsoncpp
+- 🧹 organize testing codes & clean up README
+- 📝 tutorial for setting up raylib on Windows VSCode & Arch Linux
