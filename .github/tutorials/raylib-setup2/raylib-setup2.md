@@ -2,7 +2,8 @@
 
 # For Windows (VSCode) (Window 10)
 - Open the raylib project
-- To compile, run
+- Use the terminal to `cd` into the project folder.
+- To compile, run this in the terminal
 ```bash
 mingw32-make all clean-object
 ```
