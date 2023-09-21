@@ -4,7 +4,7 @@
 - If the window doesn't look like this, select `Environment Variables`
 
 <div align='center'>
-<img width=400 src="../assets/Environment-Variables.png">
+<img width=400 src="../../assets/Environment-Variables.png">
 </div>
 
 - Select `Path` (the top one (user))
