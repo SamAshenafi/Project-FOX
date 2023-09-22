@@ -10,8 +10,11 @@ class Game {
   private:
     std::unique_ptr<Character> player; // Use a unique_ptr for deferred initialization
   public:
-    const int screenWidth = 1600;
-    const int screenHeight = 1000;
+    const int windowWidth = 1600;
+    const int windowHeight = 1000;
+
+    int screenWidth = 1600;
+    int screenHeight = 1000;
     const int gridSize = 50;
     std::vector<Tile*> interactableTiles; // Vector to store interactable tiles
 

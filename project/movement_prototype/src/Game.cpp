@@ -97,7 +97,9 @@ void Game::spawnTiles() {
 }
 
 void Game::run() {
+  SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
   InitWindow(screenWidth, screenHeight, "Grid-Based Movement with Interactive Objects");
+  SetWindowMinSize(320, 200);
 
   // Character playerCharacter(1, 1); // Create the character object
   player = std::make_unique<Character>(1, 1); // Create the character object
@@ -118,7 +120,7 @@ void Game::run() {
         //   DrawRectangle(x, y, gridSize, gridSize, DARKGRAY);
         // }
         // else {
-        DrawRectangleLines(x, y, gridSize, gridSize, DARKGRAY);
+        DrawRectangleLines(x, y, gridSize, gridSize, RAYWHITE);
         // }
       }
     }
