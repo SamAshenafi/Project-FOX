@@ -27,7 +27,7 @@ void DirectionalInput::updateDirection() {
 int DirectionalInput::getDirection() {
     updateDirection();
     // If the player is not pressing/holding any directional buttons, output NONE
-    if (!(currRight || currUp || currLeft | currDown)) {
+    if (!(currRight || currUp || currLeft || currDown)) {
         prevDirection = NONE;
         return NONE;
     }
