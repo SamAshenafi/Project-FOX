@@ -18,6 +18,7 @@ void Game::run() {
   SetTargetFPS(60);
 
   while (!WindowShouldClose()) {
+    int inputDir = inputDirection.getDirection();
     switch (gameState) {
       case start_menu:
         // NOTE: temporary placeholder for start menu.
@@ -33,7 +34,7 @@ void Game::run() {
         gameState = overworld;
         break;
       case overworld:
-        handleUserInputOverworld(inputDirection);
+        handleUserInputOverworld(inputDir);
         renderOverworld();
         break;
       case loading_combat:
@@ -113,7 +114,7 @@ void Game::renderCombat() {
 // ░▀▀▀░▀░▀░▀░░░▀▀▀░░▀░
 // INPUT
 
-void Game::handleUserInputOverworld(DirectionalInput inputDir) {
+void Game::handleUserInputOverworld(int inputDir) {
   double currentTime = GetTime();
   double deltaTimeSinceLastMove = currentTime - lastMoveTime;
   if (deltaTimeSinceLastMove < moveSpeed) {
@@ -188,7 +189,7 @@ void Game::handleUserInputOverworld(DirectionalInput inputDir) {
   int newX = player->x;
   int newY = player->y;
   
-  switch (inputDir.getDirection()) { // TODO 
+  switch (inputDir) { // TODO 
     case 0 :
         player->facing = "right";
         newX++;
