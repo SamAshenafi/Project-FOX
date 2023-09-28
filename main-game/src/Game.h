@@ -80,7 +80,7 @@ class Game {
     DirectionalInput inputDirection;
 
     void handleUserInputStartMenu();
-    void handleUserInputOverworld(int inputDir);
+    void handleUserInputOverworld(DirectionalInput inputDir);
     void handleUserInputCombat();
     void shortestPath(int startX, int startY, int targetX, int targetY);
 
