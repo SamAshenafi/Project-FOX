@@ -35,6 +35,8 @@ class Game {
 
     // NOTE: Tile & Player are stored in here
     std::vector<GameObject*> gameObjects;
+    // NOTE: a pointer to reach the player easily
+    Player* player = nullptr;
 
     // NOTE: Combat would have multiple characters
     // MAYBE: a vector<string> for id (like player-01)
@@ -69,9 +71,9 @@ class Game {
 
     // these will only be used when loadSave() & saveSave() is called
     //// player data
-    int playerX = 10;
-    int playerY = 6;
-    Direction playerFacing = Direction::down;
+    int playerX = 0;
+    int playerY = 0;
+    std::string playerFacing = "down";
 
 
     void handleUserInputStartMenu();
@@ -95,6 +97,7 @@ class Game {
 
     // Helpers
     void resetGrid(); // set all in grid to 0
+    void sortGameObjects();
 };
 
 

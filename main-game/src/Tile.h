@@ -19,5 +19,5 @@ class Tile : public GameObject {
 
     // virtual void interact();
     // void draw(int gridSize);
-    void render();
+    void render(int gridWidth, int gridHeight);
 };

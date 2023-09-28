@@ -11,10 +11,12 @@ enum GameState {
   combat,
 };
 
-enum Direction {
-    left,
-    down,
-    up,
-    right
-};
+// NOTE: Direction enum would require some extra functions to convert to string
+// direction/facing is string instead of enum now
+// enum Direction {
+//     left,
+//     down,
+//     up,
+//     right
+// };
 

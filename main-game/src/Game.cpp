@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <iostream>
 #include <fstream>
+#include <raylib.h>
 #include "nlohmann/json.hpp"
 
 Game::Game() {
@@ -26,8 +27,9 @@ void Game::run() {
         renderStartMenu();
         break;
       case loading_overworld:
-        // TODO: when the player select or start new save, loadSave() -> loadRoom()
+        // NOTE: when the player select or start new save, loadSave() -> loadRoom()
         // the player is in the overworld after (cannot save in combat, save exclusively happen when overworld )
+        loadSave("savedata-01");
         gameState = overworld;
         break;
       case overworld:
@@ -75,41 +77,26 @@ void Game::renderStartMenu() {
 
 void Game::renderOverworld() {
   BeginDrawing();
-  ClearBackground(RAYWHITE);
-  // ClearBackground(DARKGRAY);
-  // TODO: draw currentRoomId-bg.png here
+  // ClearBackground(RAYWHITE);
+  ClearBackground(DARKGRAY);
+  DrawTexture(overworldBg, 0, 0, WHITE);
 
   // Draw the grid (debug only)
-  // for (int x = 0; x < ScreenWidth; x += GridWidth) {
-  //   for (int y = 0; y < ScreenHeight; y += GridHeight) {
-  //     if (grid[x / GridWidth][y / GridHeight] == 1) {
-  //       DrawRectangle(x, y, GridWidth, GridHeight, DARKGRAY);
-  //     }
-  //     else {
-  //       // DrawRectangleLines(x, y, gridSize, gridSize, DARKGRAY);
-  //       DrawRectangleLines(x, y, GridWidth, GridHeight, BLACK);
-  //     }
-  //   }
-  // }
+  for (int x = 0; x < screenWidth; x += gridWidth) {
+    for (int y = 0; y < (screenHeight - overworldUIHeight); y += gridHeight) {
+      if (grid[x / gridWidth][y / gridHeight] == 1) {
+        DrawRectangle(x, y, gridWidth, gridHeight, DARKGRAY);
+      }
+      else {
+        // DrawRectangleLines(x, y, gridSize, gridSize, DARKGRAY);
+        DrawRectangleLines(x, y, gridWidth, gridHeight, BLACK);
+      }
+    }
+  }
 
-  // NOTE: Sort player and tile/object based on their y (depth)
-  // THEN: Iterate & call render for player and object
-  // NOTE: This is necessary because the sprite of whatever would not
-  // fit the 96x80 grid, so the object with lower y (farther away) will
-  // render before object closer
-  // basically, if player is in front of the chest, the chest sprite would not
-  // appear over the player
-  // and vice versa,
-  // if player is behind, the player sprite would not appear over the chest
-  std::sort(
-      gameObjects.begin(),
-      gameObjects.end(),
-      [](const GameObject* a, const GameObject* b) {
-      return a->y < b->y;
-      });
   for (GameObject* gameObject : gameObjects) {
     // Call the render method for each object through the pointer
-    gameObject->render();
+    gameObject->render(gridWidth, gridHeight);
   }
 
   // TODO: draw currentRoomId-fg.png here
@@ -134,40 +121,30 @@ void Game::handleUserInputOverworld() {
     return; // Too soon for another move
   }
 
-  Player* player = nullptr;
-
-  for (GameObject* gameObject : gameObjects) {
-    bool isPlayer = Helper::parseGameObjectType(gameObject->id) == "player";
-    if (isPlayer) {
-      player = dynamic_cast<Player*>(gameObject);
-      break;
-    }
-  }
-
   int keyPressed = GetKeyPressed();
   switch (keyPressed) {
     // Detect when movement key is pushed to smooth out the movement
-    case KEY_LEFT:
-      player->move(player->x-1, player->y);
-      player->facing = Direction::left;
-      break;
-    case KEY_DOWN:
-      player->move(player->x, player->y+1);
-      player->facing = Direction::down;
-      break;
-    case KEY_UP:
-      player->move(player->x, player->y-1);
-      player->facing = Direction::up;
-      break;
-    case KEY_RIGHT:
-      player->move(player->x+1, player->y);
-      player->facing = Direction::right;
-      break;
+    // case KEY_LEFT:
+    //   player->move(player->x-1, player->y);
+    //   player->facing = "left";
+    //   break;
+    // case KEY_DOWN:
+    //   player->move(player->x, player->y+1);
+    //   player->facing = "down";
+    //   break;
+    // case KEY_UP:
+    //   player->move(player->x, player->y-1);
+    //   player->facing = "up";
+    //   break;
+    // case KEY_RIGHT:
+    //   player->move(player->x+1, player->y);
+    //   player->facing = "right";
+    //   break;
     case KEY_S:
       // TODO: This is place holder
       // plan is to have a button/UI to select different save
       // like savedata-02 -> savedata-08
-      fprintf(stderr, "%s\n", "saved to savegame.json");
+      fprintf(stderr, "%s\n", "saved to savedata-01.json");
       saveSave("savedata-01");
       break;
     case KEY_SPACE:
@@ -175,19 +152,21 @@ void Game::handleUserInputOverworld() {
       int targetX = player->x;
       int targetY = player->y;
 
-      switch (player->facing) {
-        case Direction::up:
-          targetY--;
-          break;
-        case Direction::down:
-          targetY++;
-          break;
-        case Direction::left:
-          targetX--;
-          break;
-        case Direction::right:
-          targetX++;
-          break;
+      if (player->facing == "up") {
+        targetY--;
+      }
+      else if (player->facing == "down") {
+        targetY++;
+      }
+      else if (player->facing == "left") {
+        targetX--;
+      }
+      else if (player->facing == "right") {
+        targetX++;
+      }
+      else {
+        fprintf(stderr, "invalid player->facing direction");
+        return;
       }
 
       for (GameObject* gameObject : gameObjects) {
@@ -210,19 +189,19 @@ void Game::handleUserInputOverworld() {
   int newY = player->y;
 
   if (IsKeyDown(KEY_RIGHT)) {
-    player->facing = Direction::right;
+    player->facing = "right";
     newX++;
   }
   else if (IsKeyDown(KEY_LEFT)) {
-    player->facing = Direction::left;
+    player->facing = "left";
     newX--;
   }
   else if (IsKeyDown(KEY_DOWN)) {
-    player->facing = Direction::down;
+    player->facing = "down";
     newY++;
   }
   else if (IsKeyDown(KEY_UP)) {
-    player->facing = Direction::up;
+    player->facing = "up";
     newY--;
   }
 
@@ -233,7 +212,7 @@ void Game::handleUserInputOverworld() {
   bool isOutOfBound = newX < 0 ||
     newX >= (screenWidth / gridWidth) ||
     newY < 0 ||
-    newY >= (screenHeight / gridHeight);
+    newY >= ((screenHeight - overworldUIHeight) / gridHeight);
   if (isOutOfBound) {
     fprintf(stderr, "out of bound: %d, %d\n", newX, newY);
     // TODO: if current tile is transition tile
@@ -248,11 +227,22 @@ void Game::handleUserInputOverworld() {
     // no movement, terrain or tile block
     return;
   }
+  else if (newY != 0){
+    // NOTE: player's depth/y changed, so we need to sort the GameObjects vector
+    sortGameObjects();
+    player->move(newX, newY);
+    lastMoveTime = currentTime;
+  }
   else {
     player->move(newX, newY);
     lastMoveTime = currentTime;
   }
 }
+
+void Game::handleUserInputCombat() {
+  // TODO:
+  return;
+};
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
 // ░█░░░█▀█░█▀█░█▀▄
@@ -277,11 +267,27 @@ void Game::loadSave(const std::string& filename) {
       // Deserialize the JSON data into member variables
       currentRoomId = root.value("currentRoomId", "");
       loadRoom(currentRoomId);
+      // const std::string roomFilePath = "./assets/room/";
+      std::string roomFilePath = "./assets/room/" + currentRoomId;
+      overworldBg = LoadTexture((roomFilePath + "-bg.png").c_str());
+      // TODO: also load overworldFg
 
       completed.clear();
       for (const auto& item : root["completed"]) {
         completed.push_back(item.get<std::string>());
       }
+
+      playerX = root.value("playerX", 0);
+      playerY = root.value("playerY", 0);
+      playerFacing = root.value("playerFacing", "down");
+
+      player = new Player(
+          "player-01",
+          playerX,
+          playerY,
+          playerFacing
+          );
+      gameObjects.push_back(player);
 
       // TODO: Add inventory parsing logic here
       // TODO: Add more deserialization logic for other members here
@@ -410,8 +416,27 @@ void Game::loadTile(const std::string& tileId) {
 
 void Game::resetGrid() {
   for (int x = 0; x < screenWidth / gridWidth; x++) {
-    for (int y = 0; y < gridHeight / gridHeight; y++) {
+    for (int y = 0; y < (screenHeight - overworldUIHeight) / gridHeight; y++) {
       grid[x][y] = 0; // Set all to 0 (walkable)
     }
   }
+}
+
+void Game::sortGameObjects() {
+  // NOTE: Sort player and tile/object based on their y (depth)
+  // THEN: Iterate & call render for player and object
+  // NOTE: This is necessary because the sprite of whatever would not
+  // fit the 96x80 grid, so the object with lower y (farther away) will
+  // render before object closer
+  // basically, if player is in front of the chest, the chest sprite would not
+  // appear over the player
+  // and vice versa,
+  // if player is behind, the player sprite would not appear over the chest
+  std::sort(
+      gameObjects.begin(),
+      gameObjects.end(),
+      [](const GameObject* a, const GameObject* b) {
+      return a->y < b->y;
+      });
+
 }

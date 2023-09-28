@@ -16,5 +16,7 @@ Tile::Tile(
   // sprite = Helper::loadTexture("path_to_your_tile_texture.png");
 }
 
-void Tile::render() {
+void Tile::render(int gridWidth, int gridHeight) {
+  // TODO: 
+  return;
 }
