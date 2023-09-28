@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "Tile.h"
 #include "Helper.h"
+#include "Input.h"
 #include <memory>
 #include <string_view>
 #include <string>
@@ -75,9 +76,11 @@ class Game {
     int playerY = 0;
     std::string playerFacing = "down";
 
+    // Input Handler
+    DirectionalInput inputDirection;
 
     void handleUserInputStartMenu();
-    void handleUserInputOverworld();
+    void handleUserInputOverworld(int inputDir);
     void handleUserInputCombat();
     void shortestPath(int startX, int startY, int targetX, int targetY);
 
