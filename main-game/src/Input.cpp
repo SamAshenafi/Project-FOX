@@ -39,8 +39,6 @@ int DirectionalInput::getDirection() {
     // If a directional key was pressed on this frame, that's the output
     // Will exhibit priority if the user starts pressing buttons on the same frame,
     // but that is something that I do not expect someone to do on accident
-    // **** Need to account for starting pressing a direction while the opposite is already pressed
-            // ^^ Bug fixing later
     if (currRightPress) {
         prevDirection = RIGHT;
         return RIGHT;
