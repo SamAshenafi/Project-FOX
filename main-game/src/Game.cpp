@@ -18,7 +18,6 @@ void Game::run() {
   SetTargetFPS(60);
 
   while (!WindowShouldClose()) {
-    int inputDir = inputDirection.getDirection();
     switch (gameState) {
       case start_menu:
         // NOTE: temporary placeholder for start menu.
@@ -34,7 +33,7 @@ void Game::run() {
         gameState = overworld;
         break;
       case overworld:
-        handleUserInputOverworld(inputDir);
+        handleUserInputOverworld();
         renderOverworld();
         break;
       case loading_combat:
@@ -114,33 +113,12 @@ void Game::renderCombat() {
 // ░▀▀▀░▀░▀░▀░░░▀▀▀░░▀░
 // INPUT
 
-void Game::handleUserInputOverworld(int inputDir) {
+void Game::handleUserInputOverworld() {
   double currentTime = GetTime();
   double deltaTimeSinceLastMove = currentTime - lastMoveTime;
-  if (deltaTimeSinceLastMove < moveSpeed) {
-    // fprintf(stderr,"too soon\n");
-    return; // Too soon for another move
-  }
 
   int keyPressed = GetKeyPressed();
   switch (keyPressed) {
-    // Detect when movement key is pushed to smooth out the movement
-    // case KEY_LEFT:
-    //   player->move(player->x-1, player->y);
-    //   player->facing = "left";
-    //   break;
-    // case KEY_DOWN:
-    //   player->move(player->x, player->y+1);
-    //   player->facing = "down";
-    //   break;
-    // case KEY_UP:
-    //   player->move(player->x, player->y-1);
-    //   player->facing = "up";
-    //   break;
-    // case KEY_RIGHT:
-    //   player->move(player->x+1, player->y);
-    //   player->facing = "right";
-    //   break;
     case KEY_S:
       // TODO: This is place holder
       // plan is to have a button/UI to select different save
@@ -188,45 +166,38 @@ void Game::handleUserInputOverworld(int inputDir) {
 
   int newX = player->x;
   int newY = player->y;
-  
-  switch (inputDir) { // TODO 
-    case 0 :
-        player->facing = "right";
-        newX++;
-        break;
-    case 1 :
-        player->facing = "up";
-        newY--;
-        break;
-    case 2 :
-        player->facing = "left";
-        newX--;
-        break;
-    case 3 :
-        player->facing = "down";
-        newY++;
-        break;
-    default:
-        break;
+
+  std::string direction = inputHelper();
+  // fprintf(stderr, "[D]: %s\n", direction.c_str());
+
+  if (direction == "none") {
+    return;
   }
-  /*
-  if (IsKeyDown(KEY_RIGHT)) {
+  else if (direction == "right") {
     player->facing = "right";
     newX++;
   }
-  else if (IsKeyDown(KEY_LEFT)) {
+  else if (direction == "left") {
     player->facing = "left";
     newX--;
   }
-  else if (IsKeyDown(KEY_DOWN)) {
+  else if (direction == "down") {
     player->facing = "down";
     newY++;
   }
-  else if (IsKeyDown(KEY_UP)) {
+  else if (direction == "up") {
     player->facing = "up";
     newY--;
   }
-  */
+  else {
+    fprintf(stderr, "error direction\n");
+  }
+
+
+  if (deltaTimeSinceLastMove < moveSpeed) {
+    // fprintf(stderr,"too soon\n");
+    return; // Too soon for another move
+  }
 
   // no movement
   if (newX == player->x && newY == player->y) return;
@@ -463,3 +434,50 @@ void Game::sortGameObjects() {
       });
 
 }
+
+std::string Game::inputHelper() {
+  std::string lastDirection = player->facing;
+
+  if (IsKeyPressed(KEY_RIGHT)) return "right";
+  if (IsKeyPressed(KEY_LEFT)) return "left";
+  if (IsKeyPressed(KEY_UP)) return "up";
+  if (IsKeyPressed(KEY_DOWN)) return "down";
+
+  bool isNoMovementKeyHeld = !(
+      IsKeyDown(KEY_RIGHT) ||
+      IsKeyDown(KEY_LEFT) ||
+      IsKeyDown(KEY_DOWN) ||
+      IsKeyDown(KEY_UP)
+      );
+
+  if (isNoMovementKeyHeld) {
+    return "none";
+  }
+
+  bool isNoChange =
+    IsKeyDown(KEY_RIGHT) && lastDirection == "right" ||
+    IsKeyDown(KEY_LEFT) && lastDirection == "left" ||
+    IsKeyDown(KEY_DOWN) && lastDirection == "down" ||
+    IsKeyDown(KEY_UP) && lastDirection == "up";
+
+  if (isNoChange) {
+    return lastDirection;
+  }
+  else {
+    if (IsKeyDown(KEY_RIGHT)) {
+      return "right";
+    }
+    else if (IsKeyDown(KEY_LEFT)) {
+      return "left";
+    }
+    else if (IsKeyDown(KEY_DOWN)) {
+      return "down";
+    }
+    else if (IsKeyDown(KEY_UP)) {
+      return "up";
+    }
+  }
+
+  return "error";
+}
+

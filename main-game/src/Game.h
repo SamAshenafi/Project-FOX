@@ -5,7 +5,6 @@
 #include "Player.h"
 #include "Tile.h"
 #include "Helper.h"
-#include "Input.h"
 #include <memory>
 #include <string_view>
 #include <string>
@@ -76,11 +75,8 @@ class Game {
     int playerY = 0;
     std::string playerFacing = "down";
 
-    // Input Handler
-    DirectionalInput inputDirection;
-
     void handleUserInputStartMenu();
-    void handleUserInputOverworld(int inputDir);
+    void handleUserInputOverworld();
     void handleUserInputCombat();
     void shortestPath(int startX, int startY, int targetX, int targetY);
 
@@ -101,9 +97,11 @@ class Game {
     // Helpers
     void resetGrid(); // set all in grid to 0
     void sortGameObjects();
+    std::string inputHelper();
 };
 
 
 // NOTE: some of the variable init is useless since they are set by
 // loadSave/loadRoom anyway, but keep it there to prevent error
 // and improve readability
+
