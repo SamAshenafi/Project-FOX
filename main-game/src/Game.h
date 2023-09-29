@@ -41,7 +41,7 @@ class Game {
     // NOTE: Combat would have multiple characters
     // MAYBE: a vector<string> for id (like player-01)
     // and then load from {id}.json when enter combat
-    // it will be loaded from ./src/json/player/ if not found
+    // it will be loaded from ./json/player/ if not found
     // in ./save/player/
     // the json will be write to whenever player change equipments or skill
     // and at the end of combat when the player might earn something like EXP

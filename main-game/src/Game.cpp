@@ -299,7 +299,7 @@ void Game::loadSave(const std::string& filename) {
 }
 
 void Game::loadRoom(const std::string& roomId) {
-  const std::string saveFilePath = "./src/json/room/";
+  const std::string saveFilePath = "./json/room/";
   const std::string jsonFileType = ".json";
   const std::string fullFilePath = saveFilePath + roomId + jsonFileType;
   nlohmann::json root;
@@ -364,7 +364,7 @@ void Game::saveSave(const std::string& filename) {
 void Game::loadTile(const std::string& tileId) {
   std::string tileType = Helper::parseGameObjectType(tileId);
   if (tileType == "chest") {
-    const std::string chestFilePath = "./src/json/chest/";
+    const std::string chestFilePath = "./json/chest/";
     const std::string jsonFileType = ".json";
     const std::string fullFilePath = chestFilePath + tileId + jsonFileType;
     nlohmann::json root;
@@ -381,7 +381,7 @@ void Game::loadTile(const std::string& tileId) {
   }
   else if (tileType == "combat") {
     // TODO: load combat encounter, blah blah blah
-    const std::string combatFilePath = "./src/json/combat/";
+    const std::string combatFilePath = "./json/combat/";
     const std::string jsonFileType = ".json";
     const std::string fullFilePath = combatFilePath + tileId + jsonFileType;
     nlohmann::json root;
