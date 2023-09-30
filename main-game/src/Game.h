@@ -5,8 +5,10 @@
 #include "Player.h"
 #include "Tile.h"
 #include "Helper.h"
+#include "DialogQueue.h"
 #include <memory>
 #include <queue>
+#include <random>
 #include <string_view>
 #include <string>
 #include "enums.h"
@@ -18,6 +20,10 @@ class Game {
     void run();
 
   private:
+    // RNG
+    std::random_device rd;
+    std::mt19937 gen;
+
     // resolution
     const int screenWidth = 1920;
     const int screenHeight = 1080;
@@ -46,8 +52,10 @@ class Game {
     // the json will be write to whenever player change equipments or skill
     // and at the end of combat when the player might earn something like EXP
 
-    // std::vector<Vector2> pathToTarget;
     std::queue<Vector2> pathQueue;
+
+    // DialogQueue dialogueQueue;
+    std::queue<std::string> dialogQueue;
 
     // set by loadRoom()
     //// set by roomId
@@ -93,16 +101,21 @@ class Game {
     void renderStartMenu();
     void renderOverworld();
     void renderCombat();
+    void renderDialog();
 
     // Helpers
     void resetGrid(); // set all in grid to 0
     void sortGameObjects();
     std::string inputHelper();
     std::vector<Vector2> findShortestPath(int startX, int startY, int targetX, int targetY);
+    //// RNG
+    int rollD4();   // Method for rolling a 4-sided die (d4)
+    int rollD20();  // Method for rolling a 20-sided die (d20)
 };
 
 
 // NOTE: some of the variable init is useless since they are set by
 // loadSave/loadRoom anyway, but keep it there to prevent error
 // and improve readability
+// MAYBE: replace them with error value
 

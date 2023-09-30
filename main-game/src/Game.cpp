@@ -7,7 +7,7 @@
 #include <raylib.h>
 #include "nlohmann/json.hpp"
 
-Game::Game() {
+Game::Game() : gen(rd()) {
   // Initialize grid (adjust size accordingly)
   resetGrid();
 }
@@ -117,11 +117,33 @@ void Game::renderOverworld() {
       }
     }
   }
+  renderDialog();
   EndDrawing();
 }
 
 void Game::renderCombat() {
   // TODO:
+}
+
+void Game::renderDialog() {
+  if (!dialogQueue.empty()) {
+    // Draw a dialogue box
+    DrawRectangle(
+        0,
+        screenHeight - overworldUIHeight,
+        screenWidth,
+        overworldUIHeight,
+        DARKGRAY
+        );
+    // Draw the current dialog text
+    DrawText(
+        dialogQueue.front().c_str(),
+        10,  // X position of the text
+        screenHeight - overworldUIHeight + 10,  // Y position of the text
+        20,  // Font size
+        WHITE
+        );
+  }
 }
 
 // ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
@@ -139,7 +161,17 @@ void Game::handleUserInputOverworld() {
     Vector2 mousePosition = GetMousePosition();
     int targetX = mousePosition.x / gridWidth;
     int targetY = mousePosition.y / gridHeight;
+
     fprintf(stderr, "mousePosition: %d, %d\n", targetX, targetY);
+
+    // If player hit the UI/Dialog area
+    if (targetY >= 12) {
+      if (!dialogQueue.empty()) {
+        dialogQueue.pop();
+        return;
+      }
+      // NOTE: UI button interaction should go here
+    }
 
     std::vector<Vector2> path = findShortestPath(player->x, player->y, targetX, targetY);
     if (!path.empty()) {
@@ -148,7 +180,6 @@ void Game::handleUserInputOverworld() {
         std::cout << "X: " << position.x << ", Y: " << position.y << std::endl;
         pathQueue.push(position);
       }
-
       // Debug: Print the contents of pathQueue
       // std::cout << "Contents of pathQueue:" << std::endl;
       // std::queue<Vector2> tempQueue = pathQueue; // Copy pathQueue for debugging
@@ -165,7 +196,29 @@ void Game::handleUserInputOverworld() {
 
   int keyPressed = GetKeyPressed();
   switch (keyPressed) {
+    case KEY_O:
+      {
+        fprintf(stderr, "%s\n", "o was pressed");
+        std::string placeholderDialog = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse sed maximus nisl. In condimentum urna ac feugiat gravida. Vestibulum et iaculis arcu. Mauris commodo arcu et sem ornare maximus. Phasellus sit amet imperdiet odio. Duis tincidunt tincidunt faucibus. Donec dapibus, nulla nec fringilla hendrerit, arcu tellus eleifend neque, quis congue magna lacus sed nisi.";
+        int d4Result = rollD4();
+        switch (d4Result) {
+          case 1:
+            dialogQueue.push("Failure!");
+            break;
+          case 2:
+            dialogQueue.push("Hi, this is dialog. Ipsum...");
+            break;
+          case 3:
+            dialogQueue.push("Almost!");
+            break;
+          case 4:
+            dialogQueue.push(placeholderDialog);
+            break;
+        }
+        break;
+      }
     case KEY_S:
+      fprintf(stderr, "%s\n", "s was pressed");
       // TODO: This is place holder
       // plan is to have a button/UI to select different save
       // like savedata-02 -> savedata-08
@@ -174,6 +227,10 @@ void Game::handleUserInputOverworld() {
       break;
     case KEY_SPACE:
       fprintf(stderr, "%s\n", "space was pressed");
+      if (!dialogQueue.empty()) {
+        dialogQueue.pop();
+        break;
+      }
       int targetX = player->x;
       int targetY = player->y;
 
@@ -579,4 +636,14 @@ std::vector<Vector2> Game::findShortestPath(int startX, int startY, int targetX,
 
   // No path found
   return {};
+}
+
+int Game::rollD4() {
+  std::uniform_int_distribution<int> distribution(1, 4);
+  return distribution(gen);
+}
+
+int Game::rollD20() {
+  std::uniform_int_distribution<int> distribution(1, 20);
+  return distribution(gen);
 }
