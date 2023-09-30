@@ -126,6 +126,7 @@ void Game::renderCombat() {
 }
 
 void Game::renderDialog() {
+  bool isHover = (GetMousePosition().y / gridHeight) >= 12;
   if (!dialogQueue.empty()) {
     // Draw a dialogue box
     DrawRectangle(
@@ -135,6 +136,18 @@ void Game::renderDialog() {
         overworldUIHeight,
         DARKGRAY
         );
+    if (isHover) {
+      Color highlightColor = {255, 255, 255, 75}; // Adjust the alpha value as needed
+      DrawRectangle(
+          0,
+          screenHeight - overworldUIHeight,
+          screenWidth,
+          overworldUIHeight,
+          highlightColor
+          );
+    }
+    else {
+    }
     // Draw the current dialog text
     DrawText(
         dialogQueue.front().c_str(),
