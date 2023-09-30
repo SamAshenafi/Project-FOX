@@ -3,6 +3,7 @@
 #include <cstdio>
 #include <iostream>
 #include <fstream>
+#include <queue>
 #include <raylib.h>
 #include "nlohmann/json.hpp"
 
@@ -91,6 +92,8 @@ void Game::renderOverworld() {
         // DrawRectangleLines(x, y, gridSize, gridSize, DARKGRAY);
         DrawRectangleLines(x, y, gridWidth, gridHeight, BLACK);
       }
+
+
     }
   }
 
@@ -100,6 +103,20 @@ void Game::renderOverworld() {
   }
 
   // TODO: draw currentRoomId-fg.png here
+
+  Vector2 mousePosition = GetMousePosition();
+  int gridX = mousePosition.x / gridWidth;
+  int gridY = mousePosition.y / gridHeight;
+  for (int x = 0; x < screenWidth; x += gridWidth) {
+    for (int y = 0; y < (screenHeight - overworldUIHeight); y += gridHeight) {
+      // Check if mouse is over this grid tile
+      if (x / gridWidth == gridX && y / gridHeight == gridY) {
+        // DrawRectangle(x, y, gridWidth, gridHeight, ColorAlpha(WHITE, 30));
+        Color highlightColor = {255, 255, 255, 75}; // Adjust the alpha value as needed
+        DrawRectangle(x, y, gridWidth, gridHeight, highlightColor);
+      }
+    }
+  }
   EndDrawing();
 }
 
@@ -116,6 +133,35 @@ void Game::renderCombat() {
 void Game::handleUserInputOverworld() {
   double currentTime = GetTime();
   double deltaTimeSinceLastMove = currentTime - lastMoveTime;
+
+  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+    std::queue<Vector2>().swap(pathQueue); // empty the queue
+    Vector2 mousePosition = GetMousePosition();
+    int targetX = mousePosition.x / gridWidth;
+    int targetY = mousePosition.y / gridHeight;
+    fprintf(stderr, "mousePosition: %d, %d\n", targetX, targetY);
+
+    std::vector<Vector2> path = findShortestPath(player->x, player->y, targetX, targetY);
+    if (!path.empty()) {
+      for (const Vector2& position : path) {
+        // debug
+        std::cout << "X: " << position.x << ", Y: " << position.y << std::endl;
+        pathQueue.push(position);
+      }
+
+      // Debug: Print the contents of pathQueue
+      // std::cout << "Contents of pathQueue:" << std::endl;
+      // std::queue<Vector2> tempQueue = pathQueue; // Copy pathQueue for debugging
+      // while (!tempQueue.empty()) {
+      //   Vector2 pos = tempQueue.front();
+      //   tempQueue.pop();
+      //   std::cout << "X: " << pos.x << ", Y: " << pos.y << std::endl;
+      // }
+    }
+    else {
+      std::cout << "No path found!" << std::endl;
+    }
+  }
 
   int keyPressed = GetKeyPressed();
   switch (keyPressed) {
@@ -161,16 +207,22 @@ void Game::handleUserInputOverworld() {
       break;
   }
 
-
-  // player->updateAnimation();
-
   int newX = player->x;
   int newY = player->y;
-
   std::string direction = inputHelper();
-  // fprintf(stderr, "[D]: %s\n", direction.c_str());
 
   if (direction == "none") {
+    // Continue moving along the path until the queue is empty
+    while (!pathQueue.empty()) {
+      if (deltaTimeSinceLastMove < moveSpeed) {
+        break; // Too soon for another move
+      }
+      Vector2 nextPos = pathQueue.front();
+      pathQueue.pop();
+      player->move(nextPos.x, nextPos.y);
+      lastMoveTime = currentTime;
+      break;
+    }
     return;
   }
   else if (direction == "right") {
@@ -193,14 +245,16 @@ void Game::handleUserInputOverworld() {
     fprintf(stderr, "error direction\n");
   }
 
+  std::queue<Vector2>().swap(pathQueue); // empty the queue
 
   if (deltaTimeSinceLastMove < moveSpeed) {
-    // fprintf(stderr,"too soon\n");
     return; // Too soon for another move
   }
 
+  // NOTE: this might be uneccessary, add back if break
   // no movement
-  if (newX == player->x && newY == player->y) return;
+  // if (newX == player->x && newY == player->y) {
+  // }
 
   // Check if the new position is out of bounds
   bool isOutOfBound = newX < 0 ||
@@ -481,3 +535,48 @@ std::string Game::inputHelper() {
   return "error";
 }
 
+std::vector<Vector2> Game::findShortestPath(int startX, int startY, int targetX, int targetY) {
+  Vector2 start = {(float)startX, (float)startY};
+  Vector2 target = {(float)targetX, (float)targetY};
+  int dx[] = {1, -1, 0, 0};  // Possible movements in x-direction
+  int dy[] = {0, 0, 1, -1};  // Possible movements in y-direction
+  std::vector<std::vector<Vector2>> parent(20, std::vector<Vector2>(12, {-1, -1}));
+  std::queue<Vector2> q;
+  q.push(start);
+
+  while (!q.empty()) {
+    Vector2 curr = q.front();
+    q.pop();
+
+    if (curr.x == target.x && curr.y == target.y) {
+      // Reconstruct the path from target to start
+      std::vector<Vector2> path;
+      while (curr.x != start.x || curr.y != start.y) {
+        path.push_back(curr);
+        curr = parent[(int)curr.x][(int)curr.y];
+      }
+      path.push_back(start);
+      std::reverse(path.begin(), path.end());
+      return path;
+    }
+
+    for (int i = 0; i < 4; ++i) {
+      int newX = (int)curr.x + dx[i];
+      int newY = (int)curr.y + dy[i];
+      bool isValid =
+        newX >= 0 &&
+        newX < 20 &&
+        newY >= 0 &&
+        newY < 12 &&
+        grid[newX][newY] == 0;
+
+      if (isValid && parent[newX][newY].x == -1) {
+        q.push({(float)newX, (float)newY});
+        parent[newX][newY] = curr;
+      }
+    }
+  }
+
+  // No path found
+  return {};
+}

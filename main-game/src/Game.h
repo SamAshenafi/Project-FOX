@@ -6,10 +6,10 @@
 #include "Tile.h"
 #include "Helper.h"
 #include <memory>
+#include <queue>
 #include <string_view>
 #include <string>
 #include "enums.h"
-
 
 class Game {
   public:
@@ -46,6 +46,8 @@ class Game {
     // the json will be write to whenever player change equipments or skill
     // and at the end of combat when the player might earn something like EXP
 
+    // std::vector<Vector2> pathToTarget;
+    std::queue<Vector2> pathQueue;
 
     // set by loadRoom()
     //// set by roomId
@@ -54,7 +56,6 @@ class Game {
     Texture2D combatBg;
     // std::vector<Tile> interactableTiles; // Vector to store interactable tiles
     // std::vector<TransitionTile> transitionTiles;
-
 
     // savedata.json contains
     std::string currentRoomId = "05-06";
@@ -78,7 +79,6 @@ class Game {
     void handleUserInputStartMenu();
     void handleUserInputOverworld();
     void handleUserInputCombat();
-    void shortestPath(int startX, int startY, int targetX, int targetY);
 
     // NOTE: save to autosave.json whenever combat-> overworld or move to new room
     void loadSave(const std::string& filename);
@@ -98,6 +98,7 @@ class Game {
     void resetGrid(); // set all in grid to 0
     void sortGameObjects();
     std::string inputHelper();
+    std::vector<Vector2> findShortestPath(int startX, int startY, int targetX, int targetY);
 };
 
 
