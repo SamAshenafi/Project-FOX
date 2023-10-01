@@ -170,7 +170,6 @@ void Game::handleUserInputOverworld() {
   double deltaTimeSinceLastMove = currentTime - lastMoveTime;
 
   if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-    std::queue<Vector2>().swap(pathQueue); // empty the queue
     Vector2 mousePosition = GetMousePosition();
     int targetX = mousePosition.x / gridWidth;
     int targetY = mousePosition.y / gridHeight;
@@ -186,21 +185,16 @@ void Game::handleUserInputOverworld() {
       // NOTE: UI button interaction should go here
     }
 
-    std::vector<Vector2> path = findShortestPath(player->x, player->y, targetX, targetY);
+    std::queue<std::pair<int, int>>().swap(pathQueue); // empty the queue
+    std::vector<std::pair<int, int>> path = findShortestPath(player->x, player->y, targetX, targetY);
     if (!path.empty()) {
-      for (const Vector2& position : path) {
+      for (const std::pair<int, int>& position : path) {
         // debug
-        std::cout << "X: " << position.x << ", Y: " << position.y << std::endl;
+        std::cout << "x: " << position.first << ", y: " << position.second << std::endl;
         pathQueue.push(position);
       }
-      // Debug: Print the contents of pathQueue
-      // std::cout << "Contents of pathQueue:" << std::endl;
-      // std::queue<Vector2> tempQueue = pathQueue; // Copy pathQueue for debugging
-      // while (!tempQueue.empty()) {
-      //   Vector2 pos = tempQueue.front();
-      //   tempQueue.pop();
-      //   std::cout << "X: " << pos.x << ", Y: " << pos.y << std::endl;
-      // }
+      // reset move timer for smoother transition
+      deltaTimeSinceLastMove = 0;
     }
     else {
       std::cout << "No path found!" << std::endl;
@@ -287,9 +281,9 @@ void Game::handleUserInputOverworld() {
       if (deltaTimeSinceLastMove < moveSpeed) {
         break; // Too soon for another move
       }
-      Vector2 nextPos = pathQueue.front();
+      std::pair<int, int> nextPos = pathQueue.front();
       pathQueue.pop();
-      player->move(nextPos.x, nextPos.y);
+      player->move(nextPos.first, nextPos.second);
       lastMoveTime = currentTime;
       break;
     }
@@ -315,7 +309,7 @@ void Game::handleUserInputOverworld() {
     fprintf(stderr, "error direction\n");
   }
 
-  std::queue<Vector2>().swap(pathQueue); // empty the queue
+  std::queue<std::pair<int, int>>().swap(pathQueue); // empty the queue
 
   if (deltaTimeSinceLastMove < moveSpeed) {
     return; // Too soon for another move
@@ -605,25 +599,25 @@ std::string Game::inputHelper() {
   return "error";
 }
 
-std::vector<Vector2> Game::findShortestPath(int startX, int startY, int targetX, int targetY) {
-  Vector2 start = {(float)startX, (float)startY};
-  Vector2 target = {(float)targetX, (float)targetY};
+std::vector<std::pair<int, int>> Game::findShortestPath(int startX, int startY, int targetX, int targetY) {
+  std::pair<int, int> start = {(float)startX, (float)startY};
+  std::pair<int, int> target = {(float)targetX, (float)targetY};
   int dx[] = {1, -1, 0, 0};  // Possible movements in x-direction
   int dy[] = {0, 0, 1, -1};  // Possible movements in y-direction
-  std::vector<std::vector<Vector2>> parent(20, std::vector<Vector2>(12, {-1, -1}));
-  std::queue<Vector2> q;
+  std::vector<std::vector<std::pair<int, int>>> parent(20, std::vector<std::pair<int, int>>(12, {-1, -1}));
+  std::queue<std::pair<int, int>> q;
   q.push(start);
 
   while (!q.empty()) {
-    Vector2 curr = q.front();
+    std::pair<int, int> curr = q.front();
     q.pop();
 
-    if (curr.x == target.x && curr.y == target.y) {
+    if (curr.first == target.first && curr.second == target.second) {
       // Reconstruct the path from target to start
-      std::vector<Vector2> path;
-      while (curr.x != start.x || curr.y != start.y) {
+      std::vector<std::pair<int, int>> path;
+      while (curr.first != start.first || curr.second != start.second) {
         path.push_back(curr);
-        curr = parent[(int)curr.x][(int)curr.y];
+        curr = parent[(int)curr.first][(int)curr.second];
       }
       path.push_back(start);
       std::reverse(path.begin(), path.end());
@@ -631,8 +625,8 @@ std::vector<Vector2> Game::findShortestPath(int startX, int startY, int targetX,
     }
 
     for (int i = 0; i < 4; ++i) {
-      int newX = (int)curr.x + dx[i];
-      int newY = (int)curr.y + dy[i];
+      int newX = (int)curr.first + dx[i];
+      int newY = (int)curr.second + dy[i];
       bool isValid =
         newX >= 0 &&
         newX < 20 &&
@@ -640,7 +634,7 @@ std::vector<Vector2> Game::findShortestPath(int startX, int startY, int targetX,
         newY < 12 &&
         grid[newX][newY] == 0;
 
-      if (isValid && parent[newX][newY].x == -1) {
+      if (isValid && parent[newX][newY].first == -1) {
         q.push({(float)newX, (float)newY});
         parent[newX][newY] = curr;
       }

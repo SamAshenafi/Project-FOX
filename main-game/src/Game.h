@@ -51,7 +51,7 @@ class Game {
     // the json will be write to whenever player change equipments or skill
     // and at the end of combat when the player might earn something like EXP
 
-    std::queue<Vector2> pathQueue;
+    std::queue<std::pair<int, int>> pathQueue;
 
     // DialogQueue dialogueQueue;
     std::queue<std::string> dialogQueue;
@@ -106,7 +106,7 @@ class Game {
     void resetGrid(); // set all in grid to 0
     void sortGameObjects();
     std::string inputHelper();
-    std::vector<Vector2> findShortestPath(int startX, int startY, int targetX, int targetY);
+    std::vector<std::pair<int, int>> findShortestPath(int startX, int startY, int targetX, int targetY);
     //// RNG
     int rollD4();   // Method for rolling a 4-sided die (d4)
     int rollD20();  // Method for rolling a 20-sided die (d20)
