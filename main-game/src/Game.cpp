@@ -59,8 +59,6 @@ void Game::run() {
 // ░█▀▄░█▀▀░█░█░█░█░█▀▀░█▀▄
 // ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀
 // RENDER
-// NOTE + TODO: use scaling * ... for all your render so that it
-// look correct when resized
 
 void Game::renderStartMenu() {
   BeginDrawing();
@@ -69,8 +67,8 @@ void Game::renderStartMenu() {
   // placeholder, to be replaced
   DrawText(
       "Press Space to Continue or something idk",
-      scaling * screenWidth / 2 - 50,
-      scaling * screenHeight / 2, 20,
+      screenWidth / 2 - 50,
+      screenHeight / 2, 20,
       RAYWHITE
       );
   EndDrawing();
