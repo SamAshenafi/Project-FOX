@@ -5,20 +5,21 @@
 
 
 class Item{
-  public:
+
+    private:
+        std::string name;
+        int count;
+        long itemId;
+        int damage;
+        std::string sprite;
+
+    public:
 
 
-    Item(
-        std::string name,
-        int count,
-        long id,
-        int damage
-
-        );
-
-
-    std::string getItemName(Item item);
-    int getItemCount(Item item);
-    long getItemId(Item item);
-    int getItemDamage(Item item);
+        Item(std::string name, int count, long itemId, int damage, std::string sprite);
+        std::string getItemName() const;
+        int getItemCount() const;
+        long getItemId() const;
+        int getItemDamage() const;
+        std::string getSprite() const;
 };
