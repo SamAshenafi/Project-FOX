@@ -80,7 +80,19 @@ void Game::renderOverworld() {
   BeginDrawing();
   // ClearBackground(RAYWHITE);
   ClearBackground(DARKGRAY);
-  DrawTexture(overworldBg, 0, 0, WHITE);
+  // DrawTexture(overworldBg, 0, 0, WHITE);
+
+  Rectangle srcRect = { 0, 0, static_cast<float>(overworldBg.width), static_cast<float>(overworldBg.height) };
+  Rectangle destRect = { 0, 0, static_cast<float>(screenWidth), static_cast<float>((screenHeight - overworldUIHeight)) };
+  // DrawTexture(overworldBg, 0, 0, WHITE);
+  DrawTexturePro(
+      overworldBg,
+      srcRect,
+      destRect,
+      { 0, 0 },
+      0.0f,
+      WHITE
+      );
 
   // Draw the grid (debug only)
   for (int x = 0; x < screenWidth; x += gridWidth) {
@@ -591,41 +603,50 @@ std::string Game::inputHelper() {
   return "error";
 }
 
+
+/*
+TODO: This can be optimized further by keeping track of the target
+the player is walking to then decide if the current path is "good"
+if good -> calculate from old target to new target instead
+if bad -> same as before
+*/
 void Game::findShortestPath(int startX, int startY, int targetX, int targetY) {
-  std::pair<int, int> start = {(float)startX, (float)startY};
-  std::pair<int, int> target = {(float)targetX, (float)targetY};
+  std::pair<int, int> start = { startX, startY};
+  std::pair<int, int> target = { targetX, targetY};
   int dx[] = {1, -1, 0, 0};  // Possible movements in x-direction
   int dy[] = {0, 0, 1, -1};  // Possible movements in y-direction
   std::vector<std::vector<std::pair<int, int>>> parent(20, std::vector<std::pair<int, int>>(12, {-1, -1}));
   std::queue<std::pair<int, int>> q;
   q.push(start);
 
+  if (grid[targetX][targetY] != 0) {
+    std::cout << "Target cell is not reachable!" << std::endl;
+    return;
+  }
+
   while (!q.empty()) {
     std::pair<int, int> curr = q.front();
     q.pop();
 
-    bool isTargetReached = curr.first == target.first && curr.second == target.second;
-    if (isTargetReached) {
+    if (curr == target) {
       // Reconstruct the path from target to start
       std::vector<std::pair<int, int>> path;
       while (curr.first != start.first || curr.second != start.second) {
         path.push_back(curr);
-        curr = parent[(int)curr.first][(int)curr.second];
+        curr = parent[curr.first][curr.second];
       }
       path.push_back(start);
-      std::reverse(path.begin(), path.end());
 
       // update the pathQueue
-      for (const std::pair<int, int>& position : path) {
-        pathQueue.push(position);
+      for (int i = path.size() - 1; i >= 0; --i) {
+        pathQueue.push(path[i]);
       }
       return;
-      // return path;
     }
 
     for (int i = 0; i < 4; ++i) {
-      int newX = (int)curr.first + dx[i];
-      int newY = (int)curr.second + dy[i];
+      int newX = curr.first + dx[i];
+      int newY = curr.second + dy[i];
       bool isValid =
         newX >= 0 &&
         newX < 20 &&
@@ -634,14 +655,13 @@ void Game::findShortestPath(int startX, int startY, int targetX, int targetY) {
         grid[newX][newY] == 0;
 
       if (isValid && parent[newX][newY].first == -1) {
-        q.push({(float)newX, (float)newY});
+        q.push({newX, newY});
         parent[newX][newY] = curr;
       }
     }
   }
 
   std::cout << "No path found!" << std::endl;
-  return;
 }
 
 int Game::rollD4() {
