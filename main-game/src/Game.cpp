@@ -226,8 +226,8 @@ void Game::handleUserInputOverworld() {
         }
         break;
       }
-    case KEY_S:
-      fprintf(stderr, "%s\n", "s was pressed");
+    case KEY_P:
+      fprintf(stderr, "%s\n", "p was pressed");
       // TODO: This is place holder
       // plan is to have a button/UI to select different save
       // like savedata-02 -> savedata-08
@@ -558,16 +558,16 @@ void Game::sortGameObjects() {
 std::string Game::inputHelper() {
   std::string lastDirection = player->facing;
 
-  if (IsKeyPressed(KEY_RIGHT)) return "right";
-  if (IsKeyPressed(KEY_LEFT)) return "left";
-  if (IsKeyPressed(KEY_UP)) return "up";
-  if (IsKeyPressed(KEY_DOWN)) return "down";
+  if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) return "right";
+  if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) return "left";
+  if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) return "up";
+  if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) return "down";
 
   bool isNoMovementKeyHeld = !(
-      IsKeyDown(KEY_RIGHT) ||
-      IsKeyDown(KEY_LEFT) ||
-      IsKeyDown(KEY_DOWN) ||
-      IsKeyDown(KEY_UP)
+      IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D) ||
+      IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A) ||
+      IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S) ||
+      IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)
       );
 
   if (isNoMovementKeyHeld) {
@@ -575,25 +575,25 @@ std::string Game::inputHelper() {
   }
 
   bool isNoChange =
-    IsKeyDown(KEY_RIGHT) && lastDirection == "right" ||
-    IsKeyDown(KEY_LEFT) && lastDirection == "left" ||
-    IsKeyDown(KEY_DOWN) && lastDirection == "down" ||
-    IsKeyDown(KEY_UP) && lastDirection == "up";
+    (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) && lastDirection == "right" ||
+    (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) && lastDirection == "left" ||
+    (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && lastDirection == "down" ||
+    (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && lastDirection == "up";
 
   if (isNoChange) {
     return lastDirection;
   }
   else {
-    if (IsKeyDown(KEY_RIGHT)) {
+    if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
       return "right";
     }
-    else if (IsKeyDown(KEY_LEFT)) {
+    else if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
       return "left";
     }
-    else if (IsKeyDown(KEY_DOWN)) {
+    else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
       return "down";
     }
-    else if (IsKeyDown(KEY_UP)) {
+    else if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
       return "up";
     }
   }
