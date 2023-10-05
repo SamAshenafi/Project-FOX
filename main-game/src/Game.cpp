@@ -186,18 +186,10 @@ void Game::handleUserInputOverworld() {
     }
 
     std::queue<std::pair<int, int>>().swap(pathQueue); // empty the queue
-    std::vector<std::pair<int, int>> path = findShortestPath(player->x, player->y, targetX, targetY);
-    if (!path.empty()) {
-      for (const std::pair<int, int>& position : path) {
-        // debug
-        std::cout << "x: " << position.first << ", y: " << position.second << std::endl;
-        pathQueue.push(position);
-      }
-      // reset move timer for smoother transition
+    findShortestPath(player->x, player->y, targetX, targetY);
+    if (!pathQueue.empty()) {
+      // reset move timer for smoother transition?
       deltaTimeSinceLastMove = 0;
-    }
-    else {
-      std::cout << "No path found!" << std::endl;
     }
   }
 
@@ -599,7 +591,7 @@ std::string Game::inputHelper() {
   return "error";
 }
 
-std::vector<std::pair<int, int>> Game::findShortestPath(int startX, int startY, int targetX, int targetY) {
+void Game::findShortestPath(int startX, int startY, int targetX, int targetY) {
   std::pair<int, int> start = {(float)startX, (float)startY};
   std::pair<int, int> target = {(float)targetX, (float)targetY};
   int dx[] = {1, -1, 0, 0};  // Possible movements in x-direction
@@ -612,7 +604,8 @@ std::vector<std::pair<int, int>> Game::findShortestPath(int startX, int startY, 
     std::pair<int, int> curr = q.front();
     q.pop();
 
-    if (curr.first == target.first && curr.second == target.second) {
+    bool isTargetReached = curr.first == target.first && curr.second == target.second;
+    if (isTargetReached) {
       // Reconstruct the path from target to start
       std::vector<std::pair<int, int>> path;
       while (curr.first != start.first || curr.second != start.second) {
@@ -621,7 +614,13 @@ std::vector<std::pair<int, int>> Game::findShortestPath(int startX, int startY, 
       }
       path.push_back(start);
       std::reverse(path.begin(), path.end());
-      return path;
+
+      // update the pathQueue
+      for (const std::pair<int, int>& position : path) {
+        pathQueue.push(position);
+      }
+      return;
+      // return path;
     }
 
     for (int i = 0; i < 4; ++i) {
@@ -641,8 +640,8 @@ std::vector<std::pair<int, int>> Game::findShortestPath(int startX, int startY, 
     }
   }
 
-  // No path found
-  return {};
+  std::cout << "No path found!" << std::endl;
+  return;
 }
 
 int Game::rollD4() {

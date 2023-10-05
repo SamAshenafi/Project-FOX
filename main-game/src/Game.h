@@ -106,7 +106,7 @@ class Game {
     void resetGrid(); // set all in grid to 0
     void sortGameObjects();
     std::string inputHelper();
-    std::vector<std::pair<int, int>> findShortestPath(int startX, int startY, int targetX, int targetY);
+    void findShortestPath(int startX, int startY, int targetX, int targetY);
     //// RNG
     int rollD4();   // Method for rolling a 4-sided die (d4)
     int rollD20();  // Method for rolling a 20-sided die (d20)
