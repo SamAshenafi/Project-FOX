@@ -59,8 +59,6 @@ void Game::run() {
 // ░█▀▄░█▀▀░█░█░█░█░█▀▀░█▀▄
 // ░▀░▀░▀▀▀░▀░▀░▀▀░░▀▀▀░▀░▀
 // RENDER
-// NOTE + TODO: use scaling * ... for all your render so that it
-// look correct when resized
 
 void Game::renderStartMenu() {
   BeginDrawing();
@@ -69,8 +67,8 @@ void Game::renderStartMenu() {
   // placeholder, to be replaced
   DrawText(
       "Press Space to Continue or something idk",
-      scaling * screenWidth / 2 - 50,
-      scaling * screenHeight / 2, 20,
+      screenWidth / 2 - 50,
+      screenHeight / 2, 20,
       RAYWHITE
       );
   EndDrawing();
@@ -80,7 +78,19 @@ void Game::renderOverworld() {
   BeginDrawing();
   // ClearBackground(RAYWHITE);
   ClearBackground(DARKGRAY);
-  DrawTexture(overworldBg, 0, 0, WHITE);
+  // DrawTexture(overworldBg, 0, 0, WHITE);
+
+  Rectangle srcRect = { 0, 0, static_cast<float>(overworldBg.width), static_cast<float>(overworldBg.height) };
+  Rectangle destRect = { 0, 0, static_cast<float>(screenWidth), static_cast<float>((screenHeight - overworldUIHeight)) };
+  // DrawTexture(overworldBg, 0, 0, WHITE);
+  DrawTexturePro(
+      overworldBg,
+      srcRect,
+      destRect,
+      { 0, 0 },
+      0.0f,
+      WHITE
+      );
 
   // Draw the grid (debug only)
   for (int x = 0; x < screenWidth; x += gridWidth) {
@@ -216,8 +226,8 @@ void Game::handleUserInputOverworld() {
         }
         break;
       }
-    case KEY_S:
-      fprintf(stderr, "%s\n", "s was pressed");
+    case KEY_P:
+      fprintf(stderr, "%s\n", "p was pressed");
       // TODO: This is place holder
       // plan is to have a button/UI to select different save
       // like savedata-02 -> savedata-08
@@ -548,16 +558,16 @@ void Game::sortGameObjects() {
 std::string Game::inputHelper() {
   std::string lastDirection = player->facing;
 
-  if (IsKeyPressed(KEY_RIGHT)) return "right";
-  if (IsKeyPressed(KEY_LEFT)) return "left";
-  if (IsKeyPressed(KEY_UP)) return "up";
-  if (IsKeyPressed(KEY_DOWN)) return "down";
+  if (IsKeyPressed(KEY_RIGHT) || IsKeyPressed(KEY_D)) return "right";
+  if (IsKeyPressed(KEY_LEFT) || IsKeyPressed(KEY_A)) return "left";
+  if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_W)) return "up";
+  if (IsKeyPressed(KEY_DOWN) || IsKeyPressed(KEY_S)) return "down";
 
   bool isNoMovementKeyHeld = !(
-      IsKeyDown(KEY_RIGHT) ||
-      IsKeyDown(KEY_LEFT) ||
-      IsKeyDown(KEY_DOWN) ||
-      IsKeyDown(KEY_UP)
+      IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D) ||
+      IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A) ||
+      IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S) ||
+      IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)
       );
 
   if (isNoMovementKeyHeld) {
@@ -565,25 +575,25 @@ std::string Game::inputHelper() {
   }
 
   bool isNoChange =
-    IsKeyDown(KEY_RIGHT) && lastDirection == "right" ||
-    IsKeyDown(KEY_LEFT) && lastDirection == "left" ||
-    IsKeyDown(KEY_DOWN) && lastDirection == "down" ||
-    IsKeyDown(KEY_UP) && lastDirection == "up";
+    (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) && lastDirection == "right" ||
+    (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) && lastDirection == "left" ||
+    (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) && lastDirection == "down" ||
+    (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) && lastDirection == "up";
 
   if (isNoChange) {
     return lastDirection;
   }
   else {
-    if (IsKeyDown(KEY_RIGHT)) {
+    if (IsKeyDown(KEY_RIGHT) || IsKeyDown(KEY_D)) {
       return "right";
     }
-    else if (IsKeyDown(KEY_LEFT)) {
+    else if (IsKeyDown(KEY_LEFT) || IsKeyDown(KEY_A)) {
       return "left";
     }
-    else if (IsKeyDown(KEY_DOWN)) {
+    else if (IsKeyDown(KEY_DOWN) || IsKeyDown(KEY_S)) {
       return "down";
     }
-    else if (IsKeyDown(KEY_UP)) {
+    else if (IsKeyDown(KEY_UP) || IsKeyDown(KEY_W)) {
       return "up";
     }
   }
@@ -591,41 +601,50 @@ std::string Game::inputHelper() {
   return "error";
 }
 
+
+/*
+TODO: This can be optimized further by keeping track of the target
+the player is walking to then decide if the current path is "good"
+if good -> calculate from old target to new target instead
+if bad -> same as before
+*/
 void Game::findShortestPath(int startX, int startY, int targetX, int targetY) {
-  std::pair<int, int> start = {(float)startX, (float)startY};
-  std::pair<int, int> target = {(float)targetX, (float)targetY};
+  std::pair<int, int> start = { startX, startY};
+  std::pair<int, int> target = { targetX, targetY};
   int dx[] = {1, -1, 0, 0};  // Possible movements in x-direction
   int dy[] = {0, 0, 1, -1};  // Possible movements in y-direction
   std::vector<std::vector<std::pair<int, int>>> parent(20, std::vector<std::pair<int, int>>(12, {-1, -1}));
   std::queue<std::pair<int, int>> q;
   q.push(start);
 
+  if (grid[targetX][targetY] != 0) {
+    std::cout << "Target cell is not reachable!" << std::endl;
+    return;
+  }
+
   while (!q.empty()) {
     std::pair<int, int> curr = q.front();
     q.pop();
 
-    bool isTargetReached = curr.first == target.first && curr.second == target.second;
-    if (isTargetReached) {
+    if (curr == target) {
       // Reconstruct the path from target to start
       std::vector<std::pair<int, int>> path;
       while (curr.first != start.first || curr.second != start.second) {
         path.push_back(curr);
-        curr = parent[(int)curr.first][(int)curr.second];
+        curr = parent[curr.first][curr.second];
       }
       path.push_back(start);
-      std::reverse(path.begin(), path.end());
 
       // update the pathQueue
-      for (const std::pair<int, int>& position : path) {
-        pathQueue.push(position);
+      for (int i = path.size() - 1; i >= 0; --i) {
+        pathQueue.push(path[i]);
       }
       return;
-      // return path;
     }
 
     for (int i = 0; i < 4; ++i) {
-      int newX = (int)curr.first + dx[i];
-      int newY = (int)curr.second + dy[i];
+      int newX = curr.first + dx[i];
+      int newY = curr.second + dy[i];
       bool isValid =
         newX >= 0 &&
         newX < 20 &&
@@ -634,14 +653,13 @@ void Game::findShortestPath(int startX, int startY, int targetX, int targetY) {
         grid[newX][newY] == 0;
 
       if (isValid && parent[newX][newY].first == -1) {
-        q.push({(float)newX, (float)newY});
+        q.push({newX, newY});
         parent[newX][newY] = curr;
       }
     }
   }
 
   std::cout << "No path found!" << std::endl;
-  return;
 }
 
 int Game::rollD4() {

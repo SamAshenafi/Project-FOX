@@ -24,13 +24,12 @@ class Game {
     std::mt19937 gen;
 
     // resolution
-    const int screenWidth = 1920;
-    const int screenHeight = 1080;
-    const int gridWidth = 96;
-    const int gridHeight = 80;
-    const int overworldUIHeight = 120;
-    // TODO: add some way to change the scaling to and from 0.75
-    float scaling = 1.0f;
+    const int screenWidth = 1920 / 2;
+    const int screenHeight = 1080 / 2;
+    const int gridWidth = 96 / 2;
+    const int gridHeight = 80 / 2;
+    const int overworldUIHeight = 120 / 2;
+    // TODO: add some way to change the resolution variables back and forth
 
     int grid[20][12];
     GameState gameState = GameState::start_menu;
