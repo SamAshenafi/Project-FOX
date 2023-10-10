@@ -161,7 +161,7 @@ while (!WindowShouldClose()) {
 
 Now if you are working on Combat or World. You only need to change the 3 core game loop function in `Combat.cpp` or `World.cpp`. You can also organize it into their own folder.
 
-<img src="./file.png">
+<img src="./file.PNG">
 
 In case you're wondering about how the `changeState` function might be used.
 Here's an example where the game would change to `World` if `space` is pressed when
