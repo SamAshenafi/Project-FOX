@@ -1,6 +1,5 @@
 #include "raylib.h"
 #include <ctime>
-#include "Tile.h"
 #include "Game.h"
 
 int main() {

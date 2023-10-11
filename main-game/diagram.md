@@ -2,47 +2,117 @@
 # NOTES
 - Save when go to new screen, exit combat, 
 # Game
+
+```plantuml
+!include https://raw.githubusercontent.com/ganhaque/plantuml-theme/main/theme.yuml
+class Game {
+currentState: GameState*
+...
+
++ run(): void
++ processInput(): void;
++ update(): void;
++ render(): void;
+
++ changeState(newState): void;
+}
+
+class GameState {
++ processInput(): void;
++ update(): void;
++ render(): void;
+}
+
+class Exploration {
++ processInput(): void;
++ update(): void;
++ render(): void;
+}
+class Combat {
++ processInput(): void;
++ update(): void;
++ render(): void;
+}
+class MainMenu {
++ processInput(): void;
++ update(): void;
++ render(): void;
+}
+```
+
+---
+
+
+```plantuml
+!define Component Component
+!define Interface Interface
+
+package "Game" {
+    [Game] as GameComponent <<Component>>
+
+    [Play Audio] as AudioComponent <<Component>>
+    [Handle User Input] as InputComponent <<Component>>
+    [Render] as RenderingComponent <<Component>>
+
+    GameComponent --> AudioComponent : Uses
+    GameComponent --> InputComponent : Uses
+    GameComponent --> RenderingComponent : Uses
+}
+
+```
+
+```plantuml
+digraph foo {
+  node [style=rounded]
+  node1 [shape=box]
+  node2 [fillcolor=yellow, style="rounded,filled", shape=diamond]
+  node3 [shape=record, label="{ a | b | c }"]
+
+  node1 -> node2 -> node3
+}
+```
+
 ```plantuml
 !include https://raw.githubusercontent.com/ganhaque/plantuml-theme/main/theme.yuml
 Game -right-> GameState
 
 enum GameState {
-  start_menu,
-  loading_overworld,
-  overworld,
-  loading_combat,
-  combat,
+start_menu,
+loading_overworld,
+overworld,
+loading_combat,
+combat,
 }
 
 
 class Game {
-  // basics
-  nativeScreenWidth: int = 1920
-  nativeScreenHeight: int = 1080
-  nativeGridWidth: int = 96
-  nativeGridHeight: int = 80
+screenWidth: int = 1920;
+screenHeight: int = 1080;
+gridWidth: int = 96;
+gridHeight: int = 80;
+overworldUIHeight: int = 120;
 
-  gameState: 
+gameState: 
 
-  saveArray: bool[] = [false,false,...]
+saveArray: bool[] = [false,false,...]
 
-  // saveData (will be saved & load from save.json)
-  gold: int = 0
-  currentRoomId: string = "05-05"
-  playTime: int = 0 // in seconds
+// saveData (will be saved & load from save.json)
+gold: int = 0
+currentRoomId: string = "05-05"
+playTime: int = 0 // in seconds
 
 
 
-  + run(): void
-  + renderLoadingScreen(): void
-  + renderOverworld(): void
-    - renderGrid(): void
-  + renderCombat(): void
-  + renderSaveMenu(): void
-  + render...Menu(): void
-  
-  + loadSave(string fileName): void
-  + saveSave(string fileName): void
++ run(): void
++ renderLoadingScreen(): void
++ renderOverworld(): void
+- renderGrid(): void
++ renderCombat(): void
++ renderSaveMenu(): void
++ render...Menu(): void
+
++ loadSave(string fileName): void
++ saveSave(string fileName): void
 }
 
 Room --* Game
@@ -55,49 +125,49 @@ Player --* Game
 
 Player -right-> Direction
 enum Direction {
-    left,
-    down,
-    up,
-    right
+left,
+down,
+up,
+right
 }
 
 class Player {
-  // basics
-  playerId: string
+// basics
+playerId: string
 
-  // overworld
-  x: int
-  y: int
-  isAnimationLockOut: bool = false
-  facing: Direction::down
-  animationState: string
+// overworld
+x: int
+y: int
+isAnimationLockOut: bool = false
+facing: Direction::down
+animationState: string
 
-  // combat
-  statuses: Vector<Status>
-  buff: Vector<Buff>
+// combat
+statuses: Vector<Status>
+buff: Vector<Buff>
 
-  // shared
-  maxHp: int
-  currentHp: int
-  physicalDamage: int
-  magicalDamage: int
-  physicalDefense: int
-  magicalDefense: int
-  accuracy: float
-  dodge: float
-  omnivamp: int
-  ---- equipments
-  weaponId: string
-  hatId: string
-  armorId: string
-  charmIds: string[]
-  
-  + Character(string playerId, int startX, int startY)
-  + move(newX: int, newY: int): void
-  + onTurnStart(): void
-  + onTurnEnd(): void
-  + handleAttackFromFoe(attack: Attack): void
-  
+// shared
+maxHp: int
+currentHp: int
+physicalDamage: int
+magicalDamage: int
+physicalDefense: int
+magicalDefense: int
+accuracy: float
+dodge: float
+omnivamp: int
+---- equipments
+weaponId: string
+hatId: string
+armorId: string
+charmIds: string[]
+
++ Character(string playerId, int startX, int startY)
++ move(newX: int, newY: int): void
++ onTurnStart(): void
++ onTurnEnd(): void
++ handleAttackFromFoe(attack: Attack): void
+
 }
 
 ```
@@ -105,10 +175,10 @@ class Player {
 ```plantuml
 !include https://raw.githubusercontent.com/ganhaque/plantuml-theme/main/theme.yuml
 class Room {
-  roomId: string
-  overworldBg: Texture2D
-  overworldFg: Texture2D
-  combatBg: Texture2D
+roomId: string
+overworldBg: Texture2D
+overworldFg: Texture2D
+combatBg: Texture2D
 }
 
 ```
@@ -140,7 +210,7 @@ end
 !include https://raw.githubusercontent.com/ganhaque/plantuml-theme/main/theme.yuml
 
 class StringParser {
-  + static std::tuple<int, std::string> ParseString(const std::string& input);
++ static std::tuple<int, std::string> ParseString(const std::string& input);
 }
 
 ```
@@ -150,11 +220,11 @@ class StringParser {
 ```plantuml
 @startjson
 {
-   "currentRoomId":"05-05",
-   "completed": ["tutorial", "boss_1", "chest_1"],
-   "inventory": ["1-hp_pot", "1-rock"],
-   "playerX": 6,
-   "playerY": 6
+"currentRoomId":"05-05",
+"completed": ["tutorial", "boss_1", "chest_1"],
+"inventory": ["1-hp_pot", "1-rock"],
+"playerX": 6,
+"playerY": 6
 }
 @endjson
 ```
@@ -162,19 +232,19 @@ class StringParser {
 ```plantuml
 @startjson
 {
-  "roomId":"05-05",
-  "specialTiles": [
-    {
-      "id": "chest-1",
-      "x": "3",
-      "y": "3"
-    },
-    {
-      "id": "npc-1",
-      "x": "4",
-      "y": "3"
-    }
-  ]
+"roomId":"05-05",
+"specialTiles": [
+{
+"id": "chest-1",
+"x": "3",
+"y": "3"
+},
+{
+"id": "npc-1",
+"x": "4",
+"y": "3"
+}
+]
 }
 @endjson
 ```
@@ -242,7 +312,7 @@ start
 : currentRoomId = room["roomId].asString();
 
 repeat
-  :k++;
+:k++;
 repeat while (true)
 
 end

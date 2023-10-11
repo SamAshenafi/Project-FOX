@@ -1,6 +1,6 @@
 // Tile.cpp
 #include "Tile.h"
-#include "Helper.h"
+#include "../Helper.h"
 
 Tile::Tile(
     const std::string& tileId,
