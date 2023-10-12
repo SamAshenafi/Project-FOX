@@ -8,7 +8,7 @@ World::World(
     ) {
   resetGrid();
 
-  // TODO: error
+  // TODO: error occurs when rendering tile entities (line 90-ish)
   // loadRoom(roomId);
 
   std::string roomFilePath = "./assets/room/" + roomId + "-bg.png";
@@ -63,6 +63,7 @@ void World::render(Game& game) {
   // Draw the grid (debug only)
   for (int x = 0; x < columns; x++) {
     for (int y = 0; y < rows; y++) {
+      /*
       if (grid[x][y] == 1) {
         DrawRectangle(
             x * game.settings.gridWidth,
@@ -72,7 +73,7 @@ void World::render(Game& game) {
             DARKGRAY
             );
       }
-      else {
+      else { */
         // DrawRectangleLines(x, y, gridSize, gridSize, DARKGRAY);
         DrawRectangleLines(
             x * game.settings.gridWidth,
@@ -81,7 +82,7 @@ void World::render(Game& game) {
             game.settings.gridHeight,
             BLACK
             );
-      }
+      //}
     }
   }
 
@@ -130,9 +131,16 @@ void World::loadRoom(const std::string& roomId) {
       std::string roomFilePath = "./assets/room/" + roomId;
       background = LoadTexture((roomFilePath + "-bg.png").c_str());
 
-      // TODO: this part is also WIP, more work need to be done here
-      // TODO: when parsing room Tile,
-      // if Tile.isBlockMovement == true then set grid[tileX][tileY] = 1
+      // Parse Tiles
+      for (const auto& tileList : root["tiles"]) {
+        std::string tileID = tileList["id"];
+        int tileX = tileList["x"];
+        int tileY = tileList["y"];
+        bool blocked = tileList["blocked"];
+        Tile tile = Tile(tileID, tileX, tileY, blocked);
+        if (tile.isBlockMovement) grid[tileX][tileY] = 1;
+        entities.push_back(&tile);
+      }
 
       // Parse transition tiles
       for (const auto& transitionData : root["transitionTiles"]) {
