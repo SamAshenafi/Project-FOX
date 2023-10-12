@@ -16,7 +16,6 @@ Tile::Tile(
   // sprite = Helper::loadTexture("path_to_your_tile_texture.png");
 }
 
-// A copy from Player.cpp, but somehow causes a crash when called at line 90ish of World.cpp
 void Tile::render(int gridWidth, int gridHeight) {
   // PLACEHOLDER:
   DrawRectangle(

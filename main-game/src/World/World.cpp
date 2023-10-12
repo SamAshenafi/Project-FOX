@@ -8,8 +8,7 @@ World::World(
     ) {
   resetGrid();
 
-  // TODO: error occurs when rendering tile entities (line 90-ish)
-  // loadRoom(roomId);
+  loadRoom(roomId);
 
   std::string roomFilePath = "./assets/room/" + roomId + "-bg.png";
   if (std::ifstream(roomFilePath)) {
@@ -137,9 +136,9 @@ void World::loadRoom(const std::string& roomId) {
         int tileX = tileList["x"];
         int tileY = tileList["y"];
         bool blocked = tileList["blocked"];
-        Tile tile = Tile(tileID, tileX, tileY, blocked);
-        if (tile.isBlockMovement) grid[tileX][tileY] = 1;
-        entities.push_back(&tile);
+        Tile* tile = new Tile(tileID, tileX, tileY, blocked);
+        if (blocked) grid[tileX][tileY] = 1;
+        entities.push_back(tile);
       }
 
       // Parse transition tiles
