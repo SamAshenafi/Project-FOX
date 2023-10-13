@@ -205,7 +205,19 @@ void Game::loadTile(const std::string& tileId) {
     if (jsonFile.is_open()) {
       try {
         jsonFile >> root;
-        // TODO: parse chest json data here
+        
+        // Part of placeholder below
+        fprintf(stderr, "Chest contains:\n");
+
+        // Parse Chest
+        for (const auto& itemData : root["items"]) {
+            std::string itemID = itemData["id"].get<std::string>();
+            int quantity = itemData["quantity"].get<int>();
+            // TODO: Menu and implementation for taking things in and out of chests
+            // Placeholder
+            fprintf(stderr, "%i %s\n", quantity, itemID.c_str());
+            }
+
       }
       catch (const std::exception& e) {
         fprintf(stderr, "JSON parsing failed: %s\n", e.what());
@@ -222,7 +234,56 @@ void Game::loadTile(const std::string& tileId) {
     if (jsonFile.is_open()) {
       try {
         jsonFile >> root;
-        // TODO: parse combat json data here
+
+        // Part of placeholder below
+        fprintf(stderr, "------Battle------\n");
+
+        fprintf(stderr, "--Conditions\n");
+        // Parse conditions
+        for (const auto& conditionData : root["conditions"]) {
+            std::string condition = conditionData.get<std::string>();
+            // Placeholder
+            fprintf(stderr, "%s\n", condition.c_str());
+        }
+
+        // Parse enemies
+        fprintf(stderr, "--Enemies\n");
+        for (const auto& enemyData : root["enemies"]) {
+            std::string enemy = enemyData["id"].get<std::string>();
+            int ATK = enemyData["ATK"].get<int>();
+            int DEF = enemyData["DEF"].get<int>();
+            int SPD = enemyData["SPD"].get<int>();
+            // Placeholder
+            fprintf(stderr, "%s:\n   ATK: %i\n   DEF: %i\n   SPD: %i\n",
+                enemy.c_str(),
+                ATK, DEF, SPD);
+        }
+
+      }
+      catch (const std::exception& e) {
+        fprintf(stderr, "JSON parsing failed: %s\n", e.what());
+      }
+    }
+  }
+  else if (tileType == "npc") {
+    // TODO: Call dialogue
+    const std::string npcFilePath = "./json/npc/";
+    const std::string jsonFileType = ".json";
+    const std::string fullFilePath = npcFilePath + tileId + jsonFileType;
+    nlohmann::json root;
+    std::ifstream jsonFile(fullFilePath);
+    if (jsonFile.is_open()) {
+      try {
+        jsonFile >> root;
+
+        // Part of placeholder below
+        fprintf(stderr, "------NPC------\n");
+
+        // Parse NPC data
+        std::string name = root["name"].get<std::string>();
+        std::string text = root["text"].get<std::string>();
+        fprintf(stderr, "%s: %s\n", name.c_str(), text.c_str());
+
       }
       catch (const std::exception& e) {
         fprintf(stderr, "JSON parsing failed: %s\n", e.what());

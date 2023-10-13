@@ -131,12 +131,12 @@ void World::loadRoom(const std::string& roomId) {
       background = LoadTexture((roomFilePath + "-bg.png").c_str());
 
       // Parse Tiles
-      for (const auto& tileList : root["tiles"]) {
-        std::string tileID = tileList["id"];
-        int tileX = tileList["x"];
-        int tileY = tileList["y"];
-        bool blocked = tileList["blocked"];
-        Tile* tile = new Tile(tileID, tileX, tileY, blocked);
+      for (const auto& tileData : root["tiles"]) {
+        std::string tileID = tileData["id"].get<std::string>();
+        int tileX = tileData["x"].get<int>();
+        int tileY = tileData["y"].get<int>();
+        bool blocked = tileData["blocked"].get<bool>();
+        Tile* tile = new Tile(tileID.c_str(), tileX, tileY, blocked);
         if (blocked) grid[tileX][tileY] = 1;
         entities.push_back(tile);
       }
