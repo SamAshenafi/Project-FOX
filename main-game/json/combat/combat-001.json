@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "enemySize": 2,
     "enemies": [
         {
@@ -19,4 +20,27 @@
         "isPLayer": false
         }
     ]
+=======
+    "enemies": [
+        {
+          "id": "goblin",
+          "ATK": 2,
+          "DEF": 3,
+          "SPD": 5
+        },
+        {
+          "id": "soldier",
+          "ATK": 4,
+          "DEF": 8,
+          "SPD": 2
+        },
+        {
+          "id": "wolf",
+          "ATK": 3,
+          "DEF": 1,
+          "SPD": 7
+        }
+      ],
+      "conditions": ["rain", "night"]
+>>>>>>> ca4a2d8278ac5c8c41104669300cff9cec22798c
 }

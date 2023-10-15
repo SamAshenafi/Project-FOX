@@ -3,11 +3,16 @@
 
 #include <raylib.h>
 #include <string>
-class GameObject {
+
+class Entity {
   public:
     std::string id;
     int x;
     int y;
+
+    // TODO: use this to render
+    float offsetX = 0;
+    float offsetY = 0;
     Texture2D sprite;
 
     // TODO: maybe add parameter such as scaling because

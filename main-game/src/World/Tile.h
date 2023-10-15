@@ -3,9 +3,9 @@
 
 #include <string>
 #include "raylib.h"
-#include "GameObject.h"
+#include "Entity.h"
 
-class Tile : public GameObject {
+class Tile : public Entity {
   public:
     // NOTE: id, x, and y are inherited from GameObject already
     bool isBlockMovement;

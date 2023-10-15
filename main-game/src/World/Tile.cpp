@@ -1,6 +1,6 @@
 // Tile.cpp
 #include "Tile.h"
-#include "Helper.h"
+#include "../Helper.h"
 
 Tile::Tile(
     const std::string& tileId,
@@ -17,6 +17,12 @@ Tile::Tile(
 }
 
 void Tile::render(int gridWidth, int gridHeight) {
-  // TODO: 
+  // PLACEHOLDER:
+  DrawRectangle(
+      x * gridWidth,
+      y * gridHeight,
+      gridWidth,
+      gridHeight,
+      BLUE);
   return;
 }

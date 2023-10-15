@@ -1,0 +1,16 @@
+{
+    "items": [
+        {
+          "id": "bronze_sword",
+          "quantity": 1
+        },
+        {
+          "id": "medicine",
+          "quantity": 1
+        },
+        {
+          "id": "gold",
+          "quantity": 10
+        }
+      ]
+}

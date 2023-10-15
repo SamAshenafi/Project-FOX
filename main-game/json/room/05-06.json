@@ -3,18 +3,21 @@
   "tiles": [
     {
       "id": "chest-001",
-      "x": "3",
-      "y": "3"
+      "x": 3,
+      "y": 3,
+      "blocked": true
     },
     {
       "id": "npc-001",
-      "x": "4",
-      "y": "3"
+      "x": 4,
+      "y": 3,
+      "blocked": true
     },
     {
       "id": "combat-001",
-      "x": "4",
-      "y": "3"
+      "x": 8,
+      "y": 5,
+      "blocked": false
     }
   ],
   "transitionTiles": [
