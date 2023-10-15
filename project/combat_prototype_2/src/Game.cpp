@@ -1,7 +1,8 @@
 // Game.cpp
 #include "Game.h"
 #include "input.h"
-#include "combat.h"
+#include "Combat.h"
+#include "vector"
 #include <cstdio>
 #include <iostream>
 #include <fstream>
@@ -267,7 +268,7 @@ void Game::run() {
       DrawText("Press Space to Continue or something idk", screenWidth / 2 - 50, screenHeight / 2, 20, RAYWHITE);
       EndDrawing();
       if (IsKeyPressed(KEY_SPACE)) {
-        gameState = IN_GAME;
+        gameState = IN_COMBAT;
       }
     }
     else if (gameState == IN_GAME) {
@@ -315,16 +316,20 @@ void Game::run() {
       // enemy will be determined different either through something randomly chosen from a pool
       // or through some other means
       // both vales have been chosen already for this prototype
-      std::string[] playerParty = {"player-1"};
-      std::string[] enemyParty = {"enemy-1", "enemy-2"};
+
+      std::vector<std::string> playerParty = {"player-1"};
+      std::vector<std::string> enemyParty = {"enemy-1", "enemy-2"};
       
-      Combat(playerParty,enemyParty);
-      while (!combat_resolved()) {
+      Combat encounter;
+      
+      encounter.initialize_combat(playerParty, enemyParty);
+
+      while (!encounter.combat_resolved()) {
           // add functions to draw the combat portion of the game
           // TODO - see if theres a better way to implement drawing
-        initiate_round()          
+          std::cout << "it gets to here";
+          encounter.initiate_round();          
       }
-     
 
     }
   }

@@ -1,0 +1,22 @@
+{
+    "enemySize": 2,
+    "enemies": [
+        {
+        "id": "redJelly",
+        "currentHp": 10,
+        "maxHp": 10,
+        "atdDmg": 2,
+        "armor": 4,
+        "isPLayer": false
+        },
+
+        {
+        "id": "blueJelly",
+        "currentHp": 10,
+        "maxHp": 10,
+        "atdDmg": 2,
+        "armor": 4,
+        "isPLayer": false
+        }
+    ]
+}

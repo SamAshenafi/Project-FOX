@@ -1,5 +1,6 @@
 // Game.cpp
 #include "Game.h"
+#include "Combat.h"
 #include <cstdio>
 #include <iostream>
 #include <fstream>
@@ -40,6 +41,7 @@ void Game::run() {
       case loading_combat:
         // TODO: load combat encounter/enemy info
         // TODO: do transition animation
+        gameState = combat;
         break;
       case combat:
         handleUserInputCombat();
@@ -354,7 +356,16 @@ void Game::handleUserInputOverworld() {
 }
 
 void Game::handleUserInputCombat() {
-  // TODO:
+  // UserInputCombat should follow these controls
+  /*
+      Down - changes selection down 1
+      Up - changes selection up 1
+      Right and/or Space - selects whatever is being hovered over
+
+      Mousing over selection boxes - sets the selection to whats being hovered over
+      clicking whats being selected - selects whatever is being hovered over
+  */
+
   return;
 };
 
@@ -405,6 +416,24 @@ void Game::loadSave(const std::string& filename) {
 
       // TODO: Add inventory parsing logic here
       // TODO: Add more deserialization logic for other members here
+
+      // parses data for party size, party data is handled in a seperate file 
+      //(might be changed for it to be handled for only the save file?)
+      //stats for each party member are altered seperately
+      //json for party member stats are changed only when the game is saved
+      party = {};
+      for (const auto& partyData : root["party"])
+       {
+          Char_Stat add;
+          add.id = enemyData["id"];
+          add.currentHp = enemyData["currentHp"];
+          add.maxHp = enemyData["maxHp"];
+          add.atkDmg = enemyData["atkDmg"];
+          add.armor = enemyData["armor"];
+          party.insert(add);
+
+          // TODO: add abilities 
+       }
 
       inputFile.close();
     }
@@ -460,6 +489,8 @@ void Game::saveSave(const std::string& filename) {
   // - Player x, y, and other data members also need to be saved
   // - Room does not need to be saved since we load it when we load the save
 
+  //TODO: add portion that saves the stats for each party member
+
   // Serialize member data to JSON
   root["currentRoomId"] = currentRoomId;
   root["completed"] = nlohmann::json::array();
@@ -501,6 +532,10 @@ void Game::loadTile(const std::string& tileId) {
   }
   else if (tileType == "combat") {
     // TODO: load combat encounter, blah blah blah
+    // first grabs enemy data from the tileType
+    // then grabs player data from file
+    // initiates combat right after
+
     const std::string combatFilePath = "./json/combat/";
     const std::string jsonFileType = ".json";
     const std::string fullFilePath = combatFilePath + tileId + jsonFileType;
@@ -510,11 +545,38 @@ void Game::loadTile(const std::string& tileId) {
       try {
         jsonFile >> root;
         // TODO: parse combat json data here
+        /*
+          Combat data includes (and this will be updated as combat is developed)
+
+          id - used for displaying the enemy name as well as grabbing its texture path
+          currentHp - the current amount of health points a character has 
+          maxHp - the maximum amount of health points a character has 
+          atkDmg - the strength of a characters attack
+          armor - what damage is reduced depending on a attack
+
+          player party should already have been set before hand
+          maybe have it kept in the save file?
+        */
+       encounter = party;
+       for (const auto& enemyData : root["enemies"])
+       {
+          Char_Stat add;
+          add.id = enemyData["id"];
+          add.currentHp = enemyData["currentHp"];
+          add.maxHp = enemyData["maxHp"];
+          add.atkDmg = enemyData["atkDmg"];
+          add.armor = enemyData["armor"];
+          encounter.insert(add);
+
+          // TODO: add abilities 
+
+       }
       }
       catch (const std::exception& e) {
         fprintf(stderr, "JSON parsing failed: %s\n", e.what());
       }
     }
+    gameState = loading_combat;
   }
   // TODO: add more parsing for other tile type here
   else if (true) {

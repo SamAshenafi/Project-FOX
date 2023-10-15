@@ -4,6 +4,7 @@
 #include "vector"
 #include "Player.h"
 #include "Tile.h"
+#include "Combat.h"
 #include "Helper.h"
 #include <memory>
 #include <queue>
@@ -49,6 +50,10 @@ class Game {
     // in ./save/player/
     // the json will be write to whenever player change equipments or skill
     // and at the end of combat when the player might earn something like EXP
+
+    // the vector used to store the stats for a combat encounter
+    std::vector<Char_Stat> encounter;
+    std::vector<Char_Stat> party;
 
     std::queue<std::pair<int, int>> pathQueue;
 
