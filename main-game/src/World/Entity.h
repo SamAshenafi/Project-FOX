@@ -11,8 +11,8 @@ class Entity {
     int y;
 
     // TODO: use this to render
-    int offsetX = 0;
-    int offsetY = 0;
+    float offsetX = 0;
+    float offsetY = 0;
     Texture2D sprite;
 
     // TODO: maybe add parameter such as scaling because
