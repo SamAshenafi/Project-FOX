@@ -1,26 +1,4 @@
 {
-<<<<<<< HEAD
-    "enemySize": 2,
-    "enemies": [
-        {
-        "id": "redJelly",
-        "currentHp": 10,
-        "maxHp": 10,
-        "atdDmg": 2,
-        "armor": 4,
-        "isPLayer": false
-        },
-
-        {
-        "id": "blueJelly",
-        "currentHp": 10,
-        "maxHp": 10,
-        "atdDmg": 2,
-        "armor": 4,
-        "isPLayer": false
-        }
-    ]
-=======
     "enemies": [
         {
           "id": "goblin",
@@ -42,5 +20,4 @@
         }
       ],
       "conditions": ["rain", "night"]
->>>>>>> ca4a2d8278ac5c8c41104669300cff9cec22798c
 }

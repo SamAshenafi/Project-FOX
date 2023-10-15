@@ -3,16 +3,5 @@
   "completed": ["tutorial", "boss_1", "chest_1"],
   "inventory": ["1-hp_pot", "1-rock"],
   "playerX": 6,
-  "playerY": 6,
-
-  "party": [
-    {
-      "id": "Fox",
-      "currentHp": 10,
-      "maxHp": 10,
-      "atdDmg": 4,
-      "armor": 3,
-      "isPLayer": true
-      }
-  ]
+  "playerY": 6
 }

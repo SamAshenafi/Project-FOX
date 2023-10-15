@@ -5,16 +5,5 @@
   "gold": 0,
   "playerX": 5,
   "playerY": 6,
-  "playerFacing": "down",
-
-  "party": [
-    {
-      "id": "Fox",
-      "currentHp": 10,
-      "maxHp": 10,
-      "atdDmg": 4,
-      "armor": 3,
-      "isPLayer": true
-      }
-  ]
+  "playerFacing": "down"
 }

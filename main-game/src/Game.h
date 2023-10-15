@@ -5,7 +5,6 @@
 #include "Combat/Unit.h"
 #include "raylib.h"
 #include "vector"
-#include "Combat.h"
 #include "Helper.h"
 #include <algorithm>
 #include <memory>
@@ -50,31 +49,6 @@ class Game {
     // resolution
     GameSettings settings;
     // TODO: add some way to change the resolution variables back and forth
-
-    int grid[20][12];
-    GameState gameState = GameState::start_menu;
-
-    const double moveSpeed = 0.1;
-    double lastMoveTime = 0;
-
-    // NOTE: Tile & Player are stored in here
-    std::vector<GameObject*> gameObjects;
-    // NOTE: a pointer to reach the player easily
-    Player* player = nullptr;
-
-    // NOTE: Combat would have multiple characters
-    // MAYBE: a vector<string> for id (like player-01)
-    // and then load from {id}.json when enter combat
-    // it will be loaded from ./json/player/ if not found
-    // in ./save/player/
-    // the json will be write to whenever player change equipments or skill
-    // and at the end of combat when the player might earn something like EXP
-
-    // the vector used to store the stats for a combat encounter
-    std::vector<Char_Stat> encounter;
-    std::vector<Char_Stat> party;
-
-    std::queue<std::pair<int, int>> pathQueue;
 
     // DialogQueue dialogueQueue;
     std::queue<std::string> dialogQueue;
