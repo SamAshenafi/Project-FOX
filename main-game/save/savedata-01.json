@@ -5,5 +5,17 @@
   "gold": 0,
   "playerX": 5,
   "playerY": 6,
-  "playerFacing": "down"
+  "playerFacing": "down",
+
+  "party": [
+    {
+      "id": "Fox",
+      "maxHP": 10,
+      "HP": 10,
+      "ATK": 4,
+      "DEF": 3,
+      "ENG": 1,
+      }
+  ]
+  
 }

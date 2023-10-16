@@ -1,14 +1,33 @@
 #pragma once
 #include <string>
+#include <vector>
 
 class Unit {
 
   public:
+  //character stats
     std::string name;
-    int health;
-    int damage;
+    int HP;
+    int maxHP;
+
+    int baseDmg;
+    int dmg;
+
+    int baseDef;
+    int def;
+
+    int maxEnergy;
+    int energy;
+
+    std::vector<Token*> tokens;
+
+    std::vector<Use*> moves;
+
+    int speed;
     int initiative;
-    bool hasTakenTurn;
+
+    //ability stats
+    
 
     Unit(
         std::string name,

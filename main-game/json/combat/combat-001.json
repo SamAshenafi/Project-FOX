@@ -2,21 +2,27 @@
     "enemies": [
         {
           "id": "goblin",
+          "maxHP":10,
+          "HP":10,
           "ATK": 2,
           "DEF": 3,
-          "SPD": 5
+          "ENG": 1,
         },
         {
           "id": "soldier",
+          "maxHP":15,
+          "HP":10,
           "ATK": 4,
           "DEF": 8,
-          "SPD": 2
+          "ENG": 1,
         },
         {
           "id": "wolf",
+          "maxHP":8,
+          "HP":8,
           "ATK": 3,
           "DEF": 1,
-          "SPD": 7
+          "ENG": 1,
         }
       ],
       "conditions": ["rain", "night"]

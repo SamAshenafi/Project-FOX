@@ -1,10 +1,11 @@
 #pragma once
 #include "Entity.h"
+#include "Combat/Unit.h"
 // #include "enums.h"
 #include <string>
 
 // TODO: a lot lol
-class Player : public Entity {
+class Player : public Entity : public Unit {
   public:
     std::string facing;
 
@@ -30,12 +31,10 @@ class Player : public Entity {
 
     void move(int newX, int newY);
 
-
-    // Combat specific
-    int health;
-    int damage;
-    int initiative;
-    bool hasTakenTurn = false;
+    //stats specific
+    int exp;
+    int level = (level * 100 * 1.25) * exp;
+    std::vector<equipment*> equipments;
 
     // Shared
     void render(int gridWidth, int gridHeight);

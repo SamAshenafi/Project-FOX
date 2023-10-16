@@ -149,7 +149,20 @@ void Game::loadSave(const std::string& filename) {
       // entities.push_back(player);
 
       // TODO: Add inventory parsing logic here
-      // TODO: Add more deserialization logic for other members here
+      // TODO: Add more deserialization logic for other members here      
+
+      party = {};
+      for (const auto& playerData : root["party"])
+      {
+        Player add;
+        add.name = enemyData["id"].get<std::string>();
+        add.HP = enemyData["HP"].get<int>();
+        add.maxHP = enemyData["maxHP"].get<int>();
+        add.baseDmg = enemyData["ATK"].get<int>();
+        add.baseDef = enemyData["DEF"].get<int>();
+        add.maxEnergy = enemyData["ENG"].get<int>();
+        party.insert(add);
+      }
 
       inputFile.close();
     }
@@ -246,17 +259,29 @@ void Game::loadTile(const std::string& tileId) {
             fprintf(stderr, "%s\n", condition.c_str());
         }
 
+        //first passes the player stats into the hero class
+
+        encounter = party;
+
         // Parse enemies
         fprintf(stderr, "--Enemies\n");
         for (const auto& enemyData : root["enemies"]) {
-            std::string enemy = enemyData["id"].get<std::string>();
-            int ATK = enemyData["ATK"].get<int>();
-            int DEF = enemyData["DEF"].get<int>();
-            int SPD = enemyData["SPD"].get<int>();
-            // Placeholder
-            fprintf(stderr, "%s:\n   ATK: %i\n   DEF: %i\n   SPD: %i\n",
-                enemy.c_str(),
-                ATK, DEF, SPD);
+            
+            Unit add;
+            add.name = enemyData["id"].get<std::string>();
+            add.HP = enemyData["HP"].get<int>();
+            add.maxHP = enemyData["maxHP"].get<int>();
+            add.baseDmg = enemyData["ATK"].get<int>();
+            add.baseDef = enemyData["DEF"].get<int>();
+            add.maxEnergy = enemyData["ENG"].get<int>();
+
+            fprintf(stderr, ":%s:\n   HP: %i\n   maxHP: %i\n   ATK: %i\n  DEF: %i\n  ENG: %i\n",
+                add.name.c_str(),
+                add.HP, add.maxHP, add.baseDmg, add.baseDef, add.maxEnergy);
+
+
+            encounter.insert(add);
+
         }
 
       }
