@@ -15,7 +15,7 @@ Combat::Combat() {
 
   // PLACEHOLDER. DO NOT//
   Hero* foxHero = new FoxHero();
-  foxHero->unitId = "Fox";
+  foxHero->id = "Fox";
   foxHero->actions.push_back(new DoNothing());
   heroes.push_back(foxHero);
   // PLACEHOLDER. DO NOT//

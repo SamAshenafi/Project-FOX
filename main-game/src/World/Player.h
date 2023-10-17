@@ -1,11 +1,11 @@
 #pragma once
 #include "Entity.h"
-#include "../Combat/Unit.h"
+// #include "Combat/Unit.h"
 // #include "enums.h"
 #include <string>
 
 // TODO: a lot lol
-class Player : public Entity, public Unit {
+class Player : public Entity { //: public Unit {
   public:
     std::string facing;
 
@@ -21,38 +21,19 @@ class Player : public Entity, public Unit {
 
     // Texture2D flippedSprite;
 
-    //stats specific
-    // int exp;
-    // int level = (level * 100 * 1.25) * exp;
-    // std::vector<equipment*> equipments;
-    std::vector<Player> team;
-
     Player(
         const std::string& playerId,
         int playerX,
         int playerY,
-        std::string facing,
-        std::vector<Player> party
-        //int exp //what the current exp of the player
-        //int level //current level of player
-        //equipments //what equipment was the player carrying
-        );
-
-    Player( //for initialization in world.cpp
-        const std::string& playerId,
-        int playerX,
-        int playerY,
         std::string facing
-        //int exp //what the current exp of the player
-        //int level //current level of player
-        //equipments //what equipment was the player carrying
         );
-
-    Player() {}; // for initializing stats for player party
 
     void move(int newX, int newY);
 
-
+    //stats specific
+    // int exp;
+    // int level = (level * 100 * 1.25) * exp;
+    // std::vector<equipment*> equipments;
 
     // Shared
     // void interact();

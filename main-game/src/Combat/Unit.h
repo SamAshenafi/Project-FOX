@@ -14,7 +14,7 @@ class Unit {
     Unit() {};
 
     //character stats
-    std::string unitId;
+    std::string id;
     int hp;
     int maxHp;
     int bonusMaxHp;
@@ -56,7 +56,7 @@ class Unit {
     }
 
     void onTurnStart() {
-      fprintf(stderr, "%s's Turn\n", unitId.c_str());
+      fprintf(stderr, "%s's Turn\n", id.c_str());
       bonusMaxHp = 0;
       bonusAtk = 0;
       bonusDef = 0;
@@ -68,7 +68,7 @@ class Unit {
       // }
     }
     void onTurnEnd() {
-      fprintf(stderr, "%s's Turn Ended\n", unitId.c_str());
+      fprintf(stderr, "%s's Turn Ended\n", id.c_str());
       bonusMaxHp = 0;
       bonusAtk = 0;
       bonusDef = 0;
