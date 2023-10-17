@@ -5,7 +5,7 @@ SRC_DIR := ./src
 
 # Use wildcard to find all .cpp files in the specified directories
 # SRCS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
-SRCS := $(wildcard $(SRC_DIR)/**/*.cpp)
+SRCS := $(shell find $(SRC_DIR) -type f -name "*.cpp")
 
 #OBJS specifies which files to compile as part of the project
 # OBJS = ./main.cpp ./Game.cpp ./Tile.cpp
