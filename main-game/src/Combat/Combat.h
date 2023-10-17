@@ -5,16 +5,19 @@
 #include <string>
 #include "../GameState.h"
 #include <queue>
-// #include "../Room.h"
+#include "./Hero/Heroes.h"
+#include "Foe/Foe.h"
 
 #include "../Game.h"
+// #include "./Action/Actions.h"
+#include "./Action/Action.h"
 
 // class Game;
 
 class Combat : public GameState {
 
   public:
-    Combat(); // destructor
+    Combat(); // constructor
     ~Combat() override; // destructor
 
     void processInput(Game& game) override;
@@ -23,15 +26,25 @@ class Combat : public GameState {
 
     Room currentRoom;
 
-    Texture2D background;
-    // Texture2D overworldFg;
+    Texture2D bg;
 
-    std::vector<Unit> units;
-    int currentUnitIndex;
-    bool isRoundOver;
-    int currentRound;
-    void startRound();
+    // std::vector<Unit> units;
+    std::queue<Unit*> turnQueue = {};
+    std::vector<Hero*> heroes = {};
+    std::vector<Foe*> foes = {};
+
+    // int currentUnitIndex;
+    // bool isRoundOver;
+    int currentRound = 0;
+    Unit* currentUnit = nullptr;
+    // void startRound();
+
+    bool isRoundOver = false;;
+
+    std::unordered_map<std::string, std::function<Action*()>> abilityMap;
 
     // Helpers
+    bool isHero(Unit* unit);
+    bool isFoe(Unit* unit);
 
 };

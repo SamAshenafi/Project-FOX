@@ -40,7 +40,7 @@ void Game::run() {
 
 // TODO: FIX THIS!!!!!!
 // NOTE: This is very very bad code (it work tho lol), pls fix !!!
-void Game::changeState(std::string state) {
+void Game::changeStateByString(std::string state) {
   GameState* newState = nullptr;
 
   if (state == "mainMenu") {
@@ -73,6 +73,14 @@ void Game::changeState(std::string state) {
     }
     currentState = newState;
   }
+}
+
+void Game::changeState(GameState* newGameState) {
+  if (newGameState == currentState) return;
+  if (currentState != world) {
+    delete currentState;
+  }
+  currentState = newGameState;
 }
 
 void Game::renderDialog() {
@@ -263,7 +271,7 @@ void Game::loadTile(const std::string& tileId) {
         //first passes the player stats into the hero class
 
         // encounter = party;
-        encounter = {};
+        // encounter = {};
 
         // Parse enemies
         fprintf(stderr, "--Enemies\n");

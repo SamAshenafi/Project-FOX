@@ -1,10 +1,11 @@
 # List of source file directories
 SRC_DIR := ./src
-SUBDIRS := $(wildcard $(SRC_DIR)/*/)
-SRC_DIRS := $(SRC_DIR) $(SUBDIRS)
+# SUBDIRS := $(wildcard $(SRC_DIR)/*/)
+# SRC_DIRS := $(SRC_DIR) $(SUBDIRS)
 
 # Use wildcard to find all .cpp files in the specified directories
-SRCS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
+# SRCS := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.cpp))
+SRCS := $(wildcard $(SRC_DIR)/**/*.cpp)
 
 #OBJS specifies which files to compile as part of the project
 # OBJS = ./main.cpp ./Game.cpp ./Tile.cpp

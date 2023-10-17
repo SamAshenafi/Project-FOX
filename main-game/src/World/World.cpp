@@ -25,6 +25,7 @@ World::World(
       playerFacing
       );
   entities.push_back(player);
+  players.push_back(player);
 }
 
 World::~World() {
@@ -63,24 +64,24 @@ void World::render(Game& game) {
   for (int x = 0; x < columns; x++) {
     for (int y = 0; y < rows; y++) {
       /*
-      if (grid[x][y] == 1) {
-        DrawRectangle(
-            x * game.settings.gridWidth,
-            y * game.settings.gridHeight,
-            game.settings.gridWidth,
-            game.settings.gridHeight,
-            DARKGRAY
-            );
-      }
-      else { */
-        // DrawRectangleLines(x, y, gridSize, gridSize, DARKGRAY);
-        DrawRectangleLines(
-            x * game.settings.gridWidth,
-            y * game.settings.gridHeight,
-            game.settings.gridWidth,
-            game.settings.gridHeight,
-            BLACK
-            );
+         if (grid[x][y] == 1) {
+         DrawRectangle(
+         x * game.settings.gridWidth,
+         y * game.settings.gridHeight,
+         game.settings.gridWidth,
+         game.settings.gridHeight,
+         DARKGRAY
+         );
+         }
+         else { */
+      // DrawRectangleLines(x, y, gridSize, gridSize, DARKGRAY);
+      DrawRectangleLines(
+          x * game.settings.gridWidth,
+          y * game.settings.gridHeight,
+          game.settings.gridWidth,
+          game.settings.gridHeight,
+          BLACK
+          );
       //}
     }
   }
@@ -161,3 +162,10 @@ void World::loadRoom(const std::string& roomId) {
 
 
 void World::update(Game& game) {}
+
+
+
+void World::enterCombat(Game& game) {
+  GameState* combat = new Combat();
+  game.changeState(combat);
+}

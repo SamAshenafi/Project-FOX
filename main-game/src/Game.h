@@ -2,7 +2,6 @@
 #pragma once
 // #include "GameStates.h"
 
-#include "Combat/Unit.h"
 #include "raylib.h"
 #include "vector"
 #include "Helper.h"
@@ -21,9 +20,9 @@
 #include "GameState.h"
 
 #include "World/World.h"
-#include "World/Entity.h"
-#include "World/Player.h"
-#include "World/Tile.h"
+// #include "World/Entity.h"
+// #include "World/Player.h"
+// #include "World/Tile.h"
 
 #include "Combat/Combat.h"
 #include "MainMenu/MainMenu.h"
@@ -69,15 +68,16 @@ class Game {
     GameState* world;
 
     // the vector used to store the stats for a combat encounter
-    std::vector<Unit> encounter;
-    std::vector<Player> party;
+    // std::vector<Unit> encounter;
+    // std::vector<Player> party;
 
     GameState* currentState;
     // void processInput();
     // void update();
     // void render();
 
-    void changeState(std::string state);
+    void changeStateByString(std::string state); // will be deprecated
+    void changeState(GameState* newGameState);
 
     void renderDialog();
 

@@ -18,7 +18,8 @@ void MainMenu::render(Game& game) {
 
 void MainMenu::processInput(Game& game) {
   if (IsKeyPressed(KEY_SPACE)) {
-    game.changeState("world");
+    // game.changeState("world");
+    game.changeState(game.world);
     // game.changeState("combat");
   }
 }

@@ -6,6 +6,7 @@
 #include "Room.h"
 #include "Entity.h"
 #include "Player.h"
+#include "Tile.h"
 
 #include "../Game.h"
 
@@ -30,6 +31,7 @@ class World : public GameState {
     int rows = sizeof(grid[0]) / sizeof(grid[0][0]);
 
     std::vector<Entity*> entities;
+    std::vector<Player*> players;
     Player* player = nullptr;
 
     // these will only be used when loadSave() & saveSave() is called
@@ -53,6 +55,8 @@ class World : public GameState {
     std::string inputHelper(std::string facing);
     void findShortestPath(Game& game, int startX, int startY, int targetX, int targetY);
 
+    void enterCombat(Game& game);
+
   private:
     void resetGrid(); // set all in grid to 0
     void sortGameObjects();
@@ -60,4 +64,5 @@ class World : public GameState {
     // void handleKeyPressO();
 
     // processMovement();
+
 };

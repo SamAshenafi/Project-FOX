@@ -32,7 +32,9 @@ void World::processInput(Game& game) {
   switch (keyPressed) {
     case KEY_C:
       fprintf(stderr, "%s\n", "c was pressed");
-      game.changeState("combat");
+      // game.changeState("combat");
+      // Transfer data from World to Combat here
+      enterCombat(game);
       break;
     case KEY_O:
       {
