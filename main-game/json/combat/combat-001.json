@@ -4,25 +4,28 @@
           "id": "goblin",
           "maxHP":10,
           "HP":10,
-          "ATK": 2,
-          "DEF": 3,
-          "ENG": 1,
+          "baseAtk": 2,
+          "baseDef": 3,
+          "maxEnergy": 1,
+          "speed": 1
         },
         {
           "id": "soldier",
           "maxHP":15,
           "HP":10,
-          "ATK": 4,
-          "DEF": 8,
-          "ENG": 1,
+          "baseAtk": 4,
+          "baseDef": 8,
+          "maxEnergy": 1,
+          "speed": 1
         },
         {
           "id": "wolf",
           "maxHP":8,
           "HP":8,
-          "ATK": 3,
-          "DEF": 1,
-          "ENG": 1,
+          "baseAtk": 3,
+          "baseDef": 1,
+          "maxEnergy": 1,
+          "speed": 1
         }
       ],
       "conditions": ["rain", "night"]

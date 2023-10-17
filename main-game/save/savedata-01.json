@@ -12,9 +12,10 @@
       "id": "Fox",
       "maxHP": 10,
       "HP": 10,
-      "ATK": 4,
-      "DEF": 3,
-      "ENG": 1,
+      "baseAtk": 4,
+      "baseDef": 3,
+      "maxEnergy": 1,
+      "speed": 1
       }
   ]
   

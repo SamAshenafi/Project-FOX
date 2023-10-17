@@ -151,18 +151,19 @@ void Game::loadSave(const std::string& filename) {
       // TODO: Add inventory parsing logic here
       // TODO: Add more deserialization logic for other members here      
 
-      party = {};
-      for (const auto& playerData : root["party"])
-      {
-        Player add;
-        add.name = enemyData["id"].get<std::string>();
-        add.HP = enemyData["HP"].get<int>();
-        add.maxHP = enemyData["maxHP"].get<int>();
-        add.baseDmg = enemyData["ATK"].get<int>();
-        add.baseDef = enemyData["DEF"].get<int>();
-        add.maxEnergy = enemyData["ENG"].get<int>();
-        party.insert(add);
-      }
+      // party = {};
+      // for (const auto& playerData : root["party"])
+      // {
+      //   Player add;
+      //   add.name = playerData["id"].get<std::string>();
+      //   add.HP = playerData["HP"].get<int>();
+      //   add.maxHP = playerData["maxHP"].get<int>();
+      //   add.baseDmg = playerData["baseDmg"].get<int>();
+      //   add.baseDef = playerData["baseDef"].get<int>();
+      //   add.maxEnergy = playerData["maxEnergy"].get<int>();
+      //   add.speed = playerData["speed"].get<int>();
+      //   party.insert(add);
+      // }
 
       inputFile.close();
     }
@@ -261,26 +262,30 @@ void Game::loadTile(const std::string& tileId) {
 
         //first passes the player stats into the hero class
 
-        encounter = party;
+        // encounter = party;
+        encounter = {};
 
         // Parse enemies
         fprintf(stderr, "--Enemies\n");
         for (const auto& enemyData : root["enemies"]) {
             
-            Unit add;
-            add.name = enemyData["id"].get<std::string>();
-            add.HP = enemyData["HP"].get<int>();
-            add.maxHP = enemyData["maxHP"].get<int>();
-            add.baseDmg = enemyData["ATK"].get<int>();
-            add.baseDef = enemyData["DEF"].get<int>();
-            add.maxEnergy = enemyData["ENG"].get<int>();
 
-            fprintf(stderr, ":%s:\n   HP: %i\n   maxHP: %i\n   ATK: %i\n  DEF: %i\n  ENG: %i\n",
-                add.name.c_str(),
-                add.HP, add.maxHP, add.baseDmg, add.baseDef, add.maxEnergy);
+            // TODO: change initilizer for unit to fit for these stats?
+
+            // Unit add;
+            // add.name = enemyData["id"].get<std::string>();
+            // add.HP = enemyData["HP"].get<int>();
+            // add.maxHP = enemyData["maxHP"].get<int>();
+            // add.baseDmg = enemyData["ATK"].get<int>();
+            // add.baseDef = enemyData["DEF"].get<int>();
+            // add.maxEnergy = enemyData["ENG"].get<int>();
+
+            // fprintf(stderr, ":%s:\n   HP: %i\n   maxHP: %i\n   ATK: %i\n  DEF: %i\n  ENG: %i\n",
+            //     add.name.c_str(),
+            //     add.HP, add.maxHP, add.baseDmg, add.baseDef, add.maxEnergy);
 
 
-            encounter.insert(add);
+            // encounter.push_back(add);
 
         }
 

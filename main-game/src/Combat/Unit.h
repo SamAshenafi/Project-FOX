@@ -19,12 +19,15 @@ class Unit {
     int maxEnergy;
     int energy;
 
-    std::vector<Token*> tokens;
+    // std::vector<Token*> tokens;
 
-    std::vector<Use*> moves;
+    // std::vector<Use*> moves;
 
+    int health;
+    int damage;
     int speed;
     int initiative;
+    bool hasTakenTurn;
 
     //ability stats
     

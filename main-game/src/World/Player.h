@@ -1,14 +1,13 @@
 #pragma once
 #include "Entity.h"
-#include "Combat/Unit.h"
+// #include "Combat/Unit.h"
 // #include "enums.h"
 #include <string>
 
 // TODO: a lot lol
-class Player : public Entity : public Unit {
+class Player : public Entity { //: public Unit {
   public:
     std::string facing;
-
 
     // Rectangle right = { 0, 0, 96 * 2, 80 * 3 };
     // Rectangle down = { 0, 80 * 3, 96 * 2, 80 * 3 * 2 };
@@ -34,7 +33,7 @@ class Player : public Entity : public Unit {
     //stats specific
     int exp;
     int level = (level * 100 * 1.25) * exp;
-    std::vector<equipment*> equipments;
+    // std::vector<equipment*> equipments;
 
     // Shared
     void render(int gridWidth, int gridHeight);
