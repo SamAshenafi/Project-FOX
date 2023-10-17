@@ -20,7 +20,8 @@ class Tile : public Entity {
         bool isBlockMovement = false
         );
 
+    // void interact() override;
     void interact();
     // void draw(int gridSize);
-    void render(int gridWidth, int gridHeight);
+    void render(int gridWidth, int gridHeight) override;
 };

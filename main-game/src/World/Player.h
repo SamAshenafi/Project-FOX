@@ -31,12 +31,12 @@ class Player : public Entity { //: public Unit {
     void move(int newX, int newY);
 
     //stats specific
-    int exp;
-    int level = (level * 100 * 1.25) * exp;
+    // int exp;
+    // int level = (level * 100 * 1.25) * exp;
     // std::vector<equipment*> equipments;
 
     // Shared
-    void interact() = 0;
+    // void interact();
     void render(int gridWidth, int gridHeight);
 };
 

@@ -92,14 +92,17 @@ void World::processInput(Game& game) {
       }
 
       for (Entity* entity : entities) {
-        bool isInterableObject =
-          Helper::parseGameObjectType(entity->id) != "player" &&
+        bool isAtTile =
           entity->x == targetX &&
           entity->y == targetY
           ;
-        if (isInterableObject) {
+        if (!isAtTile) {
+          continue;
+        }
+        Tile* tile = dynamic_cast<Tile*>(entity);
+        if (tile != nullptr) {
           //game.loadTile(entity->id);
-          entity -> interact();
+          tile->interact();
         }
       }
       break;
