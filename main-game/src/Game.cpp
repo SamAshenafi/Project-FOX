@@ -143,35 +143,40 @@ void Game::loadSave(const std::string& filename) {
       for (const auto& item : root["completed"]) {
         completed.push_back(item.get<std::string>());
       }
+      std::vector<Player> party;
+      for (const auto& playerData : root["party"])
+      {
+        Player add = Player();
+        // add.id = playerData["id"].get<std::string>();
+        add.hp = playerData["HP"].get<int>();
+        add.maxHp = playerData["maxHP"].get<int>();
+        add.baseAtk = playerData["baseDmg"].get<int>();
+        add.baseDef = playerData["baseDef"].get<int>();
+        add.baseEnergy = playerData["maxEnergy"].get<int>();
+        add.baseSpeed = playerData["speed"].get<int>();
+        party.push_back(add);
+      }
 
-      // playerX = root.value("playerX", 0);
-      // playerY = root.value("playerY", 0);
-      // playerFacing = root.value("playerFacing", "down");
-      //
-      // player = new Player(
-      //     "player-01",
-      //     playerX,
-      //     playerY,
-      //     playerFacing
-      //     );
+      int playerX = root.value("playerX", 0);
+      int playerY = root.value("playerY", 0);
+      std::string playerFacing = root.value("playerFacing", "down");
+      
+      Player player = Player(
+          "player-01",
+          playerX,
+          playerY,
+          playerFacing,
+          party
+
+          );
+
+      // TODO: initialize entities or remove this
       // entities.push_back(player);
 
       // TODO: Add inventory parsing logic here
       // TODO: Add more deserialization logic for other members here      
 
-      // party = {};
-      // for (const auto& playerData : root["party"])
-      // {
-      //   Player add;
-      //   add.name = playerData["id"].get<std::string>();
-      //   add.HP = playerData["HP"].get<int>();
-      //   add.maxHP = playerData["maxHP"].get<int>();
-      //   add.baseDmg = playerData["baseDmg"].get<int>();
-      //   add.baseDef = playerData["baseDef"].get<int>();
-      //   add.maxEnergy = playerData["maxEnergy"].get<int>();
-      //   add.speed = playerData["speed"].get<int>();
-      //   party.insert(add);
-      // }
+      
 
       inputFile.close();
     }

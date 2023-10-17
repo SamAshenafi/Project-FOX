@@ -6,6 +6,24 @@ Player::Player(
     const std::string& playerId,
     int playerX,
     int playerY,
+    std::string facing,
+    std::vector<Player> party
+    ) :
+  facing(facing)
+{
+  id = playerId;
+  x = playerX;
+  y = playerY;
+  party = team;
+  // "fox.png" does not exist
+  sprite = Helper::loadTexture("fox.png");
+  // flippedSprite = Helper::loadTexture("fox.png");
+}
+
+Player::Player(
+    const std::string& playerId,
+    int playerX,
+    int playerY,
     std::string facing
     ) :
   facing(facing)

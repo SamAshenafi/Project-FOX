@@ -69,7 +69,6 @@ class Game {
 
     // the vector used to store the stats for a combat encounter
     // std::vector<Unit> encounter;
-    // std::vector<Player> party;
 
     GameState* currentState;
     // void processInput();

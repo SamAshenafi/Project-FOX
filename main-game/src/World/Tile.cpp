@@ -71,9 +71,6 @@ void Tile::interact() {
 
         //first passes the player stats into the hero class
 
-        // encounter = party;
-        // encounter = {};
-
         // Parse enemies
         fprintf(stderr, "--Enemies\n");
         for (const auto& enemyData : root["enemies"]) {
