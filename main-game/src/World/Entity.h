@@ -15,5 +15,6 @@ class Entity {
     float offsetY = 0;
     Texture2D sprite;
 
+    virtual void interact() = 0;
     virtual void render(int gridWidth, int gridHeight) = 0;
 };

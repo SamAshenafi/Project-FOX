@@ -216,6 +216,8 @@ void Game::saveSave(const std::string& filename) {
   }
 }
 
+// Kept temporarily, but all moved to Tile::interact()
+/*
 void Game::loadTile(const std::string& tileId) {
   std::string tileType = Helper::parseGameObjectType(tileId);
   if (tileType == "chest") {
@@ -332,3 +334,4 @@ void Game::loadTile(const std::string& tileId) {
   else if (true) {
   }
 }
+*/

@@ -36,6 +36,7 @@ class Player : public Entity { //: public Unit {
     // std::vector<equipment*> equipments;
 
     // Shared
+    void interact() = 0;
     void render(int gridWidth, int gridHeight);
 };
 

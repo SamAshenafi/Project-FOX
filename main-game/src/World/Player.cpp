@@ -13,7 +13,8 @@ Player::Player(
   id = playerId;
   x = playerX;
   y = playerY;
-  sprite = Helper::loadTexture("fox.png");
+  // "fox.png" does not exist
+  // sprite = Helper::loadTexture("fox.png");
   // flippedSprite = Helper::loadTexture("fox.png");
 }
 
@@ -24,13 +25,13 @@ void Player::render(int gridWidth, int gridHeight) {
   // if you can get that working that would be great
 
   // Old red rectangle, to be remove? or keep to debug?
-  // DrawRectangle(
-  //     x * gridWidth,
-  //     y * gridHeight,
-  //     gridWidth,
-  //     gridHeight,
-  //     RED);
-
+  DrawRectangle(
+      x * gridWidth,
+      y * gridHeight,
+      gridWidth,
+      gridHeight,
+      RED);
+  /*
   Rectangle src = {
     0,
     0,
@@ -78,6 +79,7 @@ void Player::render(int gridWidth, int gridHeight) {
       0.0,
       WHITE
       );
+  */
   return;
 }
 

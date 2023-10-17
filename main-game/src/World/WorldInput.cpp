@@ -98,7 +98,8 @@ void World::processInput(Game& game) {
           entity->y == targetY
           ;
         if (isInterableObject) {
-          game.loadTile(entity->id);
+          //game.loadTile(entity->id);
+          entity -> interact();
         }
       }
       break;

@@ -86,7 +86,8 @@ class Game {
     // void loadRoom(const std::string& roomId);
     void saveSave(const std::string& filename);
     // trigger when interact with a tile
-    void loadTile(const std::string& tileId);
+    // Functionality moved to Tile::interact()
+    // void loadTile(const std::string& tileId);
 
     // Helpers
 };

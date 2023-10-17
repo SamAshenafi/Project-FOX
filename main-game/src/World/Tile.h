@@ -4,6 +4,9 @@
 #include <string>
 #include "raylib.h"
 #include "Entity.h"
+#include <iostream>
+#include <fstream>
+#include "../../external-libs/nlohmann/json.hpp"
 
 class Tile : public Entity {
   public:
@@ -17,7 +20,7 @@ class Tile : public Entity {
         bool isBlockMovement = false
         );
 
-    // virtual void interact();
+    void interact();
     // void draw(int gridSize);
     void render(int gridWidth, int gridHeight);
 };
