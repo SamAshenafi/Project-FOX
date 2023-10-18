@@ -50,6 +50,8 @@ class Combat : public GameState {
 
     bool isRoundOver = false;;
 
+    int animationDuration = 0;
+
 
 
     // std::unordered_map<std::string, std::function<Action*()>> abilityMap = {

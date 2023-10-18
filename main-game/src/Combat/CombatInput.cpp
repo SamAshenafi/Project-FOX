@@ -1,6 +1,7 @@
 #include "Combat.h"
 
 void Combat::processInput(Game& game) {
+  if (animationDuration != 0) return;
   // TODO:
   int keyPressed = GetKeyPressed();
   switch (keyPressed) {

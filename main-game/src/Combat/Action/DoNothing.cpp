@@ -6,8 +6,8 @@ DoNothing::DoNothing() {
 DoNothing::~DoNothing() {
 }
 
-void DoNothing::perform(Unit* user, Unit* target, Game& game) {
-  energyCost = 1;
+int DoNothing::perform(Unit* user, Unit* target, Game& game) {
   user->energy -= energyCost;
-  fprintf(stderr, "%s performed Do Nothing!!!!!\n", user->id.c_str());
+  fprintf(stderr, "%s performed [Do Nothing]!!!\n", user->id.c_str());
+  return animationDuration;
 };

@@ -2,17 +2,19 @@
 #include "../Action/Actions.h"
 #include <raylib.h>
 
-void FoxFoe::takeTurn(Game& game) {
+Action* FoxFoe::decideAction() {
   if (actions.empty()) {
     fprintf(stderr, "no actions\n");
-    return;
+    return nullptr;
   }
   selectedAction = actions[0];
-  if (selectedAction != nullptr) {
+  // if (selectedAction == nullptr) {
+    // return nullptr;
     // game.dialogQueue.push("Foe did nothing!");
-    selectedAction->perform(this, this, game);
+    // selectedAction->perform(this, this, game);
     // startAnimationTime = GetTime();
     // animationTimer = 2.0;
-    selectedAction = nullptr;
-  }
+    // selectedAction = nullptr;
+  // }
+  return selectedAction;
 };

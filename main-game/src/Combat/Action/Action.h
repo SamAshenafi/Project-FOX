@@ -18,8 +18,9 @@ class Action {
     // "all"
     // "ALL"
     std::string targetType;
-    int energyCost;
+    int energyCost = 1;
+    int animationDuration = 12;
 
-    virtual void perform(Unit* user, Unit* target, Game& game) {};
+    virtual int perform(Unit* user, Unit* target, Game& game) = 0;
 };
 

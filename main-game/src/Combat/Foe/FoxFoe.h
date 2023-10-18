@@ -23,5 +23,5 @@ class FoxFoe : public Foe {
 
 
     // std::vector<Action*> actions = {};
-    void takeTurn(Game& game) override;
+    Action* decideAction() override;
 };

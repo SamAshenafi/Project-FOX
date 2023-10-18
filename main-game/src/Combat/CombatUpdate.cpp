@@ -2,17 +2,23 @@
 #include <cstdio>
 
 void Combat::update(Game& game) {
+  if (animationDuration != 0) {
+    animationDuration -= 1;
+    fprintf(stderr, "[ANIMATION]: %d\n", animationDuration);
+    return;
+  }
   if (isRoundOver) {
     // start new round
+    fprintf(stderr, "[ROUND END]: %d\n", currentRound);
     currentRound += 1;
     fprintf(stderr, "----------------\n");
-    fprintf(stderr, "New Round: %d\n", currentRound);
+    fprintf(stderr, "[ROUND START]: %d\n", currentRound);
     for (Hero* hero : heroes) {
-      hero->onRoundStart();
+      animationDuration += hero->onRoundStart();
       fprintf(stderr, "%s speed: %d\n", hero->id.c_str(), hero->getSpeed());
     }
     for (Foe* foe : foes) {
-      foe->onRoundStart();
+      animationDuration += foe->onRoundStart();
       fprintf(stderr, "%s speed: %d\n", foe->id.c_str(), foe->getSpeed());
     }
     // sort by speed -> add to turnQueue
@@ -35,42 +41,38 @@ void Combat::update(Game& game) {
     for (Unit* unit : units) {
       turnQueue.push(unit);
     }
-
-
     isRoundOver = false;
+
+    animationDuration += 8;
+    return;
+  }
+  if (currentUnit == nullptr) {
+    if (!turnQueue.empty()) {
+      fprintf(stderr, "---\n");
+      currentUnit = turnQueue.front();
+      turnQueue.pop();
+      animationDuration += currentUnit->onTurnStart();
+      // currentUnit->animationTimer = 0.5;
+      // currentUnit->startAnimationTime = GetTime();
+      return;
+    }
+    isRoundOver = true;
   }
   else {
-    if (currentUnit == nullptr) {
-      if (!turnQueue.empty()) {
-        fprintf(stderr, "---\n");
-        currentUnit = turnQueue.front();
-        turnQueue.pop();
-        currentUnit->onTurnStart();
-        // currentUnit->animationTimer = 0.5;
-        // currentUnit->startAnimationTime = GetTime();
-      }
-      else {
-        isRoundOver = true;
-      }
+    // if (currentUnit->animationTimer > 0) {
+    //   currentUnit->playAnimation();
+    //   return;
+    // }
+    if (currentUnit->energy < 1) {
+      animationDuration += currentUnit->onTurnEnd();
+      currentUnit = nullptr;
+      return;
     }
-    else {
-      // if (currentUnit->animationTimer > 0) {
-      //   currentUnit->playAnimation();
-      //   return;
-      // }
-      if (currentUnit->energy < 1) {
-        currentUnit->onTurnEnd();
-        currentUnit = nullptr;
-        return;
-      }
-      if (isFoe(currentUnit)) {
-        dynamic_cast<Foe*>(currentUnit)->takeTurn(game);
-      }
-      Action* action = currentUnit->getAction();
-      if (action == nullptr) return;
-      action->perform(currentUnit, currentUnit, game);
-      // currentUnit->takeTurn(this);
-      // currentUnit->selectedAction = currentUnit->actions[0];
+    if (isFoe(currentUnit)) {
+      dynamic_cast<Foe*>(currentUnit)->decideAction();
     }
+    Action* action = currentUnit->getAction();
+    if (action == nullptr) return;
+    animationDuration += action->perform(currentUnit, currentUnit, game);
   }
 }

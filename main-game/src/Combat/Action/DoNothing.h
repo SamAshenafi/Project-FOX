@@ -8,6 +8,6 @@ class DoNothing : public Action {
     // }
     DoNothing();
     ~DoNothing();
-    void perform(Unit *user, Unit *target, Game &game) override;
+    int perform(Unit *user, Unit *target, Game &game) override;
 
 };

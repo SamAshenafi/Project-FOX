@@ -73,19 +73,22 @@ class Unit {
       fprintf(stderr, "Take %d damage\n", dmg);
     }
 
-    void onTurnStart() {
+    int onTurnStart() {
+      int totalAnimationDuration = 6;
       fprintf(stderr, "%s's Turn\n", id.c_str());
       bonusMaxHp = 0;
       bonusAtk = 0;
       bonusDef = 0;
 
       for (Token* token : tokens) {
-        token->onTurnStart(*this);
+        totalAnimationDuration += token->onTurnStart(*this);
       }
       // for (Equipment* equipment : equipments) {
       // }
+      return totalAnimationDuration;
     }
-    void onTurnEnd() {
+    int onTurnEnd() {
+      int totalAnimationDuration = 2;
       fprintf(stderr, "%s's Turn Ended\n", id.c_str());
       bonusMaxHp = 0;
       bonusAtk = 0;
@@ -93,25 +96,31 @@ class Unit {
       bonusSpeed = 0;
 
       for (Token* token : tokens) {
-        token->onTurnEnd(*this);
+        totalAnimationDuration += token->onTurnEnd(*this);
       }
+
+      return totalAnimationDuration;
       // for (Equipment* equipment : equipments) {
       // }
     }
 
-    void onRoundStart() {
+    int onRoundStart() {
+      int totalAnimationDuration = 0;
       energy = baseEnergy;
       bonusSpeed = GetRandomValue(0, 6);
       // get speed modifier from other
 
       for (Token* token : tokens) {
-        token->onRoundStart(*this);
+        totalAnimationDuration += token->onRoundStart(*this);
       }
+      return totalAnimationDuration;
     }
-    void onRoundEnd() {
+    int onRoundEnd() {
+      int totalAnimationDuration = 0;
       for (Token* token : tokens) {
-        token->onRoundEnd(*this);
+        totalAnimationDuration += token->onRoundEnd(*this);
       }
+      return totalAnimationDuration;
     }
 
     // virtual void playAnimation();

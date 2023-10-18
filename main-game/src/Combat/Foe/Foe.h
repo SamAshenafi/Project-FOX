@@ -9,5 +9,5 @@ class Foe : public Unit {
     ~Foe() {};
     std::string actionAI = "simple";
 
-    virtual void takeTurn(Game& game) = 0;
+    virtual Action* decideAction() = 0;
 };

@@ -5,8 +5,11 @@ class Poison : public Token {
   public:
     int stack;
 
-    void onTurnStart(Unit& unit) override {
+    int onTurnStart(Unit& unit) override {
+      // TODO: How does this play a sound?
+      // SOL1: pass Game to unit on... function then to this
       unit.takeDmg(stack);
+      return 6;
     };
     // void onTurnEnd(Unit& unit);
     // void onRoundStart(Unit& unit);

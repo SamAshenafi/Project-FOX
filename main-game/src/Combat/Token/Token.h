@@ -11,8 +11,8 @@ class Token {
 
     int stack;
 
-    virtual void onTurnStart(Unit& unit);
-    virtual void onTurnEnd(Unit& unit);
-    virtual void onRoundStart(Unit& unit);
-    virtual void onRoundEnd(Unit& unit);
+    virtual int onTurnStart(Unit& unit);
+    virtual int onTurnEnd(Unit& unit);
+    virtual int onRoundStart(Unit& unit);
+    virtual int onRoundEnd(Unit& unit);
 };
