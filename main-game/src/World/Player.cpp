@@ -1,6 +1,7 @@
 // Player.cpp
 #include "Player.h"
 #include "../Helper.h"
+#include <cstdio>
 
 Player::Player(
     const std::string& playerId,
@@ -86,3 +87,33 @@ void Player::move(int newX, int newY) {
   x = newX;
   y = newY;
 }
+
+void Player::update() {
+  if (animationDuration > 0) {
+    // fprintf(stderr, "[ANIMATION]: %d\n", animationDuration);
+    animationDuration -= 1;
+    return;
+  }
+
+  // Continue moving along the path until the queue is empty
+  while (!pathQueue.empty()) {
+    std::pair<int, int> nextPos = pathQueue.front();
+    pathQueue.pop();
+    if (nextPos.first < x) {
+      facing = "left";
+    }
+    else if (nextPos.first > x) {
+      facing = "right";
+    }
+    else if (nextPos.second < y) {
+      facing = "up";
+    }
+    else if (nextPos.second > y) {
+      facing = "down";
+    }
+    move(nextPos.first, nextPos.second);
+    animationDuration += 6;
+    break;
+  }
+}
+

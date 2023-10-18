@@ -11,6 +11,7 @@
 #include "../Game.h"
 
 // class Game;
+class Player;
 
 class World : public GameState {
   public:
@@ -52,15 +53,16 @@ class World : public GameState {
     void loadRoom(const std::string& roomId);
 
     // Helpers
-    std::string inputHelper(std::string facing);
-    void findShortestPath(Game& game, int startX, int startY, int targetX, int targetY);
+    // std::string inputHelper(std::string facing);
+    // void findShortestPath(Game& game, int startX, int startY, int targetX, int targetY);
 
     void enterCombat(Game& game);
 
-  private:
     void resetGrid(); // set all in grid to 0
     void sortGameObjects();
     void clearPathQueue();
+
+  private:
     // void handleKeyPressO();
 
     // processMovement();
