@@ -28,6 +28,10 @@ class Combat : public GameState {
 
     Texture2D bg;
 
+    // Placeholder for making loadBattle()
+    std::vector<Unit*> unitsFromJSON = {};
+    void loadBattle(const std::string& battleId);
+
     // std::vector<Unit> units;
     std::queue<Unit*> turnQueue = {};
     std::vector<Hero*> heroes = {};

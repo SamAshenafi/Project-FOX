@@ -1,6 +1,7 @@
 #include "Combat.h"
 #include "Action/Actions.h"
 #include "Action/DoNothing.h"
+#include "../../external-libs/nlohmann/json.hpp"
 
 Combat::Combat() {
   // abilityMap["DoNothing"] = []() { return new DoNothing(); };
@@ -12,6 +13,9 @@ Combat::Combat() {
   // std::sort(units.begin(), units.end(), [](const Unit& a, const Unit& b) {
   //     return a.initiative > b.initiative;
   //     });
+  
+  std::string currentBattleId = "001";
+  loadBattle(currentBattleId);
 
   // PLACEHOLDER. DO NOT//
   Hero* foxHero = new FoxHero();
@@ -27,6 +31,55 @@ void Combat::render(Game& game) {
   // ClearBackground(RAYWHITE);
   ClearBackground(DARKGRAY);
   EndDrawing();
+}
+
+void Combat::loadBattle(const std::string& battleId) {
+    const std::string combatFilePath = "./json/combat/";
+    const std::string combatPrefix = "combat-";
+    const std::string jsonFileType = ".json";
+    const std::string fullFilePath = combatFilePath + combatPrefix + battleId + jsonFileType;
+    nlohmann::json root;
+    std::ifstream jsonFile(fullFilePath);
+
+    if (jsonFile.is_open()) {
+    try {
+      jsonFile >> root;
+
+      // Empty the output vector
+      unitsFromJSON.clear();
+
+      // Parse Enemies
+      for (const auto& enemyData : root["enemies"]) {
+        std::string enemyId = enemyData["id"].get<std::string>();
+        int maxHP = enemyData["maxHP"].get<int>();
+        int HP = enemyData["HP"].get<int>();
+        int baseAtk = enemyData["baseAtk"].get<int>();
+        int baseDef = enemyData["baseDef"].get<int>();
+        int maxEnergy = enemyData["maxEnergy"].get<int>();
+        int speed = enemyData["speed"].get<int>();
+
+        // TODO: Implement creating new Units (or Foes) and adding them to the vector
+
+        // Unit* enemy = new Unit();
+        // enemy.id = enemyId.c_str();
+        // enemy.maxHp = maxHP;
+        // enemy.hp = HP;
+        // enemy.baseAtk = baseAtk;
+        // enemy.baseDef = baseDef;
+        // enemy.baseEnergy = maxEnergy;
+        // enemy.baseSpeed = speed;
+
+        // unitsFromJSON.push_back(enemy);
+
+        fprintf(stderr, "--%s--\nmaxHP: %i   HP: %i\nbaseAtk: %i   baseDef: %i\nmaxEnergy: %i   speed: %i\n",
+                enemyId.c_str(), maxHP, HP, baseAtk, baseDef, maxEnergy, speed);
+      }
+
+    }
+    catch (const std::exception& e) {
+      fprintf(stderr, "JSON parsing failed: %s\n", e.what());
+    }
+  }
 }
 
 void Combat::processInput(Game& game) {
