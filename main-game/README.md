@@ -16,10 +16,33 @@ Most notably:
     - This is the simplest way to handle resolution, just add `scaling *`
     whenever you use screenWidth/Height or gridWidth/Height
     - I did not add the ability to resize that Alton discovered
-because it can be complex & difficult to account for all the resolution possible
-(the resize doesn't work properly if the window is smaller than the native resolution)
+    because it can be complex & difficult to account for all the resolution possible
+    (the resize doesn't work properly if the window is smaller than the native resolution)
 
 - I also organized the functions in the `Game.cpp`.
 There are fancy separators & 
 you can navigate to by just `Ctrl-F-ing` `RENDER` or `INPUT` or `...`
 
+
+```
+Combat
+├─ Action/
+│  ├─ Action.h
+│  ├─ Actions.h
+│  ├─ DoNothing.h
+│  └─ DoNothing.cpp
+├─ Foe/
+│  ├─ FoxFoe.h
+│  ├─ Foe.h
+│  └─ Foes.h
+├─ Hero/
+│  ├─ FoxHero.h
+│  ├─ Hero.h
+│  └─ Heroes.h
+├─ Token/
+│  ├─ Token.h
+│  └─ Poison.h
+├─ Combat.cpp
+├─ Combat.h
+└─ Unit.h
+```

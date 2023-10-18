@@ -1,8 +1,11 @@
 #pragma once
 #include "./Foe.h"
 
-class FoxHero : public Foe {
-  FoxHero();
+class FoxFoe : public Foe {
+  public:
+    FoxFoe() {
+      id = "FoxFoe";
+    };
 
     int hp = 100;
     int maxHp = 100;
@@ -13,6 +16,12 @@ class FoxHero : public Foe {
     int baseDef = 4;
     int bonusDef;
 
+    int speed = 6;
+
     int baseEnergy = 1;
     int energy;
+
+
+    // std::vector<Action*> actions = {};
+    void takeTurn(Game& game) override;
 };

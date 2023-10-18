@@ -166,6 +166,6 @@ void World::update(Game& game) {}
 
 
 void World::enterCombat(Game& game) {
-  GameState* combat = new Combat();
+  GameState* combat = new Combat("aaa");
   game.changeState(combat);
 }

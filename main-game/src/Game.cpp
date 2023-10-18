@@ -40,40 +40,40 @@ void Game::run() {
 
 // TODO: FIX THIS!!!!!!
 // NOTE: This is very very bad code (it work tho lol), pls fix !!!
-void Game::changeStateByString(std::string state) {
-  GameState* newState = nullptr;
-
-  if (state == "mainMenu") {
-    fprintf(stderr, "gameState is now MainMenu!\n");
-    newState = new MainMenu();
-  }
-  else if (state == "world") {
-    if (currentState == world) {
-      fprintf(stderr, "gameState is already world!!!\n");
-      return;
-    }
-    else {
-      fprintf(stderr, "gameState is now world!\n");
-      // loadSave("savedata-01");
-      delete currentState;
-      currentState = world;
-      return;
-      // newState = new World(currentRoomId);
-
-    }
-  }
-  else if (state == "combat") {
-    fprintf(stderr, "gameState is now Combat!\n");
-    newState = new Combat();
-  }
-
-  if (currentState != newState) {
-    if (currentState != world) {
-      delete currentState;
-    }
-    currentState = newState;
-  }
-}
+// void Game::changeStateByString(std::string state) {
+//   GameState* newState = nullptr;
+//
+//   if (state == "mainMenu") {
+//     fprintf(stderr, "gameState is now MainMenu!\n");
+//     newState = new MainMenu();
+//   }
+//   else if (state == "world") {
+//     if (currentState == world) {
+//       fprintf(stderr, "gameState is already world!!!\n");
+//       return;
+//     }
+//     else {
+//       fprintf(stderr, "gameState is now world!\n");
+//       // loadSave("savedata-01");
+//       delete currentState;
+//       currentState = world;
+//       return;
+//       // newState = new World(currentRoomId);
+//
+//     }
+//   }
+//   else if (state == "combat") {
+//     fprintf(stderr, "gameState is now Combat!\n");
+//     newState = new Combat();
+//   }
+//
+//   if (currentState != newState) {
+//     if (currentState != world) {
+//       delete currentState;
+//     }
+//     currentState = newState;
+//   }
+// }
 
 void Game::changeState(GameState* newGameState) {
   if (newGameState == currentState) return;

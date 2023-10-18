@@ -1,0 +1,14 @@
+{
+  "enemies": [
+    {
+      "id": "FoxFoe"
+    },
+    {
+      "id": "soldier"
+    },
+    {
+      "id": "wolf"
+    }
+  ],
+  "conditions": ["rain", "night"]
+}

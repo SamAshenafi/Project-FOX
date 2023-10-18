@@ -3,7 +3,9 @@
 
 class FoxHero : public Hero {
   public:
-    FoxHero() {};
+    FoxHero() {
+      id = "FoxHero";
+    };
 
     int hp = 100;
     int maxHp = 100;
@@ -14,6 +16,9 @@ class FoxHero : public Hero {
     int baseDef = 4;
     int bonusDef;
 
+    int speed = 6;
+
     int baseEnergy = 1;
     int energy;
+
 };

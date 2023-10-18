@@ -6,18 +6,19 @@
 #include "../GameState.h"
 #include <queue>
 #include "./Hero/Heroes.h"
-#include "Foe/Foe.h"
+#include "Foe/Foes.h"
 
 #include "../Game.h"
-// #include "./Action/Actions.h"
 #include "./Action/Action.h"
+// #include "./Action/Actions.h" // Error, use this in cpp instead
 
 // class Game;
+class Unit;
 
 class Combat : public GameState {
 
   public:
-    Combat(); // constructor
+    Combat(std::string combatId); // constructor
     ~Combat() override; // destructor
 
     void processInput(Game& game) override;
@@ -33,6 +34,7 @@ class Combat : public GameState {
     void loadBattle(const std::string& battleId);
 
     // std::vector<Unit> units;
+    // std::vector<Unit*> turnQueue = {};
     std::queue<Unit*> turnQueue = {};
     std::vector<Hero*> heroes = {};
     std::vector<Foe*> foes = {};
@@ -41,14 +43,28 @@ class Combat : public GameState {
     // bool isRoundOver;
     int currentRound = 0;
     Unit* currentUnit = nullptr;
+    // int currentUnitIndex = 0;
     // void startRound();
+
+    Action* hovered = nullptr;
 
     bool isRoundOver = false;;
 
-    std::unordered_map<std::string, std::function<Action*()>> abilityMap;
+
+
+    // std::unordered_map<std::string, std::function<Action*()>> abilityMap = {
+    //   {"DoNothing", []() { return new DoNothing(); }},
+    // };
+    // std::unordered_map<std::string, std::function<Foe*()>> foeMap;
+    // std::unordered_map<std::string, std::function<Foe*()>> foeMap = {
+    //   {"FoxFoe", []() { return new FoxFoe(); }},
+    //   // {"AnotherEnemyType", []() { return new AnotherEnemyType(); }},
+    //   // Add more enemy types as needed
+    // };
 
     // Helpers
     bool isHero(Unit* unit);
     bool isFoe(Unit* unit);
-
+    Foe* createFoe(const std::string& foeId);
+    Action* createAction(const std::string& actionId);
 };

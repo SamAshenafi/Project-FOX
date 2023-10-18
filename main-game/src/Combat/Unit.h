@@ -1,17 +1,22 @@
 #pragma once
+#include <cstdio>
 #include <raylib.h>
 #include <string>
 #include <vector>
+// #include "Combat.h"
 #include "Token/Token.h"
-// #include "Use/Use.h"
+// #include "Action/Action.h"
+// #include "Action/Actions.h"
 
 class Action;
 class Token;
+class Combat;
 
 class Unit {
 
   public:
     Unit() {};
+    virtual ~Unit() {};
 
     //character stats
     std::string id;
@@ -32,8 +37,8 @@ class Unit {
 
     Action* selectedAction = nullptr;
 
-    int baseSpeed;
-    int bonusSpeed;
+    int baseSpeed = 0;
+    int bonusSpeed = 0;
 
     //ability stats
     // Unit(
@@ -43,6 +48,10 @@ class Unit {
     //     int initiative
     //     );
 
+    // double lockOut = 0;
+    //
+    double startAnimationTime = 0;
+    double animationTimer = 0;
 
     int getDef() {
       return baseDef + bonusDef;
@@ -50,6 +59,15 @@ class Unit {
     int getAtk() {
       return baseAtk + bonusDef;
     }
+    int getSpeed() {
+      return baseSpeed + bonusSpeed;
+    }
+
+    Action* getAction() {
+      Action* action = selectedAction;
+      selectedAction = nullptr;
+      return action;
+    };
 
     void takeDmg(int dmg) {
       fprintf(stderr, "Take %d damage\n", dmg);
@@ -96,8 +114,22 @@ class Unit {
       }
     }
 
+    // virtual void playAnimation();
 
-    virtual void asdasdasdasd() {};
+    // void playAnimation() {
+    //   double currentTime = GetTime();
+    //   double deltaTimeSinceLastMove = currentTime - startAnimationTime;
+    //   if (deltaTimeSinceLastMove > animationTimer) {
+    //     fprintf(stderr, "Animation completed: %f\n", deltaTimeSinceLastMove);
+    //     animationTimer = 0;
+    //     return;
+    //   }
+    //   fprintf(stderr, "Animation playing: %f\n", deltaTimeSinceLastMove);
+    // }
+
+
+    virtual void assasdasdasd() {};
+    // virtual void takeTurn(Combat* combat) {};
 
     // void passTurn() {
     //   // Implement logic to pass the turn

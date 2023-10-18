@@ -1,12 +1,12 @@
 #pragma once
 #include <string>
 #include "../Unit.h"
-// #include "../../Game.h"
-#include "../Combat.h"
+#include "../../Game.h"
+// #include "../Combat.h"
 
 class Action {
   public:
-    // Action();
+    Action() {};
     virtual ~Action() = default;
     // Possile targetType
     // "self"
@@ -20,5 +20,6 @@ class Action {
     std::string targetType;
     int energyCost;
 
-    virtual void perform(Unit* user, Unit* target, Game& game) = 0;
+    virtual void perform(Unit* user, Unit* target, Game& game) {};
 };
+
