@@ -8,6 +8,8 @@ class DoNothing : public Action {
     // }
     DoNothing();
     ~DoNothing();
-    int perform(Unit *user, Unit *target, Game &game) override;
 
+    // std::string targetType = 
+
+    int perform(Unit* user, std::vector<Unit*> targets, Game& game) override;
 };

@@ -20,17 +20,17 @@ class Unit {
 
     //character stats
     std::string id;
-    int hp;
-    int maxHp;
+    int hp = 1;
+    int maxHp = 1;
     int bonusMaxHp;
 
-    int baseAtk;
-    int bonusAtk;
-    int baseDef;
-    int bonusDef;
+    int baseAtk = 0;
+    int bonusAtk = 0;
+    int baseDef = 0;
+    int bonusDef = 0;
 
     int baseEnergy = 1;
-    int energy;
+    int energy = 0;
 
     std::vector<Token*> tokens = {};
     std::vector<Action*> actions = {};

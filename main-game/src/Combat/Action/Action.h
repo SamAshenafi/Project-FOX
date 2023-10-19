@@ -17,10 +17,10 @@ class Action {
     // "enemies"
     // "all"
     // "ALL"
-    std::string targetType;
+    std::string targetType = "enemy";
     int energyCost = 1;
     int animationDuration = 12;
 
-    virtual int perform(Unit* user, Unit* target, Game& game) = 0;
+    virtual int perform(Unit* user, std::vector<Unit*> targets, Game& game) = 0;
 };
 

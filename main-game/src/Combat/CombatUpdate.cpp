@@ -13,11 +13,11 @@ void Combat::update(Game& game) {
     currentRound += 1;
     fprintf(stderr, "----------------\n");
     fprintf(stderr, "[ROUND START]: %d\n", currentRound);
-    for (Hero* hero : heroes) {
+    for (Unit* hero : heroes) {
       animationDuration += hero->onRoundStart();
       fprintf(stderr, "%s speed: %d\n", hero->id.c_str(), hero->getSpeed());
     }
-    for (Foe* foe : foes) {
+    for (Unit* foe : foes) {
       animationDuration += foe->onRoundStart();
       fprintf(stderr, "%s speed: %d\n", foe->id.c_str(), foe->getSpeed());
     }
@@ -56,23 +56,28 @@ void Combat::update(Game& game) {
       // currentUnit->startAnimationTime = GetTime();
       return;
     }
+
+    animationDuration += 2;
     isRoundOver = true;
+    return;
   }
   else {
-    // if (currentUnit->animationTimer > 0) {
-    //   currentUnit->playAnimation();
-    //   return;
-    // }
     if (currentUnit->energy < 1) {
       animationDuration += currentUnit->onTurnEnd();
       currentUnit = nullptr;
       return;
     }
+    // if (isFoe(currentUnit) && currentUnit->selectedAction != nullptr) {
     if (isFoe(currentUnit)) {
       dynamic_cast<Foe*>(currentUnit)->decideAction();
+      targets = dynamic_cast<Foe*>(currentUnit)->decideTarget(heroes);
     }
     Action* action = currentUnit->getAction();
-    if (action == nullptr) return;
-    animationDuration += action->perform(currentUnit, currentUnit, game);
+    if (action == nullptr) return; // extra, maybe need later?
+    if (action != nullptr && !targets.empty()) {
+      animationDuration += action->perform(currentUnit, targets, game);
+      highlightedAction = nullptr;
+      targets = {};
+    }
   }
 }

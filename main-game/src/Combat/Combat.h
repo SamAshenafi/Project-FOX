@@ -36,8 +36,8 @@ class Combat : public GameState {
     // std::vector<Unit> units;
     // std::vector<Unit*> turnQueue = {};
     std::queue<Unit*> turnQueue = {};
-    std::vector<Hero*> heroes = {};
-    std::vector<Foe*> foes = {};
+    std::vector<Unit*> heroes = {};
+    std::vector<Unit*> foes = {};
 
     // int currentUnitIndex;
     // bool isRoundOver;
@@ -46,7 +46,8 @@ class Combat : public GameState {
     // int currentUnitIndex = 0;
     // void startRound();
 
-    Action* hovered = nullptr;
+    Action* highlightedAction = nullptr;
+    std::vector<Unit*> targets = {};
 
     bool isRoundOver = false;;
 

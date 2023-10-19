@@ -9,5 +9,7 @@ class Foe : public Unit {
     ~Foe() {};
     std::string actionAI = "simple";
 
-    virtual Action* decideAction() = 0;
+    // virtual Action* decideAction() = 0;
+    virtual void decideAction() = 0;
+    virtual std::vector<Unit*> decideTarget(std::vector<Unit*> targets) = 0;
 };
