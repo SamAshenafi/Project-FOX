@@ -1,5 +1,6 @@
 #include "Combat.h"
 #include <cstdio>
+#include <raylib.h>
 
 void Combat::update(Game& game) {
   if (animationDuration != 0) {
@@ -33,8 +34,26 @@ void Combat::update(Game& game) {
     std::vector<Unit*> units;
     units.insert(units.end(), heroes.begin(), heroes.end());
     units.insert(units.end(), foes.begin(), foes.end());
+
+    // favor player if same speed
+    // std::sort(units.begin(), units.end(), [](Unit* a, Unit* b) {
+    //     return a->getSpeed() > b->getSpeed();
+    //     });
+
+    // random sorting if same speed (need testing)
     std::sort(units.begin(), units.end(), [](Unit* a, Unit* b) {
-        return a->getSpeed() > b->getSpeed();
+        // Compare speeds
+        if (a->getSpeed() > b->getSpeed()) {
+        return true;
+        }
+        else if (a->getSpeed() < b->getSpeed()) {
+        return false;
+        }
+        else {
+        // If speeds are equal, introduce randomness
+        // double randomValue = distribution(generator);
+        return GetRandomValue(0, 1) == 0; // 50% chance for each unit to be first
+        }
         });
 
     // Add characters to the turn queue
@@ -80,4 +99,4 @@ void Combat::update(Game& game) {
       targets = {};
     }
   }
-}
+  }
