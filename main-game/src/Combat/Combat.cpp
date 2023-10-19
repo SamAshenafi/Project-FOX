@@ -22,6 +22,7 @@ Combat::Combat(std::string combatId) {
   // PLACEHOLDER. DO NOT//
   Hero* foxHero = new FoxHero();
   // foxHero->id = "Fox";
+  foxHero->sprite = loadTexture(foxHero->id);
   foxHero->actions.push_back(new DoNothing());
   heroes.push_back(foxHero);
   // PLACEHOLDER. DO NOT//
@@ -37,6 +38,25 @@ void Combat::render(Game& game) {
   // ClearBackground(RAYWHITE);
   ClearBackground(DARKGRAY);
 
+  int screenWidth = game.settings.screenWidth;
+  int screenHeight = game.settings.screenHeight;
+
+  //Renders Background for battle 
+  // Could use similar algorithm for drawing the background image in World.cpp
+
+  // Renders Menu Boxes containing selectable actions
+  // Menu contains (1) actions and can scroll through them
+  RenderUI(screenWidth, screenHeight);
+
+  // Renders Heros and Foes and stat symbols
+  // if theres a better way to initilize pos then replace it
+  // for now the usage of pos will be considered a placeholder
+  RenderUnits(
+    heroes,
+    foes,
+    screenWidth,
+    screenHeight
+  );
   game.renderDialog();
   EndDrawing();
 }
@@ -63,8 +83,8 @@ void Combat::loadBattle(const std::string& battleId) {
         Foe* newFoe = createFoe(foeId);
         if (newFoe != nullptr) {
           fprintf(stderr, "Added foe w/ id:%s to foes\n", foeId.c_str());
-
           newFoe->actions.push_back(new DoNothing()); // Placeholder
+          newFoe->sprite = loadTexture(newFoe->id);
           foes.push_back(newFoe);
         }
         else {

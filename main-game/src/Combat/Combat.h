@@ -70,4 +70,13 @@ class Combat : public GameState {
     bool isFoe(Unit* unit);
     Foe* createFoe(const std::string& foeId);
     Action* createAction(const std::string& actionId);
+    
+    void RenderUI(int screenWidth,int screenHeight);
+    void RenderUnits(
+      std::vector<Unit*> heroes,
+      std::vector<Unit*> foes,
+      int screenWidth,
+      int screenHeight
+    );
+    Texture2D loadTexture(std::string filePath);
 };

@@ -39,7 +39,7 @@ class Unit {
 
     int baseSpeed = 0;
     int bonusSpeed = 0;
-
+    
     //ability stats
     // Unit(
     //     std::string name,
@@ -104,22 +104,22 @@ class Unit {
       // }
     }
 
-    int onRoundStart() {
-      int totalAnimationDuration = 0;
-      energy = baseEnergy;
-      bonusSpeed = GetRandomValue(0, 6);
-      // get speed modifier from other
+      int onRoundStart() {
+        int totalAnimationDuration = 0;
+        energy = baseEnergy;
+        bonusSpeed = GetRandomValue(0, 6);
+        // get speed modifier from other
 
-      for (Token* token : tokens) {
-        totalAnimationDuration += token->onRoundStart(*this);
+        for (Token* token : tokens) {
+          totalAnimationDuration += token->onRoundStart(*this);
+        }
+        return totalAnimationDuration;
       }
-      return totalAnimationDuration;
-    }
-    int onRoundEnd() {
-      int totalAnimationDuration = 0;
-      for (Token* token : tokens) {
-        totalAnimationDuration += token->onRoundEnd(*this);
-      }
+      int onRoundEnd() {
+        int totalAnimationDuration = 0;
+        for (Token* token : tokens) {
+          totalAnimationDuration += token->onRoundEnd(*this);
+        }
       return totalAnimationDuration;
     }
 
@@ -145,4 +145,25 @@ class Unit {
     //   // hasTakenTurn = true;
     //   fprintf(stderr, "Character %s passed their turn\n", name.c_str());
     // }
+
+    Texture2D sprite;
+
+    //helper function for rendering
+    void RenderSprite(
+      Texture2D sprite,
+      int hp,
+      int maxHp,
+      int energy,
+      int screenWidth,
+      int screenHeight, 
+      int pos,
+      bool isHero,
+      bool isFoe
+      );
+    // void RenderActions(
+    //   int screenWidth,
+    //   int screenHeight,
+    //   int selectedAction,
+    //   std::vector<Action*> actions
+    // );
 };
