@@ -86,7 +86,6 @@ void Combat::update(Game& game) {
       currentUnit = nullptr;
       return;
     }
-    // if (isFoe(currentUnit) && currentUnit->selectedAction != nullptr) {
     if (isFoe(currentUnit)) {
       dynamic_cast<Foe*>(currentUnit)->decideAction();
       targets = dynamic_cast<Foe*>(currentUnit)->decideTarget(heroes);
@@ -99,4 +98,4 @@ void Combat::update(Game& game) {
       targets = {};
     }
   }
-  }
+}

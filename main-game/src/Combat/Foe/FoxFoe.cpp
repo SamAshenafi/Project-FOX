@@ -8,7 +8,7 @@ void FoxFoe::decideAction() {
     fprintf(stderr, "no actions for enemy AI\n");
     // return nullptr;
   }
-  int randomActionIndex = GetRandomValue(0, actions.size());
+  int randomActionIndex = GetRandomValue(0, actions.size() - 1);
   fprintf(stderr, "randomActionIndex rolled: %d\n", randomActionIndex);
   selectedAction = actions[randomActionIndex];
   // if (selectedAction == nullptr) {
