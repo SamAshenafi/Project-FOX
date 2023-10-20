@@ -25,50 +25,48 @@ void Player::processInput(Game& game) {
     if (!pathQueue.empty()) {
       animationDuration = 0;
     }
+  }
 
-    int keyPressed = GetKeyPressed();
-    switch (keyPressed) {
-      case KEY_SPACE:
+  if (IsKeyPressed(KEY_SPACE)) {
         fprintf(stderr, "%s\n", "space was pressed");
-        if (!game.dialogQueue.empty()) {
-          game.dialogQueue.pop();
-          break;
-        }
-        int targetX = x;
-        int targetY = y;
+    if (!game.dialogQueue.empty()) {
+      game.dialogQueue.pop();
+    }
+    else {
+    int targetX = x;
+    int targetY = y;
 
-        if (facing == "up") {
-          targetY--;
-        }
-        else if (facing == "down") {
-          targetY++;
-        }
-        else if (facing == "left") {
-          targetX--;
-        }
-        else if (facing == "right") {
-          targetX++;
-        }
-        else {
-          fprintf(stderr, "invalid player->facing direction");
-          return;
-        }
+    if (facing == "up") {
+      targetY--;
+    }
+    else if (facing == "down") {
+      targetY++;
+    }
+    else if (facing == "left") {
+      targetX--;
+    }
+    else if (facing == "right") {
+      targetX++;
+    }
+    else {
+      fprintf(stderr, "invalid player->facing direction");
+      return;
+    }
 
-        for (Entity* entity : dynamic_cast<World*>(game.world)->entities) {
-          bool isAtTile =
-            entity->x == targetX &&
-            entity->y == targetY
-            ;
-          if (!isAtTile) {
-            continue;
-          }
-          Tile* tile = dynamic_cast<Tile*>(entity);
-          if (tile != nullptr) {
-            //game.loadTile(entity->id);
-            tile->interact();
-          }
-        }
-        break;
+    for (Entity* entity : dynamic_cast<World*>(game.world)->entities) {
+      bool isAtTile =
+        entity->x == targetX &&
+        entity->y == targetY
+        ;
+      if (!isAtTile) {
+        continue;
+      }
+      Tile* tile = dynamic_cast<Tile*>(entity);
+      if (tile != nullptr) {
+        //game.loadTile(entity->id);
+        tile->interact();
+      }
+    }
     }
   }
 
