@@ -64,7 +64,8 @@ void Player::processInput(Game& game) {
       Tile* tile = dynamic_cast<Tile*>(entity);
       if (tile != nullptr) {
         //game.loadTile(entity->id);
-        tile->interact();
+        std:: string tileType = tile->interact();
+        if (tileType == "battle") world->enterCombat(game, tile->id);
       }
     }
     }

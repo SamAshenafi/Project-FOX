@@ -83,7 +83,7 @@ void World::update(Game& game) {
 
 
 
-void World::enterCombat(Game& game) {
-  GameState* combat = new Combat("aaa");
+void World::enterCombat(Game& game, const std::string& battleId) {
+  GameState* combat = new Combat(battleId);
   game.changeState(combat);
 }

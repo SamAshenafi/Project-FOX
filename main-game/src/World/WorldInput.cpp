@@ -9,7 +9,7 @@ void World::processInput(Game& game) {
       fprintf(stderr, "%s\n", "c was pressed");
       // game.changeState("combat");
       // Transfer data from World to Combat here
-      enterCombat(game);
+      enterCombat(game, "battle-aaa");
       break;
     case KEY_O:
       {

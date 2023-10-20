@@ -56,7 +56,7 @@ class World : public GameState {
     // std::string inputHelper(std::string facing);
     // void findShortestPath(Game& game, int startX, int startY, int targetX, int targetY);
 
-    void enterCombat(Game& game);
+    void enterCombat(Game& game, const std::string& battleId);
 
     void resetGrid(); // set all in grid to 0
     void sortGameObjects();

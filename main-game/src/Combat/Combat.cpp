@@ -63,9 +63,8 @@ void Combat::render(Game& game) {
 
 void Combat::loadBattle(const std::string& battleId) {
   const std::string battleFilePath = "./json/battle/";
-  const std::string battlePrefix = "battle-";
   const std::string jsonFileType = ".json";
-  const std::string fullFilePath = battleFilePath + battlePrefix + battleId + jsonFileType;
+  const std::string fullFilePath = battleFilePath + battleId + jsonFileType;
   nlohmann::json root;
   std::ifstream jsonFile(fullFilePath);
 

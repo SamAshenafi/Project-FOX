@@ -16,7 +16,7 @@ Tile::Tile(
   // sprite = Helper::loadTexture("path_to_your_tile_texture.png");
 }
 
-void Tile::interact() {
+std::string Tile::interact() {
   // Copied from Game::loadTile()
   std::string tileType = Helper::parseGameObjectType(id);
   if (tileType == "chest") {
@@ -47,16 +47,16 @@ void Tile::interact() {
       }
     }
   }
-  else if (tileType == "combat") {
+  else if (tileType == "battle") {
     // TODO: load combat encounter, blah blah blah
-    const std::string combatFilePath = "./json/combat/";
+    const std::string battleFilePath = "./json/battle/";
     const std::string jsonFileType = ".json";
-    const std::string fullFilePath = combatFilePath + id + jsonFileType;
+    const std::string fullFilePath = battleFilePath + id + jsonFileType;
     nlohmann::json root;
     std::ifstream jsonFile(fullFilePath);
     
     // Placeholder until we can get combat to start
-    fprintf(stderr, "combat tile\n");
+    fprintf(stderr, "battle tile\n");
     if (jsonFile.is_open()) {
       try {
         jsonFile >> root;
@@ -94,6 +94,7 @@ void Tile::interact() {
   // TODO: add more parsing for other tile type here
   else if (true) {
   }
+  return tileType;
 }
 
 void Tile::render(int gridWidth, int gridHeight) {

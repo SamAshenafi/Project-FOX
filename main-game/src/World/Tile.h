@@ -21,7 +21,7 @@ class Tile : public Entity {
         );
 
     // void interact() override;
-    void interact();
+    std::string interact();
     // void draw(int gridSize);
     void render(int gridWidth, int gridHeight) override;
 };
