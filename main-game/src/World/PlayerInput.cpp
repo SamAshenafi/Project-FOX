@@ -3,36 +3,9 @@
 void Player::processInput(Game& game) {
   World* world = dynamic_cast<World*>(game.world);
 
-  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
-    Vector2 mousePosition = GetMousePosition();
-    int targetX = mousePosition.x / game.settings.gridWidth;
-    int targetY = mousePosition.y / game.settings.gridHeight;
-
-    fprintf(stderr, "mousePosition: %d, %d\n", targetX, targetY);
-
-    // If player hit the UI/Dialog area
-    if (targetY >= 12) {
-      if (!game.dialogQueue.empty()) {
-        game.dialogQueue.pop();
-        return;
-      }
-      // NOTE: UI button interaction should go here
-    }
-
-    std::queue<std::pair<int, int>>().swap(pathQueue); // empty the queue
-    // pathQueue = {};
-    findShortestPath(*world, x, y, targetX, targetY);
-    if (!pathQueue.empty()) {
-      animationDuration = 0;
-    }
-  }
-
   if (IsKeyPressed(KEY_SPACE)) {
-        fprintf(stderr, "%s\n", "space was pressed");
-    if (!game.dialogQueue.empty()) {
-      game.dialogQueue.pop();
-    }
-    else {
+    fprintf(stderr, "%s\n", "space was pressed");
+    if (movable) {
     int targetX = x;
     int targetY = y;
 
@@ -63,86 +36,115 @@ void Player::processInput(Game& game) {
       }
       Tile* tile = dynamic_cast<Tile*>(entity);
       if (tile != nullptr) {
-        //game.loadTile(entity->id);
-        std:: string tileType = tile->interact();
-        if (tileType == "battle") world->enterCombat(game, tile->id);
+          //game.loadTile(entity->id);
+          std:: string tileType = tile->interact();
+          if (tileType == "battle") world->enterCombat(game, tile->id);
+        }
       }
     }
+    else if (!game.dialogQueue.empty()) {
+      game.dialogQueue.pop();
+      if (game.dialogQueue.empty()) movable = true;
     }
   }
 
-  int newX = x;
-  int newY = y;
-  std::string direction = inputHelper(facing);
+  if (movable) {
+    if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+      Vector2 mousePosition = GetMousePosition();
+      int targetX = mousePosition.x / game.settings.gridWidth;
+      int targetY = mousePosition.y / game.settings.gridHeight;
 
-  if (direction == "none") return;
-  if (direction == "right") {
-    facing = "right";
-    newX++;
-  }
-  else if (direction == "left") {
-    facing = "left";
-    newX--;
-  }
-  else if (direction == "down") {
-    facing = "down";
-    newY++;
-  }
-  else if (direction == "up") {
-    facing = "up";
-    newY--;
-  }
-  else {
-    fprintf(stderr, "error direction\n");
-  }
+      fprintf(stderr, "mousePosition: %d, %d\n", targetX, targetY);
 
-  if (animationDuration > 0) return;
+      // If player hit the UI/Dialog area
+      if (targetY >= 12) {
+        if (!game.dialogQueue.empty()) {
+          game.dialogQueue.pop();
+          return;
+        }
+        // NOTE: UI button interaction should go here
+      }
+
+      std::queue<std::pair<int, int>>().swap(pathQueue); // empty the queue
+      // pathQueue = {};
+      findShortestPath(*world, x, y, targetX, targetY);
+      if (!pathQueue.empty()) {
+        animationDuration = 0;
+      }
+    }
+
+    int newX = x;
+    int newY = y;
+    std::string direction = inputHelper(facing);
+
+    if (direction == "none") return;
+    if (direction == "right") {
+      facing = "right";
+      newX++;
+    }
+    else if (direction == "left") {
+      facing = "left";
+      newX--;
+    }
+    else if (direction == "down") {
+      facing = "down";
+      newY++;
+    }
+    else if (direction == "up") {
+      facing = "up";
+      newY--;
+    }
+    else {
+      fprintf(stderr, "error direction\n");
+    }
+
+    if (animationDuration > 0) return;
 
 
-  std::queue<std::pair<int, int>>().swap(pathQueue); // empty the queue
-  // pathQueue = {};
+    std::queue<std::pair<int, int>>().swap(pathQueue); // empty the queue
+    // pathQueue = {};
 
-  // if (deltaTimeSinceLastMove < moveSpeed) {
-  //   return; // Too soon for another move
-  // }
+    // if (deltaTimeSinceLastMove < moveSpeed) {
+    //   return; // Too soon for another move
+    // }
 
-  // NOTE: this might be uneccessary, add back if break
-  // no movement
-  // if (newX == x && newY == y) {
-  // }
+    // NOTE: this might be uneccessary, add back if break
+    // no movement
+    // if (newX == x && newY == y) {
+    // }
 
-  // Check if the new position is out of bounds
-  bool isOutOfBound = newX < 0 ||
-    newX >= world->columns ||
-    newY < 0 ||
-    newY >= world->rows;
-  if (isOutOfBound) {
-    fprintf(stderr, "out of bound: %d, %d\n", newX, newY);
-    // TODO: if current tile is transition tile
-    if (true) {
-      // TODO: move player to transitionTile.enterX and enterY
-      // move(0, 0);
+    // Check if the new position is out of bounds
+    bool isOutOfBound = newX < 0 ||
+      newX >= world->columns ||
+      newY < 0 ||
+      newY >= world->rows;
+    if (isOutOfBound) {
+      fprintf(stderr, "out of bound: %d, %d\n", newX, newY);
+      // TODO: if current tile is transition tile
+      if (true) {
+        // TODO: move player to transitionTile.enterX and enterY
+        // move(0, 0);
+        return;
+      }
+      return; // Player moved to a new room, no need to continue with the current input
+    }
+    else if (world->grid[newX][newY] == 1) {
+      // no movement, terrain or tile block
       return;
     }
-    return; // Player moved to a new room, no need to continue with the current input
+    else if (newY != 0){
+      // NOTE: player's depth/y changed, so we need to sort the GameObjects vector
+      world->sortGameObjects();
+      move(newX, newY);
+      animationDuration += 6;
+      // lastMoveTime = currentTime;
+    }
+    else {
+      move(newX, newY);
+      animationDuration += 6;
+      // lastMoveTime = currentTime;
+    }
   }
-  else if (world->grid[newX][newY] == 1) {
-    // no movement, terrain or tile block
-    return;
-  }
-  else if (newY != 0){
-    // NOTE: player's depth/y changed, so we need to sort the GameObjects vector
-    world->sortGameObjects();
-    move(newX, newY);
-    animationDuration += 6;
-    // lastMoveTime = currentTime;
-  }
-  else {
-    move(newX, newY);
-    animationDuration += 6;
-    // lastMoveTime = currentTime;
-  }
-
 }
 
 std::string Player::inputHelper(std::string facing) {

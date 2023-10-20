@@ -8,7 +8,7 @@
 
 class World;
 
-class Player : public Entity { //: public Unit {
+class Player : public Entity {
   public:
     std::string facing;
 
@@ -21,6 +21,9 @@ class Player : public Entity { //: public Unit {
     // Rectangle down = { 0, 40 * 3, 48 * 2, 40 * 3 * 2 };
     // Rectangle up = { 0, 40 * 3 * 2, 48 * 2, 40 * 3 * 3 };
     // Rectangle left = { 0, 0, 48 * 2, 40 * 3 };
+
+    // For stopping movement during dialogue
+    bool movable;
 
     // Texture2D flippedSprite;
     int animationDuration = 0;

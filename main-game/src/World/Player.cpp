@@ -17,6 +17,7 @@ Player::Player(
   // "fox.png" does not exist
   sprite = Helper::loadTexture("fox.png");
   // flippedSprite = Helper::loadTexture("fox.png");
+  movable = true;
 }
 
 void Player::render(int gridWidth, int gridHeight) {
