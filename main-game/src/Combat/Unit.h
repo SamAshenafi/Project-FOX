@@ -34,6 +34,7 @@ class Unit {
 
     std::vector<Token*> tokens = {};
     std::vector<Action*> actions = {};
+    std::vector<std::string> actionList = {};
 
     Action* selectedAction = nullptr;
 
@@ -61,6 +62,10 @@ class Unit {
     }
     int getSpeed() {
       return baseSpeed + bonusSpeed;
+    }
+
+    std::vector<std::string> getActionList(){
+      return actionList;
     }
 
     Action* getAction() {

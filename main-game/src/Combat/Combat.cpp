@@ -2,6 +2,7 @@
 #include "Action/Actions.h"
 #include "../../external-libs/nlohmann/json.hpp"
 #include "Action/DoNothing.h"
+#include "Action/Strike.h"
 #include <cstdio>
 #include <raylib.h>
 #include <string>
@@ -18,14 +19,6 @@ Combat::Combat(std::string combatId) {
 
   // std::string currentBattleId = "001";
   loadBattle(combatId);
-
-  // PLACEHOLDER. DO NOT//
-  Hero* foxHero = new FoxHero();
-  // foxHero->id = "Fox";
-  foxHero->sprite = loadTexture(foxHero->id);
-  foxHero->actions.push_back(new DoNothing());
-  heroes.push_back(foxHero);
-  // PLACEHOLDER. DO NOT//
 }
 
 Combat::~Combat() {
@@ -82,7 +75,9 @@ void Combat::loadBattle(const std::string& battleId) {
         Foe* newFoe = createFoe(foeId);
         if (newFoe != nullptr) {
           fprintf(stderr, "Added foe w/ id:%s to foes\n", foeId.c_str());
-          newFoe->actions.push_back(new DoNothing()); // Placeholder
+          for(std::string action : newFoe->getActionList()) {
+            newFoe->actions.push_back(createAction(action));
+          }
           newFoe->sprite = loadTexture(newFoe->id);
           foes.push_back(newFoe);
         }
@@ -122,8 +117,14 @@ void Combat::loadBattle(const std::string& battleId) {
       fprintf(stderr, "JSON parsing failed: %s\n", e.what());
     }
   }
+  Hero* foxHero = new FoxHero();
+  foxHero->sprite = loadTexture(foxHero->id);
+  for(std::string action : foxHero->getActionList())
+  {
+    foxHero->actions.push_back(createAction(action));
+  }
+  heroes.push_back(foxHero);
 }
-
 
 // void Combat::startRound() {
 //   fprintf(stderr, "round %d started\n", currentRound);

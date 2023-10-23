@@ -1,4 +1,5 @@
 #include "Action/DoNothing.h"
+#include "Action/Actions.h"
 #include "Combat.h"
 
 bool Combat::isHero(Unit* unit) {
@@ -19,5 +20,6 @@ Foe* Combat::createFoe(const std::string& foeId) {
 Action* Combat::createAction(const std::string& actionId) {
   // add more here
   if (actionId == "DoNothing") return new DoNothing();
+  if (actionId == "Strike") return new Strike();
   return nullptr;
 }

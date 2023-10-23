@@ -7,7 +7,6 @@
 #include <queue>
 #include "./Hero/Heroes.h"
 #include "Foe/Foes.h"
-
 #include "../Game.h"
 #include "./Action/Action.h"
 // #include "./Action/Actions.h" // Error, use this in cpp instead
@@ -45,7 +44,8 @@ class Combat : public GameState {
     Unit* currentUnit = nullptr;
     // int currentUnitIndex = 0;
     // void startRound();
-
+    
+    int selected = 0;
     Action* highlightedAction = nullptr;
     std::vector<Unit*> targets = {};
 

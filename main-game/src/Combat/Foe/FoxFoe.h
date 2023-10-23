@@ -5,6 +5,8 @@ class FoxFoe : public Foe {
   public:
     FoxFoe() {
       id = "FoxFoe";
+      actionList.push_back("DoNothing");
+      actionList.push_back("Strike");
     };
 
     int hp = 100;
@@ -16,7 +18,7 @@ class FoxFoe : public Foe {
     int baseDef = 4;
     int bonusDef;
 
-    int speed = 6;
+    int baseSpeed = 6;
 
     int baseEnergy = 1;
     int energy;

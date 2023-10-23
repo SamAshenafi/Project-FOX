@@ -29,8 +29,10 @@ void Combat::processInput(Game& game) {
     case KEY_P:
       fprintf(stderr, "%s\n", "p was pressed");
       if (isHero(currentUnit)) {
-        fprintf(stderr, "%s\n", "do nothing action is selected");
-        highlightedAction = currentUnit->actions[0];
+        selected = (selected + 1) % (currentUnit->actions.size());
+        fprintf(stderr, "%s%i\n", "selection size: ",currentUnit->actions.size());
+        fprintf(stderr, "%s%s\n", "action selected: ",currentUnit->actionList[selected].c_str());
+        highlightedAction = currentUnit->actions[selected];
       }
       else {
         fprintf(stderr, "Unit w/ id: %s is not a hero\n", currentUnit->id.c_str());
@@ -39,6 +41,7 @@ void Combat::processInput(Game& game) {
     case KEY_SEVEN:
       fprintf(stderr, "%s\n", "7 was pressed");
       if (highlightedAction != nullptr) {
+        fprintf(stderr, "%s\n", "test1");
         if (highlightedAction->targetType == "enemy") {
           targets = {};
           targets.push_back(foes[0]);

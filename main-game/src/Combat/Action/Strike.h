@@ -1,13 +1,13 @@
 #pragma once
 #include "Action.h"
 
-class DoNothing : public Action {
+class Strike : public Action {
   public:
-    // DoNothing() {
+    // Strike() {
     //   energyCost = 1;
     // }
-    DoNothing();
-    ~DoNothing();
+    Strike();
+    ~Strike();
 
     // std::string targetType = "enemy";
 
