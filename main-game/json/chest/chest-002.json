@@ -1,0 +1,16 @@
+{
+  "items": [
+      {
+        "id": "shield",
+        "quantity": 1
+      },
+      {
+        "id": "glass_bottle",
+        "quantity": 2
+      },
+      {
+        "id": "gold",
+        "quantity": 30
+      }
+    ]
+}

@@ -47,6 +47,9 @@ void World::loadRoom(const std::string& roomId) {
       std::string roomFilePath = "./assets/room/" + roomId;
       background = LoadTexture((roomFilePath + "-bg.png").c_str());
 
+      // Reinitialize Entities
+      entities.clear();
+
       // Parse Tiles
       for (const auto& tileData : root["tiles"]) {
         std::string tileID = tileData["id"].get<std::string>();
@@ -58,16 +61,25 @@ void World::loadRoom(const std::string& roomId) {
         entities.push_back(tile);
       }
 
+      // Add players back to entities vector
+
+      for (Player* pc : players) {
+        entities.push_back(pc);
+      }
+
+      // Reinitialize Transition Tiles
+      transitionTiles.clear();
+
       // Parse transition tiles
       for (const auto& transitionData : root["transitionTiles"]) {
-        int tileX = transitionData["x"];
-        int tileY = transitionData["y"];
-        int enterX = transitionData["enterX"];
-        int enterY = transitionData["enterY"];
-        std::string destinationRoomId = transitionData["destinationRoomId"];
+        int tileX = transitionData["x"].get<int>();
+        int tileY = transitionData["y"].get<int>();
+        int enterX = transitionData["enterX"].get<int>();
+        int enterY = transitionData["enterY"].get<int>();
+        std::string destinationRoomId = transitionData["destinationRoomId"].get<std::string>();
         // TODO: create new TransitionTile & push into the transitionTiles vector
-        // TransitionTile transitionTile(tileX, tileY, destinationRoomId);
-        // transitionTiles.push_back(transitionTile);
+        TransitionTile* transitionTile = new TransitionTile(tileX, tileY, enterX, enterY, destinationRoomId.c_str());
+        transitionTiles.push_back(transitionTile);
       }
     }
     catch (const std::exception& e) {

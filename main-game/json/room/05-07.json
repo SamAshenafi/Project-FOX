@@ -1,0 +1,20 @@
+{
+  "roomId":"05-07",
+  "tiles": [
+    {
+      "id": "chest-002",
+      "x": 7,
+      "y": 5,
+      "blocked": true
+    }
+  ],
+  "transitionTiles": [
+    {
+      "x": 6,
+      "y": 0,
+      "enterX": 6,
+      "enterY": 11,
+      "destinationRoomId": "05-06"
+    }
+  ]
+}

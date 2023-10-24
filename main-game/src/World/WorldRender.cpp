@@ -54,6 +54,18 @@ void World::render(Game& game) {
     }
   }
 
+  //Placeholder for testing
+  // There should ideally be nothing to render, but this works as a placeholder
+  for (TransitionTile* tTile : transitionTiles) {
+    DrawRectangle(
+      tTile->x * game.settings.gridWidth,
+      tTile->y * game.settings.gridHeight,
+      game.settings.gridWidth,
+      game.settings.gridHeight,
+      Color {100, 100, 100, 100}
+      );
+  }
+
   for (Entity* entity : entities) {
     // Call the render method for each object through the pointer
     entity->render(game.settings.gridWidth, game.settings.gridHeight);

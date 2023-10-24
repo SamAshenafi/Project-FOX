@@ -7,6 +7,7 @@
 #include "Entity.h"
 #include "Player.h"
 #include "Tile.h"
+#include "TransitionTile.h"
 
 #include "../Game.h"
 
@@ -32,6 +33,7 @@ class World : public GameState {
     int rows = sizeof(grid[0]) / sizeof(grid[0][0]);
 
     std::vector<Entity*> entities;
+    std::vector<TransitionTile*> transitionTiles;
     std::vector<Player*> players;
     Player* player = nullptr;
 

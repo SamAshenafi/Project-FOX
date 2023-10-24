@@ -120,13 +120,18 @@ void Player::processInput(Game& game) {
       newY >= world->rows;
     if (isOutOfBound) {
       fprintf(stderr, "out of bound: %d, %d\n", newX, newY);
-      // TODO: if current tile is transition tile
-      if (true) {
-        // TODO: move player to transitionTile.enterX and enterY
-        // move(0, 0);
-        return;
+      for (TransitionTile* transition : dynamic_cast<World*>(game.world)->transitionTiles) {
+        bool isAtTransition =
+          transition->x == this->x &&
+          transition->y == this->y
+          ;
+        if (isAtTransition) {
+          fprintf(stderr, "Trying to go to next room\n");
+          world->loadRoom(transition->destinationRoomId);
+          move(transition->enterX, transition->enterY);
+          return;
+        }
       }
-      return; // Player moved to a new room, no need to continue with the current input
     }
     else if (world->grid[newX][newY] == 1) {
       // no movement, terrain or tile block
