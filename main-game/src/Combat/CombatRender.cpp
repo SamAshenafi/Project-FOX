@@ -74,7 +74,7 @@ void Combat::RenderUnits
     hero->RenderSprite(
       hero->sprite,
       hero->hp,
-      hero->maxHp,
+      hero->getMaxHp(),
       hero->energy,
       screenWidth,
       screenHeight,
@@ -90,7 +90,7 @@ void Combat::RenderUnits
     foe->RenderSprite(
       foe->sprite,
       foe->hp,
-      foe->maxHp,
+      foe->getMaxHp(),
       foe->energy,
       screenWidth,
       screenHeight, 

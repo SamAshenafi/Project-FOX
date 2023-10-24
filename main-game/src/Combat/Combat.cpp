@@ -84,32 +84,6 @@ void Combat::loadBattle(const std::string& battleId) {
         else {
           fprintf(stderr, "Invalid foeId: %s\n", foeId.c_str());
         }
-        // foes.push_back()
-
-
-        // Base stats are in the class, not JSON
-        // int maxHP = enemyData["maxHP"].get<int>();
-        // int HP = enemyData["HP"].get<int>();
-        // int baseAtk = enemyData["baseAtk"].get<int>();
-        // int baseDef = enemyData["baseDef"].get<int>();
-        // int maxEnergy = enemyData["maxEnergy"].get<int>();
-        // int speed = enemyData["speed"].get<int>();
-
-        // TODO: Implement creating new Units (or Foes) and adding them to the vector
-
-        // Unit* enemy = new Unit();
-        // enemy.id = enemyId.c_str();
-        // enemy.maxHp = maxHP;
-        // enemy.hp = HP;
-        // enemy.baseAtk = baseAtk;
-        // enemy.baseDef = baseDef;
-        // enemy.baseEnergy = maxEnergy;
-        // enemy.baseSpeed = speed;
-
-        // unitsFromJSON.push_back(enemy);
-
-        // fprintf(stderr, "--%s--\nmaxHP: %i   HP: %i\nbaseAtk: %i   baseDef: %i\nmaxEnergy: %i   speed: %i\n",
-        //     enemyId.c_str(), maxHP, HP, baseAtk, baseDef, maxEnergy, speed);
       }
 
     }
@@ -125,21 +99,4 @@ void Combat::loadBattle(const std::string& battleId) {
   }
   heroes.push_back(foxHero);
 }
-
-// void Combat::startRound() {
-//   fprintf(stderr, "round %d started\n", currentRound);
-//   currentRound++;
-//   // isRoundOver = false;
-//   // for (Unit& unit : units) {
-//   //   unit.hasTakenTurn = false;
-//   }
-//   // for (Unit& unit : enemies) {
-//   //   unit.hasTakenTurn = false;
-//   // }
-//
-//   // std::sort(units.begin(), units.end(), [](const Unit& a, const Unit& b) {
-//   //     return a.initiative > b.initiative;
-//   //     });
-//   // currentUnitIndex = 0; // Start with the first player character
-// }
 

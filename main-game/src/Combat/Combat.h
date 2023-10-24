@@ -68,6 +68,8 @@ class Combat : public GameState {
     // Helpers
     bool isHero(Unit* unit);
     bool isFoe(Unit* unit);
+    bool foesVanquished(std::vector<Unit*> foes);
+    bool heroesVanquished(std::vector<Unit*> heroes);
     Foe* createFoe(const std::string& foeId);
     Action* createAction(const std::string& actionId);
     

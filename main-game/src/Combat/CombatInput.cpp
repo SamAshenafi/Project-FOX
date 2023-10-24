@@ -11,21 +11,22 @@ void Combat::processInput(Game& game) {
       // game.changeState("world");
       game.changeState(game.world);
       break;
-    case KEY_N:
-      fprintf(stderr, "%s\n", "n was pressed");
-      // if (currentUnit != nullptr) {
-      //   if (isHero(currentUnit)) {
-      //     if (highlightedAction != nullptr) {
-      //       fprintf(stderr, "%s\n", "do nothing action is executed");
-      //       currentUnit->selectedAction = highlightedAction;
-      //       highlightedAction = nullptr;
-      //     }
-      //     else {
-      //       fprintf(stderr, "%s\n", "no action is selected. Please select one by pressing p for now.");
-      //     }
-      //   }
-      // }
-      break;
+    // delete this section?
+    // case KEY_N:
+    //   fprintf(stderr, "%s\n", "n was pressed");
+    //   // if (currentUnit != nullptr) {
+    //   //   if (isHero(currentUnit)) {
+    //   //     if (highlightedAction != nullptr) {
+    //   //       fprintf(stderr, "%s\n", "do nothing action is executed");
+    //   //       currentUnit->selectedAction = highlightedAction;
+    //   //       highlightedAction = nullptr;
+    //   //     }
+    //   //     else {
+    //   //       fprintf(stderr, "%s\n", "no action is selected. Please select one by pressing p for now.");
+    //   //     }
+    //   //   }
+    //   // }
+    //   break;
     case KEY_P:
       fprintf(stderr, "%s\n", "p was pressed");
       if (isHero(currentUnit)) {
@@ -41,7 +42,6 @@ void Combat::processInput(Game& game) {
     case KEY_SEVEN:
       fprintf(stderr, "%s\n", "7 was pressed");
       if (highlightedAction != nullptr) {
-        fprintf(stderr, "%s\n", "test1");
         if (highlightedAction->targetType == "enemy") {
           targets = {};
           targets.push_back(foes[0]);

@@ -16,11 +16,11 @@ void Combat::update(Game& game) {
     fprintf(stderr, "[ROUND START]: %d\n", currentRound);
     for (Unit* hero : heroes) {
       animationDuration += hero->onRoundStart();
-      fprintf(stderr, "%s speed: %d\n", hero->id.c_str(), hero->getSpeed());
+      fprintf(stderr, "%s speed: %d\n maxHp: %d\n hp: %d\n", hero->id.c_str(), hero->getSpeed(), hero->getMaxHp(), hero->hp);
     }
     for (Unit* foe : foes) {
       animationDuration += foe->onRoundStart();
-      fprintf(stderr, "%s speed: %d\n", foe->id.c_str(), foe->getSpeed());
+      fprintf(stderr, "%s speed: %d\n maxHp: %d\n hp: %d\n", foe->id.c_str(), foe->getSpeed(), foe->getMaxHp(), foe->hp);
     }
     // sort by speed -> add to turnQueue
 
@@ -50,9 +50,8 @@ void Combat::update(Game& game) {
         return false;
         }
         else {
-        // If speeds are equal, introduce randomness
-        // double randomValue = distribution(generator);
-        return GetRandomValue(0, 1) == 0; // 50% chance for each unit to be first
+        // If speeds are equal, favor player
+        return true; // 50% chance for each unit to be first
         }
         });
 
@@ -78,6 +77,21 @@ void Combat::update(Game& game) {
 
     animationDuration += 2;
     isRoundOver = true;
+
+    // Check if Combat Should Conclude in a win/loss/neither
+    if (foesVanquished(foes)) {
+      fprintf(stderr,"You WIN");
+      // TODO: implement loot and exp gain
+      // should delete tile/flag the tile as defeated
+      game.changeState(game.world);
+    }
+    if (heroesVanquished(heroes)) {
+      fprintf(stderr,"You Died");
+      // TODO: implement game over
+      // will likely consist of taken to a screen before being brough to the main menu
+      game.changeState(game.world);
+    }
+
     return;
   }
   else {
@@ -98,4 +112,17 @@ void Combat::update(Game& game) {
       targets = {};
     }
   }
+  // Check if Combat Should Conclude in a win/loss/neither
+    if (foesVanquished(foes)) {
+      fprintf(stderr,"You WIN");
+      // TODO: implement loot and exp gain
+      // should delete tile/flag the tile as defeated
+      game.changeState(game.world);
+    }
+    if (heroesVanquished(heroes)) {
+      fprintf(stderr,"You Died");
+      // TODO: implement game over
+      // will likely consist of taken to a screen before being brough to the main menu
+      game.changeState(game.world);
+    }
 }

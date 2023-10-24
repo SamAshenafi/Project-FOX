@@ -23,3 +23,16 @@ Action* Combat::createAction(const std::string& actionId) {
   if (actionId == "Strike") return new Strike();
   return nullptr;
 }
+
+bool Combat::foesVanquished(std::vector<Unit*> foes) {
+  for (Unit* foe : foes) {
+    if(foe->hp > 0) return false;
+  }
+  return true;
+}
+bool Combat::heroesVanquished(std::vector<Unit*> heroes) {
+  for (Unit* hero : heroes) {
+    if(hero->hp > 0) return false;
+  }
+  return true;
+}

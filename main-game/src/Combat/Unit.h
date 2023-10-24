@@ -20,8 +20,8 @@ class Unit {
 
     //character stats
     std::string id;
-    int hp = 1;
-    int maxHp = 1;
+    int hp;
+    int maxHp;
     int bonusMaxHp;
 
     int baseAtk = 0;
@@ -54,8 +54,11 @@ class Unit {
     double startAnimationTime = 0;
     double animationTimer = 0;
 
+    int getMaxHp() {
+      return maxHp + bonusMaxHp;
+    }
     int getDef() {
-      return baseDef + bonusDef;
+      return baseDef + bonusAtk;
     }
     int getAtk() {
       return baseAtk + bonusDef;
@@ -74,9 +77,9 @@ class Unit {
       return action;
     };
 
-    void takeDmg(int dmg) {
-      fprintf(stderr, "Take %d damage\n", dmg);
-    }
+    // void takeDmg(int dmg) {
+    //   fprintf(stderr, "Take %d damage\n", dmg);
+    // }
 
     int onTurnStart() {
       int totalAnimationDuration = 6;
