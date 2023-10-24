@@ -36,9 +36,17 @@ void Player::processInput(Game& game) {
       }
       Tile* tile = dynamic_cast<Tile*>(entity);
       if (tile != nullptr) {
-          //game.loadTile(entity->id);
-          std:: string tileType = tile->interact();
-          if (tileType == "battle") world->enterCombat(game, tile->id);
+          std::pair<std::string, std::string> tileData = tile->interact();
+          std::string tileType = tileData.first;
+          std::string tileText = tileData.second;
+          if (tileType == "battle") {
+            fprintf(stderr, "Entering Combat\n");
+            world->enterCombat(game, tile->id);
+            }
+          else if (tileType == "npc") {
+            game.dialogQueue.push(tileText);
+            movable = false;
+            }
         }
       }
     }
