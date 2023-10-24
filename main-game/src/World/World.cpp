@@ -43,12 +43,14 @@ void World::loadRoom(const std::string& roomId) {
     try {
       jsonFile >> root;
 
+      // Reinitialize room data
+      entities.clear();
+      transitionTiles.clear();
+      resetGrid();
+
       // TODO: rename this
       std::string roomFilePath = "./assets/room/" + roomId;
       background = LoadTexture((roomFilePath + "-bg.png").c_str());
-
-      // Reinitialize Entities
-      entities.clear();
 
       // Parse Tiles
       for (const auto& tileData : root["tiles"]) {
@@ -62,13 +64,9 @@ void World::loadRoom(const std::string& roomId) {
       }
 
       // Add players back to entities vector
-
       for (Player* pc : players) {
         entities.push_back(pc);
       }
-
-      // Reinitialize Transition Tiles
-      transitionTiles.clear();
 
       // Parse transition tiles
       for (const auto& transitionData : root["transitionTiles"]) {
@@ -77,7 +75,6 @@ void World::loadRoom(const std::string& roomId) {
         int enterX = transitionData["enterX"].get<int>();
         int enterY = transitionData["enterY"].get<int>();
         std::string destinationRoomId = transitionData["destinationRoomId"].get<std::string>();
-        // TODO: create new TransitionTile & push into the transitionTiles vector
         TransitionTile* transitionTile = new TransitionTile(tileX, tileY, enterX, enterY, destinationRoomId.c_str());
         transitionTiles.push_back(transitionTile);
       }
