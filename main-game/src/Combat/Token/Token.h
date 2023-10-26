@@ -8,6 +8,7 @@ class Token {
     Token(int stack) {
       stack = stack;
     };
+    virtual ~Token() = default;
 
     int stack;
 

@@ -21,18 +21,18 @@ Action* Combat::createAction(const std::string& actionId) {
   // add more here
   if (actionId == "DoNothing") return new DoNothing();
   if (actionId == "Strike") return new Strike();
+  // if (actionId == "InflictPoison") return new InflictPoison();
   return nullptr;
 }
 
-bool Combat::foesVanquished(std::vector<Unit*> foes) {
-  for (Unit* foe : foes) {
-    if(foe->hp > 0) return false;
+std::vector<Unit*> Combat::unitsVanquished(std::vector<Unit*> units) {
+  for (Unit* unit : units) {
+    if(unit->hp <= 0){
+      units.erase(units.begin());
+      // if(isFoe(unit)) {
+      //   // add code for the loot/exp the foe holds
+      // }
+    }
   }
-  return true;
-}
-bool Combat::heroesVanquished(std::vector<Unit*> heroes) {
-  for (Unit* hero : heroes) {
-    if(hero->hp > 0) return false;
-  }
-  return true;
+  return units;
 }

@@ -46,8 +46,12 @@ class Combat : public GameState {
     // void startRound();
     
     int selected = 0;
+    int numberOfTargets;
     Action* highlightedAction = nullptr;
     std::vector<Unit*> targets = {};
+    Unit* highlightedTarget = nullptr;
+    std::vector<Unit*> availableTargets = {};
+    std::vector<Unit*> previousAvailable = {};
 
     bool isRoundOver = false;;
 
@@ -68,8 +72,7 @@ class Combat : public GameState {
     // Helpers
     bool isHero(Unit* unit);
     bool isFoe(Unit* unit);
-    bool foesVanquished(std::vector<Unit*> foes);
-    bool heroesVanquished(std::vector<Unit*> heroes);
+    std::vector<Unit*> unitsVanquished (std::vector<Unit*> units);
     Foe* createFoe(const std::string& foeId);
     Action* createAction(const std::string& actionId);
     

@@ -1,22 +1,4 @@
 {
   "completed": [],
-  "tempCompleted": [],
-  "currentRoomId": "05-06",
-  "gold": 0,
-  "playerX": 5,
-  "playerY": 6,
-  "playerFacing": "down",
-
-  "party": [
-    {
-      "id": "Fox",
-      "maxHP": 10,
-      "HP": 10,
-      "baseAtk": 4,
-      "baseDef": 3,
-      "maxEnergy": 1,
-      "speed": 1
-      }
-  ]
-  
+  "currentRoomId": "05-06"
 }

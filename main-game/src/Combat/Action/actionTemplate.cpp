@@ -1,22 +1,22 @@
-#include "Strike.h"
+#include "actionTemplate.h"
 
-Strike::Strike() {
-  targetType = "enemy";
+actionTemplate::actionTemplate() {
 }
 
-Strike::~Strike() {
+actionTemplate::~actionTemplate() {
 }
 
-int Strike::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
+//might need to modify for 
+int actionTemplate::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   for (Unit* target : targets) {
 
-    // perform algorithm
+    // perform algorithm for the action
     target->hp -= user->getAtk();
 
-
+    //will need to modigy for actions containing multiple
     fprintf(
       stderr,
-      "%s performed [Strike] on %s!!!\n",
+      "%s performed [ActionTemplate] on %s!!!\n",
       user->id.c_str(),
       target->id.c_str()
     );
