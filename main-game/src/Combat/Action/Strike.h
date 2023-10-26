@@ -9,7 +9,5 @@ class Strike : public Action {
     Strike();
     ~Strike();
 
-    // std::string targetType = "enemy";
-
     int perform(Unit* user, std::vector<Unit*> targets, Game& game) override;
 };

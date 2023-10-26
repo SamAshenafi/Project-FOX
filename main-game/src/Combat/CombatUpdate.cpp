@@ -78,14 +78,17 @@ void Combat::update(Game& game) {
     animationDuration += 2;
     isRoundOver = true;
 
+    foes = unitsVanquished(foes);
+    heroes = unitsVanquished(heroes);
+
     // Check if Combat Should Conclude in a win/loss/neither
-    if (foesVanquished(foes)) {
+    if (foes.empty()) {
       fprintf(stderr,"You WIN");
       // TODO: implement loot and exp gain
       // should delete tile/flag the tile as defeated
       game.changeState(game.world);
     }
-    if (heroesVanquished(heroes)) {
+    if (heroes.empty()) {
       fprintf(stderr,"You Died");
       // TODO: implement game over
       // will likely consist of taken to a screen before being brough to the main menu
@@ -108,18 +111,23 @@ void Combat::update(Game& game) {
     if (action == nullptr) return; // extra, maybe need later?
     if (action != nullptr && !targets.empty()) {
       animationDuration += action->perform(currentUnit, targets, game);
+      currentUnit->selectedAction = nullptr;
+      currentUnit->selectedTargets = {};
       highlightedAction = nullptr;
+      numberOfTargets = NULL;
       targets = {};
+      availableTargets = {};
+      action = nullptr;
     }
   }
   // Check if Combat Should Conclude in a win/loss/neither
-    if (foesVanquished(foes)) {
+    if (foes.empty()) {
       fprintf(stderr,"You WIN");
       // TODO: implement loot and exp gain
       // should delete tile/flag the tile as defeated
       game.changeState(game.world);
     }
-    if (heroesVanquished(heroes)) {
+    if (heroes.empty()) {
       fprintf(stderr,"You Died");
       // TODO: implement game over
       // will likely consist of taken to a screen before being brough to the main menu

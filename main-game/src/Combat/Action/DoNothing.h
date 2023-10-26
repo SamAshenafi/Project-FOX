@@ -9,7 +9,5 @@ class DoNothing : public Action {
     DoNothing();
     ~DoNothing();
 
-    // std::string targetType = "enemy";
-
     int perform(Unit* user, std::vector<Unit*> targets, Game& game) override;
 };

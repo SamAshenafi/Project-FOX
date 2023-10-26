@@ -118,7 +118,7 @@ void Unit::RenderSprite
 {
   if(isHero)
   {
-    pos = screenWidth/2 - (87.5*pos);
+    pos = screenWidth/2 - (96*pos+1 + (32));
     rUnitSprite(sprite, pos, screenWidth, screenHeight);
     DrawRectangle(
     pos,
@@ -143,7 +143,8 @@ void Unit::RenderSprite
   }
   else if (isFoe) 
   {
-    pos = screenWidth/2 + 87.5*pos;
+    pos = screenWidth/2 + (96*pos);
+    if (pos > 0) pos += 32;
     rUnitSprite(sprite, pos, screenWidth, screenHeight);
     DrawRectangle(
     pos,

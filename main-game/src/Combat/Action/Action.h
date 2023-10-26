@@ -2,13 +2,14 @@
 #include <string>
 #include "../Unit.h"
 #include "../../Game.h"
+#include "../Token/Token.h"
 // #include "../Combat.h"
 
 class Action {
   public:
     Action() {};
     virtual ~Action() = default;
-    // Possile targetType
+    // Possible targetType
     // "self"
     // "ally"
     // "allies"
@@ -17,9 +18,10 @@ class Action {
     // "enemies"
     // "all"
     // "ALL"
-    std::string targetType = "enemy";
+    std::string targetType;
     int energyCost = 1;
     int animationDuration = 12;
+    int multiSelect;
 
     virtual int perform(Unit* user, std::vector<Unit*> targets, Game& game) = 0;
 };

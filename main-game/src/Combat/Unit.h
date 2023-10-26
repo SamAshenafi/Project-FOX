@@ -37,6 +37,7 @@ class Unit {
     std::vector<std::string> actionList = {};
 
     Action* selectedAction = nullptr;
+    std::vector<Unit*> selectedTargets = {};
 
     int baseSpeed = 0;
     int bonusSpeed = 0;
@@ -73,7 +74,6 @@ class Unit {
 
     Action* getAction() {
       Action* action = selectedAction;
-      selectedAction = nullptr;
       return action;
     };
 
