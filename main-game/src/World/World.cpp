@@ -6,7 +6,7 @@
 World::World(
     std::string roomId
     ) {
-  resetGrid();
+  //resetGrid();
 
   loadRoom(roomId);
 
@@ -46,12 +46,21 @@ void World::loadRoom(const std::string& roomId) {
       // Reinitialize room data
       entities.clear();
       transitionTiles.clear();
-      resetGrid();
+
 
       // TODO: rename this
       std::string roomFilePath = "./assets/room/" + roomId;
       background = LoadTexture((roomFilePath + "-bg.png").c_str());
 
+      // Set grid to provided
+      int col = 0;
+      for (const auto& row : root["blockGrid"]){
+        for(size_t i = 0; i < row.size(); i++){
+          grid[i][col] = row[i];
+        }
+        col = (col < 12) ? col + 1 : col;
+      }
+      
       // Parse Tiles
       for (const auto& tileData : root["tiles"]) {
         std::string tileID = tileData["id"].get<std::string>();
