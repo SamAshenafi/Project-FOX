@@ -31,17 +31,6 @@ void World::render(Game& game) {
   // Draw the grid (debug only)
   for (int x = 0; x < columns; x++) {
     for (int y = 0; y < rows; y++) {
-      /*
-         if (grid[x][y] == 1) {
-         DrawRectangle(
-         x * game.settings.gridWidth,
-         y * game.settings.gridHeight,
-         game.settings.gridWidth,
-         game.settings.gridHeight,
-         DARKGRAY
-         );
-         }
-         else { */
       // DrawRectangleLines(x, y, gridSize, gridSize, DARKGRAY);
       DrawRectangleLines(
           x * game.settings.gridWidth,
