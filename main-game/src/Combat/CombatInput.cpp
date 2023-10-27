@@ -29,32 +29,85 @@ void Combat::processInput(Game& game) {
     //   break;
     case KEY_P:
       fprintf(stderr, "%s\n", "p was pressed");
-      if (isHero(currentUnit)) {
+      if(isHero(currentUnit) && !(availableTargets.empty())) {
+        selected = (selected + 1) % (availableTargets.size());
+        fprintf(stderr, "%s is currently highlighted\n", availableTargets[selected]->id.c_str());
+        highlightedTarget = availableTargets[selected];
+      }
+      else if (isHero(currentUnit) && availableTargets.empty()) {
         selected = (selected + 1) % (currentUnit->actions.size());
         fprintf(stderr, "%s%i\n", "selection size: ",currentUnit->actions.size());
-        fprintf(stderr, "%s%s\n", "action selected: ",currentUnit->actionList[selected].c_str());
+        fprintf(stderr, "%s%s\n", "action highlighted: ",currentUnit->actionList[selected].c_str());
         highlightedAction = currentUnit->actions[selected];
       }
       else {
         fprintf(stderr, "Unit w/ id: %s is not a hero\n", currentUnit->id.c_str());
       }
       break;
-    case KEY_SEVEN:
-      fprintf(stderr, "%s\n", "7 was pressed");
-      if (highlightedAction != nullptr) {
-        if (highlightedAction->targetType == "enemy") {
+    case KEY_O:
+      fprintf(stderr, "%s\n", "O was pressed");
+      if (!(availableTargets.empty()) && highlightedTarget != nullptr) {
+        numberOfTargets--;
+        if (numberOfTargets <= 0) {
+          currentUnit->selectedTargets.push_back(highlightedTarget);
           targets = {};
-          targets.push_back(foes[0]);
-          fprintf(stderr, "%s\n", "do nothing action is executed on enemy at rank 1");
-          currentUnit->selectedAction = highlightedAction;
+          targets = currentUnit->selectedTargets;
+          fprintf(stderr, "%s action is executed on %i enemy(ies)\n", currentUnit->id.c_str(), targets.size());   
         }
+        else {
+          currentUnit->selectedTargets.push_back(highlightedTarget);
+          fprintf(stderr, "%s was selected. Selections left: %d\n", foes[selected]->id.c_str(), numberOfTargets);
+          previousAvailable = availableTargets;
+          availableTargets.erase(availableTargets.begin()+(selected-1));
+        }
+      }
+      else if (highlightedAction != nullptr) {
+        if (highlightedAction->targetType == "enemy") {
+          fprintf(stderr, "Action selected: %s\n", currentUnit->actionList[selected].c_str());
+          currentUnit->selectedAction = highlightedAction;
+          availableTargets = foes;
+          numberOfTargets = 1;
+        }
+
+        if (highlightedAction->targetType == "enemies") {
+          fprintf(stderr, "Action selected: %s\n", currentUnit->actionList[selected].c_str());
+          currentUnit->selectedAction = highlightedAction;
+          availableTargets = foes;
+          numberOfTargets = highlightedAction->multiSelect;
+        }
+
+        if (highlightedAction->targetType == "all") {
+          fprintf(stderr, "Action selected: %s", currentUnit->actionList[selected].c_str());
+          currentUnit->selectedAction = highlightedAction;
+          targets = foes;
+        }
+
       }
       else {
         fprintf(
             stderr,
             "%s\n",
-            "no action is selected. Please select one by pressing p for now."
+            "no action/target is selected. Please select one by pressing p for now."
             );
+      }
+      break;
+    case KEY_L:
+      if (!(availableTargets.empty()) && highlightedTarget != nullptr) {
+        if (availableTargets.size() != foes.size()) {
+          numberOfTargets++;
+          availableTargets = previousAvailable;
+          currentUnit->selectedTargets.pop_back();
+
+          fprintf(stderr, "Deselected Enemy Selection\n");
+        }
+        else if (!(availableTargets.empty()) && highlightedTarget != nullptr) {
+          numberOfTargets = NULL;
+          availableTargets = {};
+          currentUnit->selectedAction = nullptr;
+          currentUnit->selectedTargets = {};
+          previousAvailable = {};
+          fprintf(stderr, "Deselected To Action Selection\n");
+          }
       }
       break;
     case KEY_SPACE:

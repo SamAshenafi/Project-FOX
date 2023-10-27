@@ -8,7 +8,7 @@ class Poison : public Token {
     int onTurnStart(Unit& unit) override {
       // TODO: How does this play a sound?
       // SOL1: pass Game to unit on... function then to this
-      unit.takeDmg(stack);
+      unit.hp -= stack;
       return 6;
     };
     // void onTurnEnd(Unit& unit);

@@ -1,6 +1,7 @@
 #include "DoNothing.h"
 
 DoNothing::DoNothing() {
+  targetType = "all";
 }
 
 DoNothing::~DoNothing() {

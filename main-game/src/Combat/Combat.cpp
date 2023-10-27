@@ -93,7 +93,7 @@ void Combat::loadBattle(const std::string& battleId) {
   }
   Hero* foxHero = new FoxHero();
   foxHero->sprite = loadTexture(foxHero->id);
-  for(std::string action : foxHero->getActionList())
+  for(std::string action : foxHero->actionList)
   {
     foxHero->actions.push_back(createAction(action));
   }
