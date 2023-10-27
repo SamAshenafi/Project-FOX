@@ -137,7 +137,6 @@ void World::loadRoom(const std::string& roomId) {
           int tileY = tileData["y"].get<int>();
           bool blocked = tileData["blocked"].get<bool>();
           Tile* tile = new Tile(tileID.c_str(), tileX, tileY, blocked);
-          if (blocked) grid[tileX][tileY] = 1;
           roomTiles.push_back(tile);
         }
 
@@ -168,7 +167,13 @@ void World::loadRoom(const std::string& roomId) {
   // Reinitialize display data
   entities.clear();
   transitionTiles.clear();
+  // Refill display data with room data
   std::copy(&(roomToLoad->grid[0][0]), &(roomToLoad->grid)[0][0]+20*12, &grid[0][0]);
+  for (Tile* tile : roomToLoad->tiles) {
+    if (tile != nullptr && tile->isBlockMovement) {
+      grid[tile->x][tile->y] = 1;
+    }
+  }
   std::copy(roomToLoad->tiles.begin(), roomToLoad->tiles.end(), std::back_inserter(entities));
   std::copy(roomToLoad->transitionTiles.begin(), roomToLoad->transitionTiles.end(), std::back_inserter(transitionTiles));
   // Add players back to entities vector
