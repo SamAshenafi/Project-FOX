@@ -25,3 +25,27 @@ class Tile : public Entity {
     // void draw(int gridSize);
     void render(int gridWidth, int gridHeight) override;
 };
+
+class CombatTile : public Tile {
+  public:
+    CombatTile(
+        const std::string& tileId,
+        int tileX,
+        int tileY,
+        bool isBlockMovement
+        );
+
+    std::pair<std::string, std::string> interact();
+};
+
+class ChestTile : public Tile {
+  public:
+    ChestTile(
+        const std::string& tileId,
+        int tileX,
+        int tileY,
+        bool isBlockMovement
+        );
+
+    std::pair<std::string, std::string> interact();
+};

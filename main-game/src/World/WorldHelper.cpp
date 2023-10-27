@@ -1,4 +1,5 @@
 #include "World.h"
+#include <algorithm>
 
 void World::resetGrid() {
   for (int x = 0; x < 20; x++) {
@@ -25,4 +26,13 @@ void World::sortGameObjects() {
       [](const Entity* a, const Entity* b) {
       return a->y < b->y;
       });
+}
+
+void World::removeEntity(const std::string& tileId) {
+  auto found = [tileId](Entity* entity) {
+    return (entity->id == tileId);
+  };
+  auto foundEntity = std::find_if(entities.begin(), entities.end(), found);
+  grid[(*foundEntity)->x][(*foundEntity)->y] = 0;
+  entities.erase(foundEntity);
 }

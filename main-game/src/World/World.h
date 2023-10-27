@@ -63,6 +63,7 @@ class World : public GameState {
     void resetGrid(); // set all in grid to 0
     void sortGameObjects();
     void clearPathQueue();
+    void removeEntity(const std::string& tileId);
 
   private:
     // void handleKeyPressO();
