@@ -32,6 +32,9 @@ class World : public GameState {
     int columns = sizeof(grid) / sizeof(grid[0]);
     int rows = sizeof(grid[0]) / sizeof(grid[0][0]);
 
+    std::vector<Room*> rooms;
+    Room* currentRoom = nullptr;
+
     std::vector<Entity*> entities;
     std::vector<TransitionTile*> transitionTiles;
     std::vector<Player*> players;
@@ -48,8 +51,6 @@ class World : public GameState {
 
     std::queue<std::pair<int, int>> pathQueue;
 
-    Room currentRoom;
-
     Texture2D background;
 
     void loadRoom(const std::string& roomId);
@@ -64,6 +65,8 @@ class World : public GameState {
     void sortGameObjects();
     void clearPathQueue();
     void removeEntity(const std::string& tileId);
+
+    Room* findRoom(const std::string& roomId);
 
   private:
     // void handleKeyPressO();

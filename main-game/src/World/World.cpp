@@ -2,6 +2,7 @@
 #include <cstdio>
 #include <raylib.h>
 #include "../../external-libs/nlohmann/json.hpp"
+#include <algorithm>
 
 World::World(
     std::string roomId
@@ -32,66 +33,150 @@ World::~World() {
   return;
 }
 
-void World::loadRoom(const std::string& roomId) {
-  const std::string saveFilePath = "./json/room/";
-  const std::string jsonFileType = ".json";
-  const std::string fullFilePath = saveFilePath + roomId + jsonFileType;
-  nlohmann::json root;
-  std::ifstream jsonFile(fullFilePath);
+// Old version. Keeping while working on new version
 
-  if (jsonFile.is_open()) {
-    try {
-      jsonFile >> root;
+// void World::loadRoom(const std::string& roomId) {
+//   const std::string saveFilePath = "./json/room/";
+//   const std::string jsonFileType = ".json";
+//   const std::string fullFilePath = saveFilePath + roomId + jsonFileType;
+//   nlohmann::json root;
+//   std::ifstream jsonFile(fullFilePath);
 
-      // Reinitialize room data
-      entities.clear();
-      transitionTiles.clear();
+//   if (jsonFile.is_open()) {
+//     try {
+//       jsonFile >> root;
+
+//       // Reinitialize room data
+//       entities.clear();
+//       transitionTiles.clear();
 
 
-      // TODO: rename this
-      std::string roomFilePath = "./assets/room/" + roomId;
-      background = LoadTexture((roomFilePath + "-bg.png").c_str());
+//       // TODO: rename this
+//       std::string roomFilePath = "./assets/room/" + roomId;
+//       background = LoadTexture((roomFilePath + "-bg.png").c_str());
 
-      // Set grid to provided
-      int col = 0;
-      for (const auto& row : root["blockGrid"]){
-        for(size_t i = 0; i < row.size(); i++){
-          grid[i][col] = row[i];
-        }
-        col = (col < 12) ? col + 1 : col;
-      }
+//       // Set grid to provided
+//       int col = 0;
+//       for (const auto& row : root["blockGrid"]){
+//         for(size_t i = 0; i < row.size(); i++){
+//           grid[i][col] = row[i];
+//         }
+//         col = (col < 12) ? col + 1 : col;
+//       }
       
-      // Parse Tiles
-      for (const auto& tileData : root["tiles"]) {
-        std::string tileID = tileData["id"].get<std::string>();
-        int tileX = tileData["x"].get<int>();
-        int tileY = tileData["y"].get<int>();
-        bool blocked = tileData["blocked"].get<bool>();
-        Tile* tile = new Tile(tileID.c_str(), tileX, tileY, blocked);
-        if (blocked) grid[tileX][tileY] = 1;
-        entities.push_back(tile);
-      }
+//       // Parse Tiles
+//       for (const auto& tileData : root["tiles"]) {
+//         std::string tileID = tileData["id"].get<std::string>();
+//         int tileX = tileData["x"].get<int>();
+//         int tileY = tileData["y"].get<int>();
+//         bool blocked = tileData["blocked"].get<bool>();
+//         Tile* tile = new Tile(tileID.c_str(), tileX, tileY, blocked);
+//         if (blocked) grid[tileX][tileY] = 1;
+//         entities.push_back(tile);
+//       }
 
-      // Add players back to entities vector
-      for (Player* pc : players) {
-        entities.push_back(pc);
-      }
+//       // Add players back to entities vector
+//       for (Player* pc : players) {
+//         entities.push_back(pc);
+//       }
 
-      // Parse transition tiles
-      for (const auto& transitionData : root["transitionTiles"]) {
-        int tileX = transitionData["x"].get<int>();
-        int tileY = transitionData["y"].get<int>();
-        int enterX = transitionData["enterX"].get<int>();
-        int enterY = transitionData["enterY"].get<int>();
-        std::string destinationRoomId = transitionData["destinationRoomId"].get<std::string>();
-        TransitionTile* transitionTile = new TransitionTile(tileX, tileY, enterX, enterY, destinationRoomId.c_str());
-        transitionTiles.push_back(transitionTile);
+//       // Parse transition tiles
+//       for (const auto& transitionData : root["transitionTiles"]) {
+//         int tileX = transitionData["x"].get<int>();
+//         int tileY = transitionData["y"].get<int>();
+//         int enterX = transitionData["enterX"].get<int>();
+//         int enterY = transitionData["enterY"].get<int>();
+//         std::string destinationRoomId = transitionData["destinationRoomId"].get<std::string>();
+//         TransitionTile* transitionTile = new TransitionTile(tileX, tileY, enterX, enterY, destinationRoomId.c_str());
+//         transitionTiles.push_back(transitionTile);
+//       }
+//     }
+//     catch (const std::exception& e) {
+//       fprintf(stderr, "JSON parsing failed: %s\n", e.what());
+//     }
+//   }
+// }
+
+void World::loadRoom(const std::string& roomId) {
+  Room* roomToLoad = findRoom(roomId);
+  // If the room does not exist, construct it
+  if (roomToLoad == nullptr) {
+    fprintf(stderr, "Creating new Room...\n");
+    const std::string saveFilePath = "./json/room/";
+    const std::string jsonFileType = ".json";
+    const std::string fullFilePath = saveFilePath + roomId + jsonFileType;
+    nlohmann::json root;
+    std::ifstream jsonFile(fullFilePath);
+
+    if (jsonFile.is_open()) {
+      try {
+        jsonFile >> root;
+
+        // variables for constructing new room
+        int roomGrid[20][12];
+        std::vector<Tile*> roomTiles;
+        std::vector<TransitionTile*> roomTransitions;
+
+        // TODO: rename this
+        std::string roomFilePath = "./assets/room/" + roomId;
+        Texture2D roomBackground = LoadTexture((roomFilePath + "-bg.png").c_str());
+
+        // Set grid to provided
+        int col = 0;
+        for (const auto& row : root["blockGrid"]){
+          for(size_t i = 0; i < row.size(); i++){
+            roomGrid[i][col] = row[i];
+          }
+          col = (col < 12) ? col + 1 : col;
+        }
+
+        // Parse Tiles
+        for (const auto& tileData : root["tiles"]) {
+          std::string tileID = tileData["id"].get<std::string>();
+          int tileX = tileData["x"].get<int>();
+          int tileY = tileData["y"].get<int>();
+          bool blocked = tileData["blocked"].get<bool>();
+          Tile* tile = new Tile(tileID.c_str(), tileX, tileY, blocked);
+          if (blocked) grid[tileX][tileY] = 1;
+          roomTiles.push_back(tile);
+        }
+
+        // Parse transition tiles
+        for (const auto& transitionData : root["transitionTiles"]) {
+          int tileX = transitionData["x"].get<int>();
+          int tileY = transitionData["y"].get<int>();
+          int enterX = transitionData["enterX"].get<int>();
+          int enterY = transitionData["enterY"].get<int>();
+          std::string destinationRoomId = transitionData["destinationRoomId"].get<std::string>();
+          TransitionTile* transitionTile = new TransitionTile(tileX, tileY, enterX, enterY, destinationRoomId.c_str());
+          roomTransitions.push_back(transitionTile);
+        }
+        // Construct new room and add it to the rooms vector
+        roomToLoad = new Room(roomId, roomGrid, roomTiles, roomTransitions, roomBackground);
+        rooms.push_back(roomToLoad);
       }
-    }
-    catch (const std::exception& e) {
-      fprintf(stderr, "JSON parsing failed: %s\n", e.what());
+      catch (const std::exception& e) {
+        fprintf(stderr, "JSON parsing failed: %s\n", e.what());
+      }
     }
   }
+  else fprintf(stderr, "Room already exists\n");
+  // Set current room as loaded room
+  currentRoom = roomToLoad;
+
+  // --------------------- Render/build the room
+  // Reinitialize display data
+  entities.clear();
+  transitionTiles.clear();
+  std::copy(&(roomToLoad->grid[0][0]), &(roomToLoad->grid)[0][0]+20*12, &grid[0][0]);
+  std::copy(roomToLoad->tiles.begin(), roomToLoad->tiles.end(), std::back_inserter(entities));
+  std::copy(roomToLoad->transitionTiles.begin(), roomToLoad->transitionTiles.end(), std::back_inserter(transitionTiles));
+  // Add players back to entities vector
+  for (Player* pc : players) {
+    entities.push_back(pc);
+  }
+  background = roomToLoad->background;
+  fprintf(stderr, "Successful loadRoom\n");
 }
 
 

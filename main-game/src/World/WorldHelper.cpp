@@ -36,3 +36,14 @@ void World::removeEntity(const std::string& tileId) {
   grid[(*foundEntity)->x][(*foundEntity)->y] = 0;
   entities.erase(foundEntity);
 }
+
+Room* World::findRoom(const std::string& roomId) {
+  if (rooms.empty()) return nullptr;
+  fprintf(stderr, "Room vec is not empty.\n");
+  auto found = [roomId](Room* room) {
+    return (room->roomId == roomId);
+  };
+  auto foundRoom = std::find_if(rooms.begin(), rooms.end(), found);
+  if (foundRoom == rooms.end()) return nullptr;
+  return *foundRoom;
+}
