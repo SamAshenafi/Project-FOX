@@ -3,6 +3,20 @@
 #include <raylib.h>
 
 void Combat::update(Game& game) {
+  // Check if Combat Should Conclude in a win/loss/neither
+    if (foes.empty()) {
+      fprintf(stderr,"You WIN");
+      // TODO: implement loot and exp gain
+      // should delete tile/flag the tile as defeated
+      game.changeState(game.world);
+    }
+    if (heroes.empty()) {
+      fprintf(stderr,"You Died");
+      // TODO: implement game over
+      // will likely consist of taken to a screen before being brough to the main menu
+      game.changeState(game.world);
+    }
+
   if (animationDuration != 0) {
     animationDuration -= 1;
     fprintf(stderr, "[ANIMATION]: %d\n", animationDuration);
@@ -81,20 +95,6 @@ void Combat::update(Game& game) {
     foes = unitsVanquished(foes);
     heroes = unitsVanquished(heroes);
 
-    // Check if Combat Should Conclude in a win/loss/neither
-    if (foes.empty()) {
-      fprintf(stderr,"You WIN");
-      // TODO: implement loot and exp gain
-      // should delete tile/flag the tile as defeated
-      game.changeState(game.world);
-    }
-    if (heroes.empty()) {
-      fprintf(stderr,"You Died");
-      // TODO: implement game over
-      // will likely consist of taken to a screen before being brough to the main menu
-      game.changeState(game.world);
-    }
-
     return;
   }
   else {
@@ -120,17 +120,4 @@ void Combat::update(Game& game) {
       action = nullptr;
     }
   }
-  // Check if Combat Should Conclude in a win/loss/neither
-    if (foes.empty()) {
-      fprintf(stderr,"You WIN");
-      // TODO: implement loot and exp gain
-      // should delete tile/flag the tile as defeated
-      game.changeState(game.world);
-    }
-    if (heroes.empty()) {
-      fprintf(stderr,"You Died");
-      // TODO: implement game over
-      // will likely consist of taken to a screen before being brough to the main menu
-      game.changeState(game.world);
-    }
 }
