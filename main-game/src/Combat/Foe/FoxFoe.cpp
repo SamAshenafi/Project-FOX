@@ -23,5 +23,8 @@ void FoxFoe::decideAction() {
 };
 
 std::vector<Unit*> FoxFoe::decideTarget(std::vector<Unit*> targets) {
+  if (targets.empty()){
+    return {};
+  }
   return targets;
 }

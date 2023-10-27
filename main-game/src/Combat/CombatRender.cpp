@@ -48,6 +48,7 @@ Texture2D Combat::loadTexture(std::string filePath)
 void Combat::RenderUI(int screenWidth, int screenHeight)
 {
   //first renders the boxes
+    //Stat box bellow units
   DrawRectangle(
     screenWidth - screenWidth*0.98,
     screenHeight - screenHeight*0.40,
@@ -55,8 +56,73 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
     screenHeight*0.30,
     GRAY
   );
+    //Box Showing Available Actions
+  DrawRectangle(
+    screenWidth - screenWidth*0.96,
+    screenHeight - screenHeight*0.38,
+    screenWidth*0.30,
+    screenHeight*0.26,
+    ORANGE
+  );
+    //Box containing actions descriptions
+  DrawRectangle(
+    screenWidth - screenWidth*0.65,
+    screenHeight - screenHeight*0.38,
+    screenWidth*0.62,
+    screenHeight*0.26,
+    ORANGE
+  );
 
-  //then renders the actions 
+  //renders the actions
+  if(currentUnit != nullptr && isHero(currentUnit)) {
+    std::vector<std::string> actionBox = {};
+    actionBox = currentUnit->actionList;
+
+    if (selected > 4) {
+      for (int i = selected - 4 ; i>0 ; i--) {
+        actionBox.erase(actionBox.begin());
+      }
+    }
+
+    while (actionBox.size() > 4) actionBox.pop_back();
+
+    int pos = 0;
+    for(std::string actions : actionBox) {
+      DrawText(
+      actions.c_str(),
+      screenWidth - (screenWidth*0.96 - 20),  // X position of the text
+      screenHeight - (screenHeight*0.30 + (25*pos)),  // Y position of the text
+      28,  // Font size
+      WHITE
+      );
+      pos++;
+    }
+    //renders the action descriptions
+    
+    //renders the pointer (use selected)
+    Action* action = currentUnit->getAction();
+    if (action == nullptr) {
+      DrawRectangle(
+        screenWidth - (screenWidth*0.96),
+        screenHeight - (screenHeight*0.30 + (25*selected)),
+        10,
+        10,
+        BLUE
+      );
+    }
+    else {
+      DrawRectangle(
+        screenWidth/2 + (96*(selected) + 32*(selected+1)),
+        screenHeight*0.10,
+        10,
+        10,
+        RED
+      );
+    }
+  }  
+
+  
+
 }
 
 //Render Units
@@ -68,7 +134,7 @@ void Combat::RenderUnits
   int screenHeight
 )
 {
-  int pos = 1;
+  int pos = 0;
   for (Unit* hero : heroes)
   {
     hero->RenderSprite(
@@ -84,7 +150,7 @@ void Combat::RenderUnits
     );
     pos++;
   }
-  pos = 1;
+  pos = 0;
   for (Unit* foe : foes)
   {
     foe->RenderSprite(
@@ -118,7 +184,7 @@ void Unit::RenderSprite
 {
   if(isHero)
   {
-    pos = screenWidth/2 - (96*pos+1 + (32));
+    pos = screenWidth/2 - (96*(pos+1) + (32*pos+1));
     rUnitSprite(sprite, pos, screenWidth, screenHeight);
     DrawRectangle(
     pos,
@@ -134,7 +200,7 @@ void Unit::RenderSprite
     DrawText(
       healthText.c_str(),
       pos,  // X position of the text
-      0.10 * screenHeight,  // Y position of the text
+      0.25 * screenHeight,  // Y position of the text
       20,  // Font size
       WHITE
       );
@@ -143,11 +209,18 @@ void Unit::RenderSprite
   }
   else if (isFoe) 
   {
-    pos = screenWidth/2 + (96*pos);
-    if (pos > 0) pos += 32;
+    pos = screenWidth/2 + (96*(pos) + 32*(pos+1));
     rUnitSprite(sprite, pos, screenWidth, screenHeight);
     DrawRectangle(
     pos,
+    0.30 * screenHeight,
+    10,
+    10,
+    BLUE
+    );
+
+    DrawRectangle(
+    screenWidth/2,
     0.30 * screenHeight,
     10,
     10,
@@ -161,7 +234,7 @@ void Unit::RenderSprite
     DrawText(
         healthText.c_str(),
         pos,  // X position of the text
-        0.10 * screenHeight,  // Y position of the text
+        0.25 * screenHeight,  // Y position of the text
         20,  // Font size
         WHITE
         );
