@@ -29,6 +29,13 @@
       "enterX": 6,
       "enterY": 11,
       "destinationRoomId": "05-06"
+    },
+    {
+      "x": 19,
+      "y": 7,
+      "enterX": 0,
+      "enterY": 7,
+      "destinationRoomId": "05-08"
     }
   ]
 }
