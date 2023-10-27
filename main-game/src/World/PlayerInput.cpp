@@ -42,6 +42,7 @@ void Player::processInput(Game& game) {
           if (tileType == "battle") {
             fprintf(stderr, "Entering Combat\n");
             world->enterCombat(game, tile->id);
+            world->removeEntity(tile->id);
             }
           else if (tileType == "npc") {
             game.dialogQueue.push(tileText);
