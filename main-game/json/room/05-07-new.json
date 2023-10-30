@@ -1,23 +1,29 @@
 {
    "roomData": {
       "room": "05-07-new",
-      "roomInfo": "e6t1e100c1e51t1e65e1e14",
+      "roomInfo": "e240",
       "specialTiles": [
          [
             "chest-002",
+            4,
+            6,
             false
          ]
       ],
       "transitionTiles": [
          [
             "05-06-new",
-            "6",
-            "11"
+            6,
+            0,
+            6,
+            11
          ],
          [
             "05-08-new",
-            "0",
-            "7"
+            19,
+            7,
+            0,
+            7
          ]
       ]
    }

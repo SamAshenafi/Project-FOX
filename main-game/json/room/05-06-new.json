@@ -1,13 +1,15 @@
 {
    "roomData": {
       "room": "05-06-new",
-      "roomInfo": "e225t1e14",
+      "roomInfo": "e240",
       "specialTiles": [],
       "transitionTiles": [
          [
             "05-07-new",
-            "6",
-            "0"
+            6,
+            11,
+            6,
+            0
          ]
       ]
    }
