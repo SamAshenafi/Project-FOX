@@ -8,7 +8,7 @@
 #include "Player.h"
 #include "Tile.h"
 #include "TransitionTile.h"
-
+#include "../../external-libs/nlohmann/json.hpp"
 #include "../Game.h"
 
 // class Game;
@@ -56,6 +56,10 @@ class World : public GameState {
     void loadRoom(const std::string& roomId);
 
     // Helpers
+    Room* buildRoom(const std::string& roomId, nlohmann::json source);
+    void setGridFromString(std::string roomInfo);
+    void setRoom(Room* roomToSet);
+    Room* findRoom(const std::string& roomId);
     // std::string inputHelper(std::string facing);
     // void findShortestPath(Game& game, int startX, int startY, int targetX, int targetY);
 
@@ -65,8 +69,6 @@ class World : public GameState {
     void sortGameObjects();
     void clearPathQueue();
     void removeEntity(const std::string& tileId);
-
-    Room* findRoom(const std::string& roomId);
 
   private:
     // void handleKeyPressO();

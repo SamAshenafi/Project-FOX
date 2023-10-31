@@ -118,6 +118,8 @@ void World::loadRoom(const std::string& roomId) {
   }
   background = roomToLoad->background;
   fprintf(stderr, "Successful loadRoom\n");
+  // For testing setGridFromString
+  // setGridFromString("w21e18w2e18w2e18w2e18w2e18w2e18w2e18w2e18w2e18w2e18w21");
 }
 
 
