@@ -17,7 +17,7 @@ class Tile : public Entity {
         const std::string& tileId,
         int tileX,
         int tileY,
-        bool isBlockMovement = false
+        bool isBlockMovement
         );
 
     // void interact() override;

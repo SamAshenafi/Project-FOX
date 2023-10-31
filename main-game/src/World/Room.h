@@ -13,13 +13,13 @@ class Room {
 
     Room(
       std::string id,
-      int roomGrid[20][12],
+      std::string roomInfo,
       std::vector<Tile*> roomTiles,
       std::vector<TransitionTile*> roomTransitions,
       Texture2D roomBackground
     );
 
-    int grid[20][12];
+    std::string roomInfo;
     std::vector<Tile*> tiles;
     std::vector<TransitionTile*> transitionTiles;
     Texture2D background;

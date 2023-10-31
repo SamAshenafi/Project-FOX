@@ -3,13 +3,13 @@
 
 Room::Room(
   std::string id,
-  int roomGrid[20][12],
+  std::string roomInfo,
   std::vector<Tile*> roomTiles,
   std::vector<TransitionTile*> roomTransitions,
   Texture2D roomBackground
 ) {
   roomId = id;
-  std::copy(&roomGrid[0][0], &roomGrid[0][0]+20*12, &grid[0][0]);
+  this->roomInfo = roomInfo;
   tiles = roomTiles;
   transitionTiles = roomTransitions;
   background = roomBackground;
@@ -20,6 +20,5 @@ void Room::removeTile(const std::string& tileId) {
     return (tile->id == tileId);
   };
   auto foundTile = std::find_if(tiles.begin(), tiles.end(), found);
-  grid[(*foundTile)->x][(*foundTile)->y] = 0;
   tiles.erase(foundTile);
 }

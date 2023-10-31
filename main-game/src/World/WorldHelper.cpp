@@ -51,9 +51,9 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
   // Parse Tiles
   for (const auto& tileData : source["roomData"]["specialTiles"]) {
     std::string tileID = tileData[0].get<std::string>();
-    int tileX = tileData[1].get<int>();
-    int tileY = tileData[2].get<int>();
-    bool blocked = tileData[3].get<bool>();
+    bool blocked = tileData[1].get<bool>();
+    int tileX = tileData[2].get<int>();
+    int tileY = tileData[3].get<int>();
     Tile* tile = new Tile(tileID.c_str(), tileX, tileY, blocked);
     roomTiles.push_back(tile);
   }
@@ -70,7 +70,7 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
   }
   // Construct new room and add it to the rooms vector
   // TODO: Uncomment later
-  Room* roomToBuild; // = new Room(roomId, roomInfo, roomTiles, roomTransitions, roomBackground);
+  Room* roomToBuild = new Room(roomId, roomInfo, roomTiles, roomTransitions, roomBackground);
   return roomToBuild;
 }
 
@@ -83,7 +83,12 @@ void World::setRoom(Room* roomToSet) {
   entities.clear();
   transitionTiles.clear();
   // Refill display data with room data
-  //TODO: make function for converting data
+  setGridFromString(roomToSet->roomInfo);
+  for (Tile* tile : roomToSet->tiles) {
+    if (tile->isBlockMovement) {
+      grid[tile->x][tile->y] = 1;
+    }
+  }
 
   std::copy(roomToSet->tiles.begin(), roomToSet->tiles.end(), std::back_inserter(entities));
   std::copy(roomToSet->transitionTiles.begin(), roomToSet->transitionTiles.end(), std::back_inserter(transitionTiles));
@@ -101,9 +106,7 @@ void World::setGridFromString(std::string roomInfo) {
   while (ch != roomInfo.end()) {
     char kind = *(ch++);
     std::string number = "";
-    while (!isalpha(*ch)) {
-      fprintf(stderr, "current number char: " + *ch);
-      fprintf(stderr, "\n");
+    while (isdigit(*ch)) {
       number += *(ch++);
     }
     int num;
@@ -117,16 +120,16 @@ void World::setGridFromString(std::string roomInfo) {
     sections.push_back(std::make_pair(kind, num));
   }
   int col = 0, row = 0;
+  int bitVal;
   for (auto &section : sections) {
     // Get the value that needs to be applied
-    int bitVal;
     if (section.first == 'w') bitVal = 1;
     else bitVal = 0;
     // Set the bitmap position accordingly
     for (int i = 0; i < section.second; ++i) {
       if (row == 12) {
         // About to try to put data into grid[0][12], which does not exist
-        fprintf(stderr, "roomInfo has too much data. Ending loop\n");
+        fprintf(stderr, "Too much data. Ending loop\n");
         return;
       }
       grid[col++][row] = bitVal;

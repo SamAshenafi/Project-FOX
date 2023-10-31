@@ -220,29 +220,29 @@ void Game::saveSave(const std::string& filename) {
     root["WorldData"]["Players"].push_back(playerInfo);
   }
 
-  // Fill room data
-  for (Room* room : world->rooms) {
-    nlohmann::json roomData = nlohmann::json::object({
-      {"roomId", room->roomId}, {"blockGrid", room->grid}
-    });
+  // // Fill room data
+  // for (Room* room : world->rooms) {
+  //   nlohmann::json roomData = nlohmann::json::object({
+  //     {"roomId", room->roomId}, {"blockGrid", room->grid}
+  //   });
 
-    roomData["tiles"] = nlohmann::json::array();
-    for (Tile* tile : room->tiles) {
-      roomData["tiles"].push_back(nlohmann::json::object({
-        {"id", tile->id}, {"x", tile->x},
-        {"y", tile->y}, {"blocked", tile->isBlockMovement}
-      }));
-    }
-    roomData["transitionTiles"] = nlohmann::json::array();
-    for (TransitionTile* transitionTile : room->transitionTiles) {
-      roomData["transitionTiles"].push_back(nlohmann::json::object({
-        {"x", transitionTile->x}, {"y", transitionTile->y},
-        {"enterX", transitionTile->enterX}, {"enterY", transitionTile->enterY},
-        {"destinationRoomId", transitionTile->destinationRoomId}
-      }));
-    }
-    root["WorldData"]["Rooms"].push_back(roomData);
-  }
+  //   roomData["tiles"] = nlohmann::json::array();
+  //   for (Tile* tile : room->tiles) {
+  //     roomData["tiles"].push_back(nlohmann::json::object({
+  //       {"id", tile->id}, {"x", tile->x},
+  //       {"y", tile->y}, {"blocked", tile->isBlockMovement}
+  //     }));
+  //   }
+  //   roomData["transitionTiles"] = nlohmann::json::array();
+  //   for (TransitionTile* transitionTile : room->transitionTiles) {
+  //     roomData["transitionTiles"].push_back(nlohmann::json::object({
+  //       {"x", transitionTile->x}, {"y", transitionTile->y},
+  //       {"enterX", transitionTile->enterX}, {"enterY", transitionTile->enterY},
+  //       {"destinationRoomId", transitionTile->destinationRoomId}
+  //     }));
+  //   }
+  //   root["WorldData"]["Rooms"].push_back(roomData);
+  // }
 
   // Create a JSON writer
   std::ofstream outputFile(fullFilePath);
