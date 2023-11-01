@@ -41,6 +41,14 @@ void World::processInput(Game& game) {
       fprintf(stderr, "%s\n", "saved to savedata-01.json");
       game.saveSave("savedata-01");
       break;
+    // case KEY_LEFT_BRACKET:
+    //   fprintf(stderr, "%s\n", "[ was pressed");
+    //   // TODO: This is place holder
+    //   // plan is to have a button/UI to select different save
+    //   // like savedata-02 -> savedata-08
+    //   fprintf(stderr, "%s\n", "loaded from savedata-01.json");
+    //   game.loadSave("savedata-01");
+    //   break;
   }
 }
 

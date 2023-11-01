@@ -1,4 +1,49 @@
 {
-  "completed": [],
-  "currentRoomId": "05-06"
+  "WorldData": {
+    "Players": [
+      {
+        "facing": "right",
+        "id": "player-01",
+        "x": 5,
+        "y": 7
+      }
+    ],
+    "Rooms": [
+      {
+        "room": "05-06",
+        "roomInfo": "e65e1e95w3e17w3e17w3e36",
+        "specialTiles": [
+          [
+            "chest-001",
+            true,
+            3,
+            3
+          ],
+          [
+            "npc-001",
+            true,
+            4,
+            3
+          ],
+          [
+            "battle-aaa",
+            false,
+            8,
+            5
+          ]
+        ],
+        "transitionTiles": [
+          [
+            "05-07",
+            6,
+            11,
+            6,
+            0
+          ]
+        ]
+      }
+    ],
+    "currentRoomId": "05-06"
+  },
+  "completed": []
 }

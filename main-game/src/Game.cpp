@@ -132,48 +132,29 @@ void Game::loadSave(const std::string& filename) {
     // Parse the JSON data
     try {
       inputFile >> root;
-      // TODO: this part is WIP, more work need to be done here
-      // Deserialize the JSON data into member variables
-      currentRoomId = root.value("currentRoomId", "");
-      // loadRoom(currentRoomId);
-      // const std::string roomFilePath = "./assets/room/";
-      std::string roomFilePath = "./assets/room/" + currentRoomId;
-      // overworldBg = LoadTexture((roomFilePath + "-bg.png").c_str());
-      // TODO: also load overworldFg
 
+      // World Data
+      nlohmann::json worldData = root["WorldData"];
+      world->players.clear();
+      for (const auto& pc : worldData["Players"]) {
+        Player* PC = new Player(
+          pc["id"], pc["x"], pc["y"], pc["facing"]
+        );
+        world->players.push_back(PC);
+      }
+      world->rooms.clear();
+      for (const auto& room : worldData["Rooms"]) {
+        Room* newRoom = world->buildRoom(room["room"], room);
+        world->rooms.push_back(newRoom);
+      }
+      Room* roomToSet = world->findRoom(worldData["currentRoomId"]);
+      world->setRoom(roomToSet);
+
+      // Completed
       completed.clear();
       for (const auto& item : root["completed"]) {
         completed.push_back(item.get<std::string>());
       }
-
-      // playerX = root.value("playerX", 0);
-      // playerY = root.value("playerY", 0);
-      // playerFacing = root.value("playerFacing", "down");
-      //
-      // player = new Player(
-      //     "player-01",
-      //     playerX,
-      //     playerY,
-      //     playerFacing
-      //     );
-      // entities.push_back(player);
-
-      // TODO: Add inventory parsing logic here
-      // TODO: Add more deserialization logic for other members here      
-
-      // party = {};
-      // for (const auto& playerData : root["party"])
-      // {
-      //   Player add;
-      //   add.name = playerData["id"].get<std::string>();
-      //   add.HP = playerData["HP"].get<int>();
-      //   add.maxHP = playerData["maxHP"].get<int>();
-      //   add.baseDmg = playerData["baseDmg"].get<int>();
-      //   add.baseDef = playerData["baseDef"].get<int>();
-      //   add.maxEnergy = playerData["maxEnergy"].get<int>();
-      //   add.speed = playerData["speed"].get<int>();
-      //   party.insert(add);
-      // }
 
       inputFile.close();
     }
@@ -198,9 +179,9 @@ void Game::saveSave(const std::string& filename) {
   // - Room does not need to be saved since we load it when we load the save
 
   // Serialize member data to JSON
-  root["currentRoomId"] = currentRoomId;
   root["completed"] = nlohmann::json::array();
   root["WorldData"] = nlohmann::json::object();
+  root["WorldData"]["currentRoomId"] = currentRoomId;
 
   for (const std::string& item : completed) {
     root["completed"].push_back(item);
@@ -220,29 +201,28 @@ void Game::saveSave(const std::string& filename) {
     root["WorldData"]["Players"].push_back(playerInfo);
   }
 
-  // // Fill room data
-  // for (Room* room : world->rooms) {
-  //   nlohmann::json roomData = nlohmann::json::object({
-  //     {"roomId", room->roomId}, {"blockGrid", room->grid}
-  //   });
+  // Fill room data
+  for (Room* room : world->rooms) {
+    nlohmann::json roomData = nlohmann::json::object({
+      {"room", room->roomId}, {"roomInfo", room->roomInfo}
+    });
 
-  //   roomData["tiles"] = nlohmann::json::array();
-  //   for (Tile* tile : room->tiles) {
-  //     roomData["tiles"].push_back(nlohmann::json::object({
-  //       {"id", tile->id}, {"x", tile->x},
-  //       {"y", tile->y}, {"blocked", tile->isBlockMovement}
-  //     }));
-  //   }
-  //   roomData["transitionTiles"] = nlohmann::json::array();
-  //   for (TransitionTile* transitionTile : room->transitionTiles) {
-  //     roomData["transitionTiles"].push_back(nlohmann::json::object({
-  //       {"x", transitionTile->x}, {"y", transitionTile->y},
-  //       {"enterX", transitionTile->enterX}, {"enterY", transitionTile->enterY},
-  //       {"destinationRoomId", transitionTile->destinationRoomId}
-  //     }));
-  //   }
-  //   root["WorldData"]["Rooms"].push_back(roomData);
-  // }
+    roomData["specialTiles"] = nlohmann::json::array();
+    for (Tile* tile : room->tiles) {
+      roomData["specialTiles"].push_back(nlohmann::json::array({
+        tile->id, tile->isBlockMovement, tile->x, tile->y
+      }));
+    }
+    roomData["transitionTiles"] = nlohmann::json::array();
+    for (TransitionTile* transitionTile : room->transitionTiles) {
+      roomData["transitionTiles"].push_back(nlohmann::json::array({
+        transitionTile->destinationRoomId,
+        transitionTile->x, transitionTile->y,
+        transitionTile->enterX, transitionTile->enterY
+      }));
+    }
+    root["WorldData"]["Rooms"].push_back(roomData);
+  }
 
   // Create a JSON writer
   std::ofstream outputFile(fullFilePath);

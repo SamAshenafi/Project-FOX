@@ -40,7 +40,7 @@ void World::removeEntity(const std::string& tileId) {
 
 Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
   // variables for constructing new room
-  std::string roomInfo = source["roomData"]["roomInfo"];
+  std::string roomInfo = source["roomInfo"];
   std::vector<Tile*> roomTiles;
   std::vector<TransitionTile*> roomTransitions;
 
@@ -49,7 +49,7 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
   Texture2D roomBackground = LoadTexture((roomFilePath + "-bg.png").c_str());
 
   // Parse Tiles
-  for (const auto& tileData : source["roomData"]["specialTiles"]) {
+  for (const auto& tileData : source["specialTiles"]) {
     std::string tileID = tileData[0].get<std::string>();
     bool blocked = tileData[1].get<bool>();
     int tileX = tileData[2].get<int>();
@@ -59,7 +59,7 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
   }
 
   // Parse transition tiles
-  for (const auto& transitionData : source["roomData"]["transitionTiles"]) {
+  for (const auto& transitionData : source["transitionTiles"]) {
     std::string destinationRoomId = transitionData[0].get<std::string>();
     int tileX = transitionData[1].get<int>();
     int tileY = transitionData[2].get<int>();

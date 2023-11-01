@@ -48,7 +48,7 @@ void World::loadRoom(const std::string& roomId) {
       try {
         jsonFile >> root;
 
-        roomToLoad = buildRoom(roomId, root);
+        roomToLoad = buildRoom(roomId, root["roomData"]);
         rooms.push_back(roomToLoad);
       }
       catch (const std::exception& e) {
