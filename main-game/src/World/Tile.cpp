@@ -76,11 +76,16 @@ std::pair<std::string, std::string> Tile::interact() {
 
 void Tile::render(int gridWidth, int gridHeight) {
   // PLACEHOLDER:
+  Color color = BLUE;
+  std::string tileType = Helper::parseGameObjectType(id);
+  if (tileType == "chest") color = YELLOW;
+  else if (tileType == "npc") color = GREEN;
+  else if (tileType == "battle") color = RED;
   DrawRectangle(
       x * gridWidth,
       y * gridHeight,
       gridWidth,
       gridHeight,
-      BLUE);
+      color);
   return;
 }
