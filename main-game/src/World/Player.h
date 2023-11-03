@@ -46,7 +46,6 @@ class Player : public Entity {
     // std::vector<equipment*> equipments;
 
     // Shared
-    // void interact();
     void render(int gridWidth, int gridHeight);
     void update();
 

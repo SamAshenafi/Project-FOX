@@ -16,7 +16,7 @@ class Player;
 
 class World : public GameState {
   public:
-    World(std::string roomId); // destructor
+    World(std::string roomId); // constructor
     ~World() override; // destructor
 
     void processInput(Game& game) override;

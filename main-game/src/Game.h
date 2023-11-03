@@ -65,7 +65,7 @@ class Game {
     // Exploration* exploration;
     // MainMenu* mainMenu;
 
-    World* world;
+    GameState* world;
 
     // the vector used to store the stats for a combat encounter
     // std::vector<Unit> encounter;

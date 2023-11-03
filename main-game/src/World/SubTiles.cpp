@@ -8,7 +8,7 @@ CombatTile::CombatTile(
     bool isBlockMovement
 ) : Tile(tileId, tileX, tileY, isBlockMovement)
 {
-  // Additional constructor funcitonality to add to base constructor
+  // Additional constructor functionality to add to base constructor
 
 
 }
@@ -27,7 +27,7 @@ ChestTile::ChestTile(
     bool isBlockMovement
 ) : Tile(tileId, tileX, tileY, isBlockMovement)
 {
-  // Additional constructor funcitonality to add to base constructor
+  // Additional constructor functionality to add to base constructor
 
 
 }

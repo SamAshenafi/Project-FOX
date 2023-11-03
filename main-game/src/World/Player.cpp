@@ -14,9 +14,7 @@ Player::Player(
   id = playerId;
   x = playerX;
   y = playerY;
-  // "fox.png" does not exist
   sprite = Helper::loadTexture("fox.png");
-  // flippedSprite = Helper::loadTexture("fox.png");
   movable = true;
 }
 
@@ -25,14 +23,6 @@ void Player::render(int gridWidth, int gridHeight) {
   // Need clean up, this code is bad lol
   // TODO: There's also walking animation in the spritesheet
   // if you can get that working that would be great
-
-  // Old red rectangle, to be remove? or keep to debug?
-  // DrawRectangle(
-  //     x * gridWidth,
-  //     y * gridHeight,
-  //     gridWidth,
-  //     gridHeight,
-  //     RED);
 
   Rectangle src = {
     0,
