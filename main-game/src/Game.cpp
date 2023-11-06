@@ -141,6 +141,8 @@ void Game::loadSave(const std::string& filename) {
           pc["id"], pc["x"], pc["y"], pc["facing"]
         );
         dynamic_cast<World*>(world)->players.push_back(PC);
+        // TODO: If we add more "player" objects, then we need to alter this. We've only ever had 1, so this works fine.
+        dynamic_cast<World*>(world)->player = PC;
       }
       dynamic_cast<World*>(world)->rooms.clear();
       for (const auto& room : worldData["Rooms"]) {
