@@ -130,6 +130,19 @@ void Player::processInput(Game& game) {
       newY >= world->rows;
     if (isOutOfBound) {
       fprintf(stderr, "out of bound: %d, %d\n", newX, newY);
+    }
+    else if (world->grid[newX][newY] == 1) {
+      // no movement, terrain or tile block
+      return;
+    }
+    else {
+      // NOTE: player's depth/y may have changed. If so we need to sort the GameObjects vector
+      if (y != newY) {
+        move(newX, newY);
+        world->sortGameObjects();
+      }
+      else move(newX, newY);
+      animationDuration += 6;
       for (TransitionTile* transition : dynamic_cast<World*>(game.world)->transitionTiles) {
         bool isAtTransition =
           transition->x == this->x &&
@@ -137,26 +150,11 @@ void Player::processInput(Game& game) {
           ;
         if (isAtTransition) {
           fprintf(stderr, "Trying to go to next room\n");
-          world->loadRoom(transition->destinationRoomId);
           move(transition->enterX, transition->enterY);
+          world->loadRoom(transition->destinationRoomId);
           return;
         }
       }
-    }
-    else if (world->grid[newX][newY] == 1) {
-      // no movement, terrain or tile block
-      return;
-    }
-    else if (newY != 0){
-      // NOTE: player's depth/y changed, so we need to sort the GameObjects vector
-      world->sortGameObjects();
-      move(newX, newY);
-      animationDuration += 6;
-      // lastMoveTime = currentTime;
-    }
-    else {
-      move(newX, newY);
-      animationDuration += 6;
       // lastMoveTime = currentTime;
     }
   }

@@ -97,6 +97,7 @@ void World::setRoom(Room* roomToSet) {
     entities.push_back(pc);
   }
   background = roomToSet->background;
+  sortGameObjects();
 }
 
 void World::setGridFromString(std::string roomInfo) {

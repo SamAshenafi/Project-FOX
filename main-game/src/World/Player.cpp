@@ -24,8 +24,15 @@ void Player::render(int gridWidth, int gridHeight) {
   // TODO: There's also walking animation in the spritesheet
   // if you can get that working that would be great
 
+  if (animationFrame > 2 || animationFrame < 0) {
+    fprintf(stderr, "Animation frame (%i) invalid\n", animationFrame);
+    animationFrame = 0;
+  }
+
+  int animationPosition = animationFrame * gridWidth * 4;
+
   Rectangle src = {
-    0,
+    animationPosition,
     0,
     static_cast<float>(gridWidth * 4),
     static_cast<float>(gridHeight * 6)
@@ -43,13 +50,13 @@ void Player::render(int gridWidth, int gridHeight) {
   int spriteWidth = 96 * 2;
   int spriteHeight = 80 * 3;
   Rectangle down = {
-    0,
+    animationPosition,
     static_cast<float>(spriteHeight),
     static_cast<float>(spriteWidth),
     static_cast<float>(spriteHeight)
   };
   Rectangle up = {
-    0,
+    animationPosition,
     static_cast<float>(spriteHeight * 2),
     static_cast<float>(spriteWidth),
     static_cast<float>(spriteHeight)
@@ -85,6 +92,9 @@ void Player::update() {
     animationDuration -= 1;
     return;
   }
+  else animationDuration += 6;
+  if (animationFrame > 0) animationFrame -= 1;
+  else animationFrame = 2;
 
   // Continue moving along the path until the queue is empty
   while (!pathQueue.empty()) {

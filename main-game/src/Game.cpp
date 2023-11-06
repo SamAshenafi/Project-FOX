@@ -135,20 +135,20 @@ void Game::loadSave(const std::string& filename) {
 
       // World Data
       nlohmann::json worldData = root["WorldData"];
-      world->players.clear();
+      dynamic_cast<World*>(world)->players.clear();
       for (const auto& pc : worldData["Players"]) {
         Player* PC = new Player(
           pc["id"], pc["x"], pc["y"], pc["facing"]
         );
-        world->players.push_back(PC);
+        dynamic_cast<World*>(world)->players.push_back(PC);
       }
-      world->rooms.clear();
+      dynamic_cast<World*>(world)->rooms.clear();
       for (const auto& room : worldData["Rooms"]) {
-        Room* newRoom = world->buildRoom(room["room"], room);
-        world->rooms.push_back(newRoom);
+        Room* newRoom = dynamic_cast<World*>(world)->buildRoom(room["room"], room);
+        dynamic_cast<World*>(world)->rooms.push_back(newRoom);
       }
-      Room* roomToSet = world->findRoom(worldData["currentRoomId"]);
-      world->setRoom(roomToSet);
+      Room* roomToSet = dynamic_cast<World*>(world)->findRoom(worldData["currentRoomId"]);
+      dynamic_cast<World*>(world)->setRoom(roomToSet);
 
       // Completed
       completed.clear();
@@ -191,7 +191,7 @@ void Game::saveSave(const std::string& filename) {
   root["WorldData"]["Players"] = nlohmann::json::array();
   root["WorldData"]["Rooms"] = nlohmann::json::array();
 
-  for (Player* player : world->players) {
+  for (Player* player : dynamic_cast<World*>(world)->players) {
     nlohmann::json playerInfo = nlohmann::json::object( {
       {"id", player->id},
       {"x", player->x},
@@ -202,7 +202,7 @@ void Game::saveSave(const std::string& filename) {
   }
 
   // Fill room data
-  for (Room* room : world->rooms) {
+  for (Room* room : dynamic_cast<World*>(world)->rooms) {
     nlohmann::json roomData = nlohmann::json::object({
       {"room", room->roomId}, {"roomInfo", room->roomInfo}
     });

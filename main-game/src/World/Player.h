@@ -25,8 +25,11 @@ class Player : public Entity {
     // For stopping movement during dialogue
     bool movable;
 
-    // Texture2D flippedSprite;
+    // Animation duration
     int animationDuration = 0;
+
+    // Animation Frame
+    int animationFrame = 2;
 
     Player(
         const std::string& playerId,
