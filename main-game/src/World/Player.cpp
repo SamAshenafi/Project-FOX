@@ -92,7 +92,7 @@ void Player::update() {
     animationDuration -= 1;
     return;
   }
-  else animationDuration += 6;
+  else resetAnimationDuration();
   if (animationFrame > 0) animationFrame -= 1;
   else animationFrame = 2;
 
@@ -113,8 +113,11 @@ void Player::update() {
       facing = "down";
     }
     move(nextPos.first, nextPos.second);
-    animationDuration += 6;
+    resetAnimationDuration();
     break;
   }
 }
 
+void Player::resetAnimationDuration() {
+  animationDuration += 10;
+}

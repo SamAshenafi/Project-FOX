@@ -109,6 +109,8 @@ void Player::processInput(Game& game) {
     }
 
     if (animationDuration > 0) return;
+    if (animationFrame == 0) animationFrame = 2;
+    else animationFrame -= 1;
 
 
     std::queue<std::pair<int, int>>().swap(pathQueue); // empty the queue
@@ -142,7 +144,7 @@ void Player::processInput(Game& game) {
         world->sortGameObjects();
       }
       else move(newX, newY);
-      animationDuration += 6;
+      resetAnimationDuration();
       for (TransitionTile* transition : dynamic_cast<World*>(game.world)->transitionTiles) {
         bool isAtTransition =
           transition->x == this->x &&
