@@ -3,7 +3,7 @@
 #include <raylib.h>
 #include "../../external-libs/nlohmann/json.hpp"
 #include <algorithm>
-
+#include "Inventory.h"
 World::World(
     std::string roomId
     ) {
@@ -23,7 +23,8 @@ World::World(
       "player-01",
       playerX,
       playerY,
-      playerFacing
+      playerFacing,
+      playerInventory
       );
   entities.push_back(player);
   players.push_back(player);

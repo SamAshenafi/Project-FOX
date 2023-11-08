@@ -2,20 +2,24 @@
 #include "Player.h"
 #include "../Helper.h"
 #include <cstdio>
-
+#include "Inventory.h"
 Player::Player(
     const std::string& playerId,
     int playerX,
     int playerY,
-    std::string facing
+    std::string facing,
+    Inventory playerInventory
     ) :
   facing(facing)
 {
   id = playerId;
   x = playerX;
   y = playerY;
+  inventory = playerInventory;
   sprite = Helper::loadTexture("fox.png");
   movable = true;
+  ItemAssets::Initialize();
+  inventory.AddItem("bronze_sword");
 }
 
 void Player::render(int gridWidth, int gridHeight) {

@@ -10,7 +10,7 @@
 #include "TransitionTile.h"
 #include "../../external-libs/nlohmann/json.hpp"
 #include "../Game.h"
-
+#include "Inventory.h"
 // class Game;
 class Player;
 
@@ -45,7 +45,7 @@ class World : public GameState {
     int playerX = 0;
     int playerY = 0;
     std::string playerFacing = "down";
-
+    Inventory playerInventory;
     // Input
 
 

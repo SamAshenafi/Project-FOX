@@ -35,7 +35,8 @@ class Player : public Entity {
         const std::string& playerId,
         int playerX,
         int playerY,
-        std::string facing
+        std::string facing,
+        Inventory playerInventory
         );
 
     std::queue<std::pair<int, int>> pathQueue = {};

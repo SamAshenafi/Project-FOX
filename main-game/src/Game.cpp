@@ -1,7 +1,7 @@
 // Game.cpp
 #include "Game.h"
 #include <cstdio>
-
+#include "World/Inventory.h"
 Game::Game() {
   InitWindow(settings.screenWidth, settings.screenHeight, "Project: Fox");
   // SetConfigFlags(FLAG_WINDOW_RESIZABLE | FLAG_VSYNC_HINT);
@@ -138,7 +138,7 @@ void Game::loadSave(const std::string& filename) {
       dynamic_cast<World*>(world)->players.clear();
       for (const auto& pc : worldData["Players"]) {
         Player* PC = new Player(
-          pc["id"], pc["x"], pc["y"], pc["facing"]
+          pc["id"], pc["x"], pc["y"], pc["facing"], Inventory()
         );
         dynamic_cast<World*>(world)->players.push_back(PC);
         // TODO: If we add more "player" objects, then we need to alter this. We've only ever had 1, so this works fine.
@@ -200,6 +200,13 @@ void Game::saveSave(const std::string& filename) {
       {"y", player->y},
       {"facing", player->facing}
     });
+    //new inventory code
+    nlohmann::json inventoryJson = nlohmann::json::object();
+        for (const auto& item : player->inventory.GetItems()) {
+            inventoryJson[item.first] = item.second;
+        }
+    playerInfo["Inventory"] = inventoryJson;
+    ///////
     root["WorldData"]["Players"].push_back(playerInfo);
   }
 
@@ -225,6 +232,7 @@ void Game::saveSave(const std::string& filename) {
     }
     root["WorldData"]["Rooms"].push_back(roomData);
   }
+  //Inventory
 
   // Create a JSON writer
   std::ofstream outputFile(fullFilePath);
