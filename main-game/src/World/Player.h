@@ -54,6 +54,10 @@ class Player : public Entity {
 
     std::string inputHelper(std::string facing);
     void findShortestPath(World& world, int startX, int startY, int targetX, int targetY);
+
+    private:
+      // Private Helpers to reduce redundancy
+      void resetAnimationDuration();
 };
 
 
