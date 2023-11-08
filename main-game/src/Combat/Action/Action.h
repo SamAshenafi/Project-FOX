@@ -2,7 +2,7 @@
 #include <string>
 #include "../Unit.h"
 #include "../../Game.h"
-#include "../Token/Token.h"
+// #include "../Token/Token.h"
 // #include "../Combat.h"
 
 class Action {
@@ -22,6 +22,7 @@ class Action {
     int energyCost = 1;
     int animationDuration = 12;
     int multiSelect;
+    int amount;
 
     virtual int perform(Unit* user, std::vector<Unit*> targets, Game& game) = 0;
 };

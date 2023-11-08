@@ -1,6 +1,6 @@
-#include "Action/DoNothing.h"
 #include "Action/Actions.h"
 #include "Combat.h"
+#include "Token/Tokens.h"
 
 bool Combat::isHero(Unit* unit) {
   Hero* hero = dynamic_cast<Hero*>(unit);
@@ -21,9 +21,15 @@ Action* Combat::createAction(const std::string& actionId) {
   // add more here
   if (actionId == "DoNothing") return new DoNothing();
   if (actionId == "Strike") return new Strike();
-  // if (actionId == "InflictPoison") return new InflictPoison();
+  if (actionId == "InflictPoison") return new InflictPoison();
+  if (actionId == "Heal") return new Heal(5);
   return nullptr;
 }
+
+Token* Unit::createToken(const std::string& tokenId, int stack) {
+  if (tokenId == "Poison") return new Poison(stack);
+}
+
 
 std::vector<Unit*> Combat::unitsVanquished(std::vector<Unit*> units) {
   for (Unit* unit : units) {
