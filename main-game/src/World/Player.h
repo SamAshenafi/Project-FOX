@@ -28,9 +28,6 @@ class Player : public Entity {
     // Animation duration
     int animationDuration = 0;
 
-    // Animation Frame
-    int animationFrame = 2;
-
     Player(
         const std::string& playerId,
         int playerX,

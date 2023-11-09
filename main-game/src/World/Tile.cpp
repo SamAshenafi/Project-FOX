@@ -13,6 +13,9 @@ Tile::Tile(
   id = tileId;
   x = tileX;
   y = tileY;
+
+  // If statements for sprites go below
+  // std::string tileType = Helper::parseGameObjectType(tileId);
   // sprite = Helper::loadTexture("path_to_your_tile_texture.png");
 }
 
@@ -75,12 +78,27 @@ std::pair<std::string, std::string> Tile::interact() {
 }
 
 void Tile::render(int gridWidth, int gridHeight) {
+  // Placeholder is now set up for implementation of sprites.
+  // Will be restructured once some sprites are in
+
   // PLACEHOLDER:
   Color color = BLUE;
   std::string tileType = Helper::parseGameObjectType(id);
-  if (tileType == "chest") color = YELLOW;
-  else if (tileType == "npc") color = GREEN;
-  else if (tileType == "battle") color = RED;
+  if (tileType == "chest") {
+    color = YELLOW;
+    // renderHelper(gridWidth, gridHeight);
+    // return;
+  }
+  else if (tileType == "npc") {
+    color = GREEN;
+    // renderHelper(gridWidth, gridHeight);
+    // return;
+  }
+  else if (tileType == "battle") {
+    color = RED;
+    // renderHelper(gridWidth, gridHeight);
+    // return;
+  }
   DrawRectangle(
       x * gridWidth,
       y * gridHeight,

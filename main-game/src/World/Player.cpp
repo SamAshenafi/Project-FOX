@@ -16,68 +16,37 @@ Player::Player(
   y = playerY;
   sprite = Helper::loadTexture("fox.png");
   movable = true;
+
+  // Rendering values
+  offsetX = 0.5;
+  offsetY = 2;
+  spriteWidth = 192; // 96 * 2
+  spriteHeight = 240; // 80 * 3
 }
 
 void Player::render(int gridWidth, int gridHeight) {
-  // TODO: Sprite render good now?
-  // Need clean up, this code is bad lol
-  // TODO: There's also walking animation in the spritesheet
-  // if you can get that working that would be great
+  // BUG: left-facing fox animates backwards
 
   if (animationFrame > 2 || animationFrame < 0) {
-    fprintf(stderr, "Animation frame (%i) invalid\n", animationFrame);
+    fprintf(stderr, "Player animation frame (%i) invalid\n", animationFrame);
     animationFrame = 0;
   }
 
-  int animationPosition = animationFrame * gridWidth * 4;
-
-  Rectangle src = {
-    animationPosition,
-    0,
-    static_cast<float>(gridWidth * 4),
-    static_cast<float>(gridHeight * 6)
-  };
-
-
-  offsetX = 0.5;
-  offsetY = 2;
-  Rectangle dest = {
-    static_cast<float>((x - offsetX) * gridWidth),
-    static_cast<float>((y - offsetY) * gridHeight - offsetY),
-    static_cast<float>(2 * gridWidth),
-    static_cast<float>(3 * gridHeight),
-  };
-  int spriteWidth = 96 * 2;
-  int spriteHeight = 80 * 3;
-  Rectangle down = {
-    animationPosition,
-    static_cast<float>(spriteHeight),
-    static_cast<float>(spriteWidth),
-    static_cast<float>(spriteHeight)
-  };
-  Rectangle up = {
-    animationPosition,
-    static_cast<float>(spriteHeight * 2),
-    static_cast<float>(spriteWidth),
-    static_cast<float>(spriteHeight)
-  };
-  if (facing == "down") {
-    src = down;
+  bool flipped = false;
+  if (facing == "right") {
+    animationRow = 0;
+  }
+  else if (facing == "down") {
+    animationRow = 1;
   }
   else if (facing == "up") {
-    src = up;
+    animationRow = 2;
   }
   else if (facing == "left") {
-    src.width *= -1;
+    animationRow = 0;
+    flipped = true;
   }
-  DrawTexturePro(
-      sprite,
-      src,
-      dest,
-      {0, 0},
-      0.0,
-      WHITE
-      );
+  renderHelper(gridWidth, gridHeight, flipped);
   return;
 }
 
