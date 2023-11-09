@@ -15,7 +15,6 @@ class Entity {
     int animationRow = 0;
     int spriteWidth = 200; // Default value for preventing problems
     int spriteHeight = 250; // Default value for preventing problems
-    Inventory inventory;
     float offsetX = 0;
     float offsetY = 0;
     Texture2D sprite;
