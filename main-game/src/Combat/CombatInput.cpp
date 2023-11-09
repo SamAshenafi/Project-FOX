@@ -52,7 +52,8 @@ void Combat::processInput(Game& game) {
           currentUnit->selectedTargets.push_back(highlightedTarget);
           targets = {};
           targets = currentUnit->selectedTargets;
-          fprintf(stderr, "%s action is executed on %i enemy(ies)\n", currentUnit->id.c_str(), targets.size());   
+          fprintf(stderr, "%s action is executed on %i enemy(ies)\n", currentUnit->id.c_str(), targets.size()); 
+          selected = 0;  
         }
         else {
           currentUnit->selectedTargets.push_back(highlightedTarget);
@@ -67,6 +68,7 @@ void Combat::processInput(Game& game) {
           currentUnit->selectedAction = highlightedAction;
           availableTargets = foes;
           numberOfTargets = 1;
+          selected = 0;
         }
 
         if (highlightedAction->targetType == "enemies") {
@@ -74,12 +76,21 @@ void Combat::processInput(Game& game) {
           currentUnit->selectedAction = highlightedAction;
           availableTargets = foes;
           numberOfTargets = highlightedAction->multiSelect;
+          selected = 0;
         }
 
         if (highlightedAction->targetType == "all") {
           fprintf(stderr, "Action selected: %s", currentUnit->actionList[selected].c_str());
           currentUnit->selectedAction = highlightedAction;
           targets = foes;
+          selected = 0;
+        }
+
+        if(highlightedAction->targetType == "self") {
+          fprintf(stderr, "Action selected: %s", currentUnit->actionList[selected].c_str());
+          currentUnit->selectedAction = highlightedAction;
+          targets.push_back(currentUnit);
+          selected = 0;
         }
 
       }

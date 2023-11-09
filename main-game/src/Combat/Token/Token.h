@@ -5,15 +5,14 @@ class Unit;
 
 class Token {
   public:
-    Token(int stack) {
-      stack = stack;
-    };
+    Token() {};
     virtual ~Token() = default;
 
     int stack;
+    int tokenID;
 
-    virtual int onTurnStart(Unit& unit);
-    virtual int onTurnEnd(Unit& unit);
-    virtual int onRoundStart(Unit& unit);
-    virtual int onRoundEnd(Unit& unit);
+    virtual int onTurnStart(Unit& unit) = 0;
+    virtual int onTurnEnd(Unit& unit) = 0;
+    virtual int onRoundStart(Unit& unit) = 0;
+    virtual int onRoundEnd(Unit& unit) = 0;
 };

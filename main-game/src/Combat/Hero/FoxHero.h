@@ -25,6 +25,7 @@ class FoxHero : public Hero {
 
       actionList.push_back("DoNothing");
       actionList.push_back("Strike");
-      // actionList.push_back("InflictPoison");
+      actionList.push_back("InflictPoison");
+      actionList.push_back("Heal");
     };
 };

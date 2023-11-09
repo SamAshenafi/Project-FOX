@@ -1,6 +1,7 @@
 #pragma once
 #include "Action.h"
 #include "../Token/Poison.h"
+// #include "../Token/Tokens.h"
 
 class InflictPoison : public Action {
   public:
@@ -9,9 +10,6 @@ class InflictPoison : public Action {
     // }
     InflictPoison();
     ~InflictPoison();
-    
-    // TODO: add target type functionality (should be simple)
-    // std::string targetType = "enemy";
 
     int perform(Unit* user, std::vector<Unit*> targets, Game& game) override;
 };

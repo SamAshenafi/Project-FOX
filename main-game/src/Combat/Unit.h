@@ -77,6 +77,8 @@ class Unit {
       return action;
     };
 
+    Token* createToken(const std::string& tokenId, int stack);
+
     // void takeDmg(int dmg) {
     //   fprintf(stderr, "Take %d damage\n", dmg);
     // }

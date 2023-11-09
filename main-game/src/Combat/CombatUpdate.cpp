@@ -69,6 +69,7 @@ void Combat::update(Game& game) {
       fprintf(stderr, "---\n");
       currentUnit = turnQueue.front();
       turnQueue.pop();
+      fprintf(stderr, "turnStart being called for %s, current number of tokens: %d\n", currentUnit->id.c_str(), currentUnit->tokens.size());
       animationDuration += currentUnit->onTurnStart();
       // currentUnit->animationTimer = 0.5;
       // currentUnit->startAnimationTime = GetTime();
