@@ -1,11 +1,11 @@
 #pragma once
 #include "Token.h"
 
-class Poison : public Token {
+class AtkBoost : public Token {
   public:
-    Poison(int input, Texture2D newSprite) {
+    AtkBoost(int input, Texture2D newSprite) {
     stack = input;
-    tokenID = GetRandomValue(0,99);
+    tokenID = GetRandomValue(100,199);
     sprite = newSprite;
   }
     int stack;
@@ -13,14 +13,7 @@ class Poison : public Token {
     int onTurnStart(Unit& unit) override {
       // TODO: How does this play a sound?
       // SOL1: pass Game to unit on... function then to this
-      unit.hp -= 5;
-      fprintf(
-        stderr,
-        "%s is being drained by the poison. Losing %i health!!!\n",
-        unit.id.c_str(),
-        5
-      );
-      return 6;
+      return 0;
     };
     virtual int onTurnEnd(Unit& unit) override {
       // TODO: How does this play a sound?
@@ -28,6 +21,7 @@ class Poison : public Token {
       stack--;
       if (stack <= 0) {
         int i = 0;
+        unit.bonusAtk -= unit.baseAtk * 1.20;
         for(Token* pending : unit.tokens) {
           if (pending->tokenID == this->tokenID) {
             unit.tokens.erase(unit.tokens.begin()+i);
@@ -46,7 +40,6 @@ class Poison : public Token {
     virtual int onRoundEnd(Unit& unit) override {
       // TODO: How does this play a sound?
       // SOL1: pass Game to unit on... function then to this
-      
       return 0;
     };
 };

@@ -24,10 +24,10 @@ class Unit {
     int maxHp;
     int bonusMaxHp;
 
-    int baseAtk = 0;
-    int bonusAtk = 0;
-    int baseDef = 0;
-    int bonusDef = 0;
+    int baseAtk;
+    int bonusAtk;
+    int baseDef;
+    int bonusDef;
 
     int baseEnergy = 1;
     int energy = 0;
@@ -59,10 +59,10 @@ class Unit {
       return maxHp + bonusMaxHp;
     }
     int getDef() {
-      return baseDef + bonusAtk;
+      return baseDef + bonusDef;
     }
     int getAtk() {
-      return baseAtk + bonusDef;
+      return baseAtk + bonusAtk;
     }
     int getSpeed() {
       return baseSpeed + bonusSpeed;
@@ -86,9 +86,6 @@ class Unit {
     int onTurnStart() {
       int totalAnimationDuration = 6;
       fprintf(stderr, "%s's Turn\n", id.c_str());
-      bonusMaxHp = 0;
-      bonusAtk = 0;
-      bonusDef = 0;
 
       for (Token* token : tokens) {
         totalAnimationDuration += token->onTurnStart(*this);
@@ -100,10 +97,6 @@ class Unit {
     int onTurnEnd() {
       int totalAnimationDuration = 2;
       fprintf(stderr, "%s's Turn Ended\n", id.c_str());
-      bonusMaxHp = 0;
-      bonusAtk = 0;
-      bonusDef = 0;
-      bonusSpeed = 0;
 
       for (Token* token : tokens) {
         totalAnimationDuration += token->onTurnEnd(*this);
@@ -167,6 +160,7 @@ class Unit {
       int screenWidth,
       int screenHeight, 
       int pos,
+      std::vector<Token*> tokens,
       bool isHero,
       bool isFoe
       );

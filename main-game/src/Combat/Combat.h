@@ -84,4 +84,5 @@ class Combat : public GameState {
       int screenHeight
     );
     Texture2D loadTexture(std::string filePath);
+    void loadTokenTextures();
 };

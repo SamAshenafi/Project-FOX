@@ -80,14 +80,14 @@ void Combat::processInput(Game& game) {
         }
 
         if (highlightedAction->targetType == "all") {
-          fprintf(stderr, "Action selected: %s", currentUnit->actionList[selected].c_str());
+          fprintf(stderr, "Action selected: %s\n", currentUnit->actionList[selected].c_str());
           currentUnit->selectedAction = highlightedAction;
           targets = foes;
           selected = 0;
         }
 
         if(highlightedAction->targetType == "self") {
-          fprintf(stderr, "Action selected: %s", currentUnit->actionList[selected].c_str());
+          fprintf(stderr, "Action selected: %s\n", currentUnit->actionList[selected].c_str());
           currentUnit->selectedAction = highlightedAction;
           targets.push_back(currentUnit);
           selected = 0;

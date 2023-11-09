@@ -2,6 +2,16 @@
 #include "Combat.h"
 #include "Token/Tokens.h"
 
+std::vector<Texture2D> tokenTextures = {};
+
+// loads token textures
+void Combat::loadTokenTextures() 
+{
+  tokenTextures.push_back(loadTexture("Poison"));
+  tokenTextures.push_back(loadTexture("AtkBoost"));
+  // tokenTextures.push_back(loadTexture("DefBoost"));
+}
+
 bool Combat::isHero(Unit* unit) {
   Hero* hero = dynamic_cast<Hero*>(unit);
   return hero != nullptr;
@@ -22,12 +32,14 @@ Action* Combat::createAction(const std::string& actionId) {
   if (actionId == "DoNothing") return new DoNothing();
   if (actionId == "Strike") return new Strike();
   if (actionId == "InflictPoison") return new InflictPoison();
+  if (actionId == "BoostAtk") return new BoostAtk();
   if (actionId == "Heal") return new Heal(5);
   return nullptr;
 }
 
 Token* Unit::createToken(const std::string& tokenId, int stack) {
-  if (tokenId == "Poison") return new Poison(stack);
+  if (tokenId == "Poison") return new Poison(stack, tokenTextures[0]);
+  if (tokenId == "AtkBoost") return new AtkBoost(stack, tokenTextures[1]);
 }
 
 

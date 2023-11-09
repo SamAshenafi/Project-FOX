@@ -10,9 +10,9 @@ class FoxFoe : public Foe {
       bonusMaxHp;
 
       baseAtk = 10;
-      bonusAtk;
+      bonusAtk = 0;
       baseDef = 4;
-      bonusDef;
+      bonusDef = 0;
 
       baseSpeed = 6;
 

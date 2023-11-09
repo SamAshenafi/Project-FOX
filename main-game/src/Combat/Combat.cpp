@@ -61,6 +61,9 @@ void Combat::loadBattle(const std::string& battleId) {
   nlohmann::json root;
   std::ifstream jsonFile(fullFilePath);
 
+  // Loads textures used for tokens
+  loadTokenTextures();
+
   if (jsonFile.is_open()) {
     try {
       jsonFile >> root;

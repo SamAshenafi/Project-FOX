@@ -34,6 +34,34 @@ void rUnitSprite(Texture2D sprite, int pos, int screenWidth, int screenHeight)
     );
 }
 
+void rTokenSprite (Texture2D sprite, int pos, int screenWidth, int screenHeight)
+{
+  int spriteWidth = 10 * 2;
+  int spriteHeight = 10 * 3;
+  Rectangle src = {
+      0,
+      0,
+      static_cast<float>(spriteWidth),
+      static_cast<float>(spriteHeight)
+    };
+
+  Rectangle dest = {
+      static_cast<float>(pos),
+      static_cast<float>(0.18 * screenHeight),
+      static_cast<float>(screenWidth/8), //sizes are planned to change
+      static_cast<float>(screenHeight/4), //sizes are planned to change
+    };
+  
+  DrawTexturePro(
+    sprite,
+    src,
+    dest,
+    {0, 0},
+    0.0,
+    WHITE
+    );
+}
+
 
 // Combat Helpers //
 //loadTexture
@@ -78,8 +106,8 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
     std::vector<std::string> actionBox = {};
     actionBox = currentUnit->actionList;
 
-    if (selected > 4) {
-      for (int i = selected - 4 ; i>0 ; i--) {
+    if (selected > 3) {
+      for (int i = selected - 3 ; i>0 ; i--) {
         actionBox.erase(actionBox.begin());
       }
     }
@@ -91,7 +119,7 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
       DrawText(
       actions.c_str(),
       screenWidth - (screenWidth*0.96 - 20),  // X position of the text
-      screenHeight - (screenHeight*0.30 + (25*pos)),  // Y position of the text
+      screenHeight - (screenHeight*0.20 + (25*pos)),  // Y position of the text
       28,  // Font size
       WHITE
       );
@@ -102,9 +130,11 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
     //renders the pointer (use selected)
     Action* action = currentUnit->getAction();
     if (action == nullptr) {
+      int pos = selected;
+      if (selected > 3) pos = 3;
       DrawRectangle(
         screenWidth - (screenWidth*0.96),
-        screenHeight - (screenHeight*0.30 + (25*selected)),
+        screenHeight - (screenHeight*0.20 + (25*pos)),
         10,
         10,
         BLUE
@@ -145,6 +175,7 @@ void Combat::RenderUnits
       screenWidth,
       screenHeight,
       pos,
+      hero->tokens,
       isHero(hero),
       isFoe(hero)
     );
@@ -161,6 +192,7 @@ void Combat::RenderUnits
       screenWidth,
       screenHeight, 
       pos,
+      foe->tokens,
       isHero(foe),
       isFoe(foe));
     pos++;
@@ -178,6 +210,7 @@ void Unit::RenderSprite
   int screenWidth,
   int screenHeight, 
   int pos,
+  std::vector<Token*> tokens,
   bool isHero,
   bool isFoe
 )
@@ -187,7 +220,7 @@ void Unit::RenderSprite
     pos = screenWidth/2 - (96*(pos+1) + (32*pos+1));
     rUnitSprite(sprite, pos, screenWidth, screenHeight);
     DrawRectangle(
-    pos,
+    pos ,
     0.30 * screenHeight,
     10,
     10,
@@ -206,6 +239,29 @@ void Unit::RenderSprite
       );
     //energy
     //TODO: add energy render
+
+    //renders tokens if available
+    int i = 0;
+    for(Token* token : tokens) {
+      int tokenPos = pos + (tokens.size() * 15);
+      DrawRectangle(
+        tokenPos,
+        screenHeight*0.18,
+        10,
+        10,
+        PURPLE
+      );
+
+      // Uncomment this and delete above when token sprites are made
+    //   rTokenSprite(
+    //     token->sprite,
+    //     tokenPos,
+    //     screenWidth,
+    //     screenHeight
+    //     );
+    // }
+      i++;
+    }
   }
   else if (isFoe) 
   {
@@ -240,8 +296,28 @@ void Unit::RenderSprite
         );
     //energy
     //TODO: add energy render
-    //Tokens
-    //TODO: and Token render
+    //renders tokens if available
+    int i = 0;
+    for(Token* token : tokens) {
+      int tokenPos = pos + (i * 15);
+      DrawRectangle(
+        tokenPos,
+        screenHeight*0.18,
+        10,
+        10,
+        PURPLE
+      );
+
+      // Uncomment this and delete above when token sprites are made
+    //   rTokenSprite(
+    //     token->sprite,
+    //     tokenPos,
+    //     screenWidth,
+    //     screenHeight
+    //     );
+    // }
+    i++;
     }
     return;
+  }
 }

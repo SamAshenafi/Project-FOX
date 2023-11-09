@@ -4,3 +4,4 @@
 #include "Strike.h"
 #include "InflictPoison.h"
 #include "Heal.h"
+#include "BoostAtk.h"

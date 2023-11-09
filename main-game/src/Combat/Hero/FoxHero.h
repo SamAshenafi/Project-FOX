@@ -14,9 +14,9 @@ class FoxHero : public Hero {
       bonusMaxHp;
 
       baseAtk = 10;
-      bonusAtk;
+      bonusAtk = 0;
       baseDef = 4;
-      bonusDef;
+      bonusDef = 0;
 
       baseSpeed = 6;
 
@@ -27,5 +27,6 @@ class FoxHero : public Hero {
       actionList.push_back("Strike");
       actionList.push_back("InflictPoison");
       actionList.push_back("Heal");
+      actionList.push_back("BoostAtk");
     };
 };
