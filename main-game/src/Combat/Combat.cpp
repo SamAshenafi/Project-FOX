@@ -1,8 +1,6 @@
 #include "Combat.h"
 #include "Action/Actions.h"
 #include "../../external-libs/nlohmann/json.hpp"
-#include "Action/DoNothing.h"
-#include "Action/Strike.h"
 #include <cstdio>
 #include <raylib.h>
 #include <string>

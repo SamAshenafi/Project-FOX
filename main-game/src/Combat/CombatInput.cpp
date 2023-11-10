@@ -31,12 +31,14 @@ void Combat::processInput(Game& game) {
       fprintf(stderr, "%s\n", "p was pressed");
       if(!game.dialogQueue.empty()) game.dialogQueue.pop();
       if(isHero(currentUnit) && !(availableTargets.empty())) {
-        selected = (selected + 1) % (availableTargets.size());
+        if (highlightedTarget == nullptr) selected = 0;
+        else selected = (selected + 1) % (availableTargets.size());
         fprintf(stderr, "%s is currently highlighted\n", availableTargets[selected]->id.c_str());
         highlightedTarget = availableTargets[selected];
       }
       else if (isHero(currentUnit) && availableTargets.empty()) {
-        selected = (selected + 1) % (currentUnit->actions.size());
+        if (highlightedAction == nullptr) selected = 0;
+        else selected = (selected + 1) % (currentUnit->actions.size());
         fprintf(stderr, "%s%i\n", "selection size: ",currentUnit->actions.size());
         fprintf(stderr, "%s%s\n", "action highlighted: ",currentUnit->actionList[selected].first.c_str());
         highlightedAction = currentUnit->actions[selected];

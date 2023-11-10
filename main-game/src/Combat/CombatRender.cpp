@@ -179,7 +179,7 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
         BLUE
       );
     }
-    else if (highlightedAction != nullptr) {
+    else if (highlightedTarget != nullptr) {
       DrawRectangle(
         screenWidth/2 + (96*(selected) + 32*(selected+1)),
         screenHeight*0.10,

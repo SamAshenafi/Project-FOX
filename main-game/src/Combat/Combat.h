@@ -46,8 +46,6 @@ class Combat : public GameState {
     // void startRound();
     
     int selected = 0;
-    int prevSel_A = 0;
-    int prevSel_T = 0;
     int numberOfTargets;
     Action* highlightedAction = nullptr;
     std::vector<Unit*> targets = {};

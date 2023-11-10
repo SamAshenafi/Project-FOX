@@ -21,7 +21,7 @@ class Unit {
     //character stats
     std::string id;
     int hp;
-    int maxHp;
+    int maxHp = 0;
     int bonusMaxHp;
 
     int baseAtk;
@@ -57,7 +57,8 @@ class Unit {
     double animationTimer = 0;
 
     int getMaxHp() {
-      return maxHp + bonusMaxHp;
+      if(maxHp == 0) return 0;
+      return maxHp;
     }
     int getDef() {
       return baseDef + bonusDef;
