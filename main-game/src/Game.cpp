@@ -14,6 +14,7 @@ Game::Game() {
   world = new World(currentRoomId);
 
   // set initinal game state
+  gameOver = false;
   GameState* newState = new MainMenu();
   // GameState* newState = world;
   // GameState* newState = new Combat();

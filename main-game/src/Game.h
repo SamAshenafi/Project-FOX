@@ -60,6 +60,7 @@ class Game {
     // inventory mini-class (don't make a class for this yet)
     int gold = 0;
     std::vector<std::string> items;
+    bool gameOver;
 
 
     // Exploration* exploration;

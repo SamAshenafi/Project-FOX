@@ -5,22 +5,38 @@
 void MainMenu::render(Game& game) {
   BeginDrawing();
   // TODO: put your render for start menu/screen here
-
-  // placeholder, to be replaced
-  DrawText(
-      "Press Space to Continue or something idk",
+  ClearBackground(DARKGRAY);
+  if(game.gameOver) {
+    DrawText(
+      "GAME OVER!\n press Space to return to main menu.",
       game.settings.screenWidth / 2 - 50,
       game.settings.screenHeight / 2, 20,
       RAYWHITE
       );
+  }
+  // placeholder, to be replaced
+  else {
+    DrawText(
+      "Press Space to Start A New Game\n or [ to load your saved game",
+      game.settings.screenWidth / 2 - 50,
+      game.settings.screenHeight / 2, 20,
+      RAYWHITE
+      );
+  }
   EndDrawing();
 }
 
 void MainMenu::processInput(Game& game) {
   if (IsKeyPressed(KEY_SPACE)) {
-    // game.changeState("world");
+    if (game.gameOver) game.gameOver = false;
+    else game.changeState(game.world);
+  }
+  else if(IsKeyPressed(KEY_LEFT_BRACKET)) {
+    fprintf(stderr, "%s\n", "[ was pressed");
+    fprintf(stderr, "%s\n", "loaded from savedata-01.json");
+    game.gameOver = false;
     game.changeState(game.world);
-    // game.changeState("combat");
+    game.loadSave("savedata-01");
   }
 }
 

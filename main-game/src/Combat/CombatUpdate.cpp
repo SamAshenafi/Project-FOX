@@ -38,7 +38,8 @@ void Combat::update(Game& game) {
           // TODO: implement game over
           // will likely consist of taken to a screen before being brough to the main menu
           if(!game.dialogQueue.empty()) game.dialogQueue.pop();
-          game.changeState(game.world);
+          game.gameOver = true;
+          game.changeState(new MainMenu());
           return;
       }
 
