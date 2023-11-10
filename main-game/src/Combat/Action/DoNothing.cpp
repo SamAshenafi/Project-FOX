@@ -2,12 +2,16 @@
 
 DoNothing::DoNothing() {
   targetType = "all";
+  actionDesc = {
+      "Does Nothing Lol"
+    };
 }
 
 DoNothing::~DoNothing() {
 }
 
 int DoNothing::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
+  user->actionDialouge += "Is loafing Around";
   for (Unit* target : targets) {
     fprintf(
       stderr,
@@ -18,5 +22,5 @@ int DoNothing::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   }
   user->energy -= energyCost;
   // fprintf(stderr, "%s performed [Do Nothing]!!!\n", user->id.c_str());
-  return animationDuration;
+  return animationDuration + 80;
 };

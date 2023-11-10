@@ -3,13 +3,20 @@
 InflictPoison::InflictPoison(int stack) {
     targetType = "enemy";
     amount = stack;
+    actionDesc = {
+      "Poisons a target dealing 5 damage",
+      "For " + std::to_string(amount) + " Turns"
+    };
 }
 
 InflictPoison::~InflictPoison() {
 }
 
 int InflictPoison::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
+  user->actionDialouge += "Has Inflicted Poison onto ";
   for (Unit* target : targets) {
+    
+    user->actionDialouge += target->id + ", ";
 
     // perform algorithm for the action
     Token* new_token = target->createToken("Poison", amount);
@@ -44,7 +51,8 @@ int InflictPoison::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
     );
     
   }
+  user->actionDialouge += " for " + std::to_string(amount) + " turns";
   user->energy -= energyCost;
   // fprintf(stderr, "%s performed [Strike]!!!\n", user->id.c_str());
-  return animationDuration;
+  return animationDuration + 80;
 };

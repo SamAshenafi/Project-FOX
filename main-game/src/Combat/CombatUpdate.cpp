@@ -6,13 +6,13 @@ void Combat::update(Game& game) {
   if (animationDuration != 0) {
     animationDuration -= 1;
     fprintf(stderr, "[ANIMATION]: %d\n", animationDuration);
-    while(animationDuration == 0 && game.dialogQueue.size() != 0) game.dialogQueue.pop();
     return;
   }
 
 
   if (foes.empty()) {
         if (!combatConcluded) {
+          while(!game.dialogQueue.empty()) game.dialogQueue.pop();
           game.dialogQueue.push("You WIN!!!");
           fprintf(stderr,"You WIN!!!");
           animationDuration += 40;
@@ -28,6 +28,7 @@ void Combat::update(Game& game) {
 
       if (heroes.empty()) {
         if (!combatConcluded){
+          while(!game.dialogQueue.empty()) game.dialogQueue.pop();
           game.dialogQueue.push("Fen has been slain :(");
           fprintf(stderr,"You Died\n");
           animationDuration += 40;
@@ -104,6 +105,7 @@ void Combat::update(Game& game) {
       turnQueue.pop();
       fprintf(stderr, "turnStart being called for %s, current number of tokens: %d\n", currentUnit->id.c_str(), currentUnit->tokens.size());
       animationDuration += currentUnit->onTurnStart(combatConcluded);
+      while(!game.dialogQueue.empty()) game.dialogQueue.pop();
       game.dialogQueue.push(currentUnit->actionDialouge);
       // currentUnit->animationTimer = 0.5;
       // currentUnit->startAnimationTime = GetTime();
@@ -115,9 +117,14 @@ void Combat::update(Game& game) {
     return;
   }
   else {
+    while(!game.dialogQueue.empty()) game.dialogQueue.pop();
     game.dialogQueue.push(currentUnit->actionDialouge);
     if (currentUnit->energy < 1) {
-      animationDuration += currentUnit->onTurnEnd(combatConcluded);      
+      animationDuration += currentUnit->onTurnEnd(combatConcluded);
+
+      while(!game.dialogQueue.empty()) game.dialogQueue.pop();
+      currentUnit->actionDialouge = "";
+
       currentUnit = nullptr;
       return;
     }
@@ -129,6 +136,11 @@ void Combat::update(Game& game) {
     if (action == nullptr) return; // extra, maybe need later?
     if (action != nullptr && !targets.empty()) {
       animationDuration += action->perform(currentUnit, targets, game);
+
+      while(!game.dialogQueue.empty()) game.dialogQueue.pop();
+      game.dialogQueue.push(currentUnit->actionDialouge);
+      fprintf(stderr, "actionDialouge: %s\n", currentUnit->actionDialouge.c_str());
+
       //reseting values for next decided action
       currentUnit->selectedAction = nullptr;
       currentUnit->selectedTargets = {};
@@ -142,6 +154,7 @@ void Combat::update(Game& game) {
     foes = unitsVanquished(foes);
     heroes = unitsVanquished(heroes);
 
+    return;
   }
 }
 

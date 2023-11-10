@@ -3,19 +3,25 @@
 BoostAtk::BoostAtk(int stack) {
     targetType = "self";
     amount = stack;
-    
+    actionDesc = {
+      "Boosts targets' Attack by 50%",
+      "For " + std::to_string(amount) + " Turns"
+    };
 }
 
 BoostAtk::~BoostAtk() {
 }
 
 int BoostAtk::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
+  user->actionDialouge += "has boosted ";
   for (Unit* target : targets) {
+
+    user->actionDialouge += target->id + "'s, ";
 
     // perform algorithm for the action
     Token* new_token = target->createToken("AtkBoost", amount);
     if (target->tokens.size() == 0) {
-      target->bonusAtk += target->baseAtk * 1.25;
+      target->bonusAtk += target->baseAtk * 0.50;
       target->tokens.push_back(new_token);
     } 
     else if (target->tokens.size() <= 10) {
@@ -49,6 +55,7 @@ int BoostAtk::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
     );
     
   }
+  user->actionDialouge += "Def by 50%";
   user->energy -= energyCost;
   // fprintf(stderr, "%s performed [Strike]!!!\n", user->id.c_str());
   return animationDuration;

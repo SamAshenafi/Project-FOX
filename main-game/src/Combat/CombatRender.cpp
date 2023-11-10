@@ -5,6 +5,14 @@
 #include <cstdio>
 #include <raylib.h>
 
+
+std::vector<std::string> combatInputTutorial =
+{
+  "p --- select",
+  "o --- confirm selection",
+  "l --- cancels selection"
+};
+
 void rUnitSprite(Texture2D sprite, int pos, int screenWidth, int screenHeight)
 {
     int spriteWidth = 96 * 2;
@@ -122,22 +130,50 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
       DrawText(
       actions.c_str(),
       screenWidth - (screenWidth*0.96 - 20),  // X position of the text
-      screenHeight - (screenHeight*0.20 + (25*pos)),  // Y position of the text
+      screenHeight - (screenHeight*0.38 - (25*pos)),  // Y position of the text
       28,  // Font size
       WHITE
       );
       pos++;
     }
-    //renders the action descriptions
-    
-    //renders the pointer (use selected)
+
     Action* action = currentUnit->getAction();
+    
+    //renders the action descriptions
+    int i = 0;
+    if (highlightedAction != nullptr || action != nullptr && !action->actionDesc.empty()) {
+      std::vector<std::string> actionDesc = currentUnit->actions[selected]->actionDesc;
+      for (std::string line : actionDesc) {
+        DrawText(
+        line.c_str(),
+        screenWidth - screenWidth*0.64,  // X position of the text
+        screenHeight - (screenHeight*0.38 - (25*i)),  // Y position of the text
+        28,  // Font size
+        WHITE
+      );
+      i++;
+      }   
+    }
+    else {
+      // shows instructions
+      for (std::string line : combatInputTutorial) {
+        DrawText(
+        line.c_str(),
+        screenWidth - screenWidth*0.64,  // X position of the text
+        screenHeight - (screenHeight*0.38 - (25*i)),  // Y position of the text
+        28,  // Font size
+        WHITE
+      );
+      i++;
+      }
+    }
+    //renders the pointer (use selected)
     if (action == nullptr && highlightedAction != nullptr) {
       int pos = selected;
       if (selected > 3) pos = 3;
       DrawRectangle(
         screenWidth - (screenWidth*0.96),
-        screenHeight - (screenHeight*0.20 + (25*pos)),
+        screenHeight - (screenHeight*0.38 - (25*pos)),
         10,
         10,
         BLUE

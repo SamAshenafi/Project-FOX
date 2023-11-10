@@ -3,13 +3,20 @@
 BoostDef::BoostDef(int stack) {
     targetType = "self";
     amount = stack;
+    actionDesc = {
+      "Boosts targets' Defense by 50%",
+      "For " + std::to_string(amount) + " Turns"
+    };
 }
 
 BoostDef::~BoostDef() {
 }
 
 int BoostDef::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
+  user->actionDialouge += "has boosted ";
   for (Unit* target : targets) {
+
+    user->actionDialouge += target->id + "'s, ";
 
     // perform algorithm for the action
     Token* new_token = target->createToken("DefBoost", amount);
@@ -48,7 +55,8 @@ int BoostDef::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
     );
     
   }
+  user->actionDialouge += "Def by 50%";
   user->energy -= energyCost;
   // fprintf(stderr, "%s performed [Strike]!!!\n", user->id.c_str());
-  return animationDuration;
+  return animationDuration + 80;
 };

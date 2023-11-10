@@ -20,7 +20,6 @@ class Poison : public Token {
         unit.id.c_str(),
         5
       );
-      fprintf(stderr,"actiondialouge: %s", unit.actionDialouge);
       return 10;
     };
     virtual int onTurnEnd(Unit& unit) override {

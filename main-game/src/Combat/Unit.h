@@ -87,14 +87,14 @@ class Unit {
     int onTurnStart(bool combatConcluded) {
       int totalAnimationDuration = 10;
       fprintf(stderr, "%s's Turn\n", id.c_str());
-      if (combatConcluded) actionDialouge = (id+"'s Turn --- ");
+      if (!combatConcluded) actionDialouge = (id+"'s Turn --- ");
 
       int i = 0;
       for (Token* token : tokens) {
         if (token->tokenID / 100 == 0) i++;
         totalAnimationDuration += token->onTurnStart(*this);
       }
-      if(i > 0 && combatConcluded) actionDialouge += id + " is being drained by poison!!! -"
+      if(i > 0 && !combatConcluded) actionDialouge += id + " is being drained by poison!!! -"
                                 + std::to_string(5 * i) + " health";
       // for (Equipment* equipment : equipments) {
       // }
