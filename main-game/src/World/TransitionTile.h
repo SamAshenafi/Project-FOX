@@ -1,8 +1,7 @@
 #pragma once
 #include <string>
 
-class TransitionTile {
-  public:
+struct TransitionTile {
     int x, y;
     int enterX, enterY;
     std::string destinationRoomId;
@@ -19,9 +18,4 @@ class TransitionTile {
       enterX(enterX),
       enterY(enterY),
       destinationRoomId(destinationRoomId) {}
-
-    // You can add more methods and properties if needed
 };
-
-// TODO: Transitontile implmentation
-// When player is standing on 

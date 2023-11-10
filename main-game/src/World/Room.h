@@ -5,8 +5,7 @@
 #include "TransitionTile.h"
 #include "raylib.h"
 
-class Room {
-  public:
+struct Room {
     std::string roomId;
 
     Room() = default;

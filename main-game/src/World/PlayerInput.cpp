@@ -157,7 +157,27 @@ void Player::processInput(Game& game) {
           return;
         }
       }
-      // lastMoveTime = currentTime;
+      for (Entity* entity : dynamic_cast<World*>(game.world)->entities) {
+        bool isAtTile =
+          entity->x == x &&
+          entity->y == y
+          ;
+        if (!isAtTile) {
+          continue;
+        }
+        Tile* tile = dynamic_cast<Tile*>(entity);
+        if (tile != nullptr) {
+          std::pair<std::string, std::string> tileData = tile->interact();
+          std::string tileType = tileData.first;
+          std::string tileText = tileData.second;
+          if (tileType == "battle") {
+            fprintf(stderr, "Entering Combat\n");
+            world->enterCombat(game, tile->id);
+            world->removeEntity(tile->id);
+            world->currentRoom->removeTile(tile->id);
+          }
+        }
+      }
     }
   }
 }

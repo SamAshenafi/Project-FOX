@@ -23,9 +23,6 @@ class World : public GameState {
     void update(Game& game) override;
     void render(Game& game) override;
 
-    const double moveSpeed = 0.1;
-    double lastMoveTime = 0;
-
     int grid[20][12];
     // int rows = sizeof(grid) / sizeof(grid[0]);
     // int columns = sizeof(grid[0]) / sizeof(grid[0][0]);
@@ -46,10 +43,6 @@ class World : public GameState {
     int playerY = 0;
     std::string playerFacing = "down";
     Inventory playerInventory;
-    // Input
-
-
-    std::queue<std::pair<int, int>> pathQueue;
 
     Texture2D background;
 
@@ -57,7 +50,6 @@ class World : public GameState {
 
     // Helpers
     Room* buildRoom(const std::string& roomId, nlohmann::json source);
-    void setGridFromString(std::string roomInfo);
     void setRoom(Room* roomToSet);
     Room* findRoom(const std::string& roomId);
     // std::string inputHelper(std::string facing);
@@ -67,12 +59,8 @@ class World : public GameState {
 
     void resetGrid(); // set all in grid to 0
     void sortGameObjects();
-    void clearPathQueue();
     void removeEntity(const std::string& tileId);
 
   private:
-    // void handleKeyPressO();
-
-    // processMovement();
-
+    void setGridFromString(std::string roomInfo);
 };

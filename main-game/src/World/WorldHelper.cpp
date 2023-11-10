@@ -69,7 +69,6 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
     roomTransitions.push_back(transitionTile);
   }
   // Construct new room and add it to the rooms vector
-  // TODO: Uncomment later
   Room* roomToBuild = new Room(roomId, roomInfo, roomTiles, roomTransitions, roomBackground);
   return roomToBuild;
 }
