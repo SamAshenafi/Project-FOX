@@ -3,7 +3,6 @@
 Heal::Heal(int insert) {
   targetType = "self";
   amount = insert;
-  fprintf(stderr, "amount = %d\n", amount);
 }
 
 Heal::~Heal() {
@@ -12,8 +11,7 @@ Heal::~Heal() {
 //might need to modify for 
 int Heal::perform(Unit* user, std::vector<Unit*> targets,  Game& game) {
   for (Unit* target : targets) {
-
-    fprintf(stderr, "amount = %d\n", this->amount);
+    
     // perform algorithm for the action
     if(target->getMaxHp() >= target->hp) target->hp = target->hp + this->amount;
 

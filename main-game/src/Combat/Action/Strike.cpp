@@ -11,7 +11,7 @@ int Strike::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   for (Unit* target : targets) {
 
     // perform algorithm
-    target->hp -= user->getAtk();
+    target->hp -= (user->getAtk() - target->getDef());
 
 
     fprintf(

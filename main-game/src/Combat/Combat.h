@@ -46,6 +46,8 @@ class Combat : public GameState {
     // void startRound();
     
     int selected = 0;
+    int prevSel_A = 0;
+    int prevSel_T = 0;
     int numberOfTargets;
     Action* highlightedAction = nullptr;
     std::vector<Unit*> targets = {};
@@ -54,6 +56,7 @@ class Combat : public GameState {
     std::vector<Unit*> previousAvailable = {};
 
     bool isRoundOver = false;;
+    bool combatConcluded = false;
 
     int animationDuration = 0;
 
@@ -74,7 +77,7 @@ class Combat : public GameState {
     bool isFoe(Unit* unit);
     std::vector<Unit*> unitsVanquished (std::vector<Unit*> units);
     Foe* createFoe(const std::string& foeId);
-    Action* createAction(const std::string& actionId);
+    Action* createAction(const std::string& actionId, int amount);
     
     void RenderUI(int screenWidth,int screenHeight);
     void RenderUnits(

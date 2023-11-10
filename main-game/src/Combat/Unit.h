@@ -34,10 +34,11 @@ class Unit {
 
     std::vector<Token*> tokens = {};
     std::vector<Action*> actions = {};
-    std::vector<std::string> actionList = {};
+    std::vector<std::pair<std::string,int>> actionList = {};
 
     Action* selectedAction = nullptr;
     std::vector<Unit*> selectedTargets = {};
+    std::string actionDialouge;
 
     int baseSpeed = 0;
     int bonusSpeed = 0;
@@ -68,7 +69,7 @@ class Unit {
       return baseSpeed + bonusSpeed;
     }
 
-    std::vector<std::string> getActionList(){
+    std::vector<std::pair<std::string,int>> getActionList(){
       return actionList;
     }
 
@@ -83,22 +84,27 @@ class Unit {
     //   fprintf(stderr, "Take %d damage\n", dmg);
     // }
 
-    int onTurnStart() {
-      int totalAnimationDuration = 6;
+    int onTurnStart(bool combatConcluded) {
+      int totalAnimationDuration = 10;
       fprintf(stderr, "%s's Turn\n", id.c_str());
+      if (combatConcluded) actionDialouge = (id+"'s Turn --- ");
 
+      int i = 0;
       for (Token* token : tokens) {
+        if (token->tokenID / 100 == 0) i++;
         totalAnimationDuration += token->onTurnStart(*this);
       }
+      if(i > 0 && combatConcluded) actionDialouge += id + " is being drained by poison!!! -"
+                                + std::to_string(5 * i) + " health";
       // for (Equipment* equipment : equipments) {
       // }
       return totalAnimationDuration;
     }
-    int onTurnEnd() {
+    int onTurnEnd(bool combatConcluded) {
       int totalAnimationDuration = 2;
       fprintf(stderr, "%s's Turn Ended\n", id.c_str());
-
       for (Token* token : tokens) {
+        fprintf(stderr, "it gets to here");
         totalAnimationDuration += token->onTurnEnd(*this);
       }
 
@@ -107,7 +113,7 @@ class Unit {
       // }
     }
 
-      int onRoundStart() {
+      int onRoundStart(bool combatConcluded) {
         int totalAnimationDuration = 0;
         energy = baseEnergy;
         bonusSpeed = GetRandomValue(0, 6);
@@ -118,7 +124,7 @@ class Unit {
         }
         return totalAnimationDuration;
       }
-      int onRoundEnd() {
+      int onRoundEnd(bool combatConcluded) {
         int totalAnimationDuration = 0;
         for (Token* token : tokens) {
           totalAnimationDuration += token->onRoundEnd(*this);

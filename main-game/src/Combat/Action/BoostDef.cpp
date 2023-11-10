@@ -1,19 +1,22 @@
-#include "InflictPoison.h"
+#include "BoostDef.h"
 
-InflictPoison::InflictPoison(int stack) {
-    targetType = "enemy";
+BoostDef::BoostDef(int stack) {
+    targetType = "self";
     amount = stack;
 }
 
-InflictPoison::~InflictPoison() {
+BoostDef::~BoostDef() {
 }
 
-int InflictPoison::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
+int BoostDef::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   for (Unit* target : targets) {
 
     // perform algorithm for the action
-    Token* new_token = target->createToken("Poison", amount);
-    if (target->tokens.size() == 0) target->tokens.push_back(new_token);
+    Token* new_token = target->createToken("DefBoost", amount);
+    if (target->tokens.size() == 0) {
+      target->bonusDef += target->baseDef * 0.50;
+      target->tokens.push_back(new_token);
+    } 
     else if (target->tokens.size() <= 10) {
       for (Token* pending : target->tokens) {
         if (pending->tokenID == new_token->tokenID) {
@@ -21,13 +24,14 @@ int InflictPoison::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
           pending = target->tokens[0];
         }
       }
+      target->bonusDef += target->baseDef * 0.50;
       target->tokens.push_back(new_token);
     }
 
     //will need to modigy for actions containing multiple
     fprintf(
       stderr,
-      "%s performed [InflictPoison] on %s!!!\n",
+      "%s performed [Boost Defence] on %s!!!\n",
       user->id.c_str(),
       target->id.c_str()
     );
@@ -38,9 +42,9 @@ int InflictPoison::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
     // );
     fprintf(
       stderr,
-      "%s hp is now %i!!!\n",
+      "%s defnece is now %i!!!\n",
       target->id.c_str(),
-      target->hp
+      target->getDef()
     );
     
   }

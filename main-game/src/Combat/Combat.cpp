@@ -78,8 +78,8 @@ void Combat::loadBattle(const std::string& battleId) {
         Foe* newFoe = createFoe(foeId);
         if (newFoe != nullptr) {
           fprintf(stderr, "Added foe w/ id:%s to foes\n", foeId.c_str());
-          for(std::string action : newFoe->getActionList()) {
-            newFoe->actions.push_back(createAction(action));
+          for(std::pair<std::string,int> action : newFoe->getActionList()) {
+            newFoe->actions.push_back(createAction(action.first,action.second));
           }
           newFoe->sprite = loadTexture(newFoe->id);
           foes.push_back(newFoe);
@@ -96,9 +96,9 @@ void Combat::loadBattle(const std::string& battleId) {
   }
   Hero* foxHero = new FoxHero();
   foxHero->sprite = loadTexture(foxHero->id);
-  for(std::string action : foxHero->actionList)
+  for(std::pair<std::string,int> action : foxHero->getActionList())
   {
-    foxHero->actions.push_back(createAction(action));
+    foxHero->actions.push_back(createAction(action.first,action.second));
   }
   heroes.push_back(foxHero);
 }

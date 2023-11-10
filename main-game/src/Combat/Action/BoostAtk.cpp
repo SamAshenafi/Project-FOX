@@ -1,7 +1,9 @@
 #include "BoostAtk.h"
 
-BoostAtk::BoostAtk() {
+BoostAtk::BoostAtk(int stack) {
     targetType = "self";
+    amount = stack;
+    
 }
 
 BoostAtk::~BoostAtk() {
@@ -11,7 +13,7 @@ int BoostAtk::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   for (Unit* target : targets) {
 
     // perform algorithm for the action
-    Token* new_token = target->createToken("AtkBoost", 3);
+    Token* new_token = target->createToken("AtkBoost", amount);
     if (target->tokens.size() == 0) {
       target->bonusAtk += target->baseAtk * 1.25;
       target->tokens.push_back(new_token);
