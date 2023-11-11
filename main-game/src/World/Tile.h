@@ -14,38 +14,70 @@ class Tile : public Entity {
     bool isBlockMovement;
 
     Tile(
-        const std::string& tileId,
-        int tileX,
-        int tileY,
-        bool isBlockMovement
-        );
+      const std::string& tileId,
+      int tileX,
+      int tileY,
+      bool isBlockMovement
+      );
 
     // void interact() override;
-    std::pair<std::string, std::string> interact();
+    std::pair<std::string, std::string> interact() override;
     // void draw(int gridSize);
     void render(int gridWidth, int gridHeight) override;
+
+  protected:
+    std::string tileText = "";
 };
 
 class CombatTile : public Tile {
   public:
     CombatTile(
-        const std::string& tileId,
-        int tileX,
-        int tileY,
-        bool isBlockMovement
-        );
+      const std::string& tileId,
+      int tileX,
+      int tileY,
+      bool isBlockMovement
+      );
 
-    std::pair<std::string, std::string> interact();
+    std::pair<std::string, std::string> interact() override;
+};
+
+class NpcTile : public Tile {
+  public:
+    NpcTile(
+      const std::string& tileId,
+      int tileX,
+      int tileY,
+      bool isBlockMovement
+      );
+
+    std::pair<std::string, std::string> interact() override;
 };
 
 class ChestTile : public Tile {
   public:
     ChestTile(
-        const std::string& tileId,
-        int tileX,
-        int tileY,
-        bool isBlockMovement
-        );
+      const std::string& tileId,
+      int tileX,
+      int tileY,
+      bool isBlockMovement
+      );
 
-    std::pair<std::string, std::string> interact();
+    std::pair<std::string, std::string> interact() override;
+
+    // Inventory data below:
+};
+
+class DoorTile : public Tile {
+  public:
+    DoorTile(
+      const std::string& tileId,
+      int tileX,
+      int tileY,
+      bool isBlockMovement
+      );
+
+    std::pair<std::string, std::string> interact() override;
+    // Depending on what we have art-wise, we can either have doors open, and change their sprite,
+    // Or we can delete them, so we only need one sprite
+    void open();
 };

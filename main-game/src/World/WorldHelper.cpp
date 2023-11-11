@@ -1,6 +1,7 @@
 #include "World.h"
 #include <algorithm>
 #include <string>
+#include "../Helper.h"
 
 
 // Should be called whenever entities changes or existing entities change their y position
@@ -47,7 +48,15 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
     bool blocked = tileData[1].get<bool>();
     int tileX = tileData[2].get<int>();
     int tileY = tileData[3].get<int>();
-    Tile* tile = new Tile(tileID.c_str(), tileX, tileY, blocked);
+
+    std::string tileType = Helper::parseGameObjectType(tileID);
+    Tile* tile = nullptr;
+    if (tileType == "battle") tile = new CombatTile(tileID.c_str(), tileX, tileY, blocked);
+    else if (tileType == "npc") tile = new NpcTile(tileID.c_str(), tileX, tileY, blocked);
+    else if (tileType == "chest") tile = new ChestTile(tileID.c_str(), tileX, tileY, blocked);
+    else if (tileType == "door") tile = new DoorTile(tileID.c_str(), tileX, tileY, blocked);
+    else tile = new Tile(tileID.c_str(), tileX, tileY, blocked);
+
     roomTiles.push_back(tile);
   }
 
