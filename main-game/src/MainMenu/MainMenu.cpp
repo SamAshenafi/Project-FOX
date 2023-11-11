@@ -17,7 +17,7 @@ MainMenu::MainMenu()
   frameHeight = treeTexture.height;
   frameRec = {0.0f, 0.0f, static_cast<float>(frameWidth), static_cast<float>(frameHeight)};
   treePosition = {-20 * 0.6, 230 * 0.6};
-  treePosition2 = {1000 * 0.6, 285 * 0.6};
+  treePosition2 = {1100 * 0.6, 300 * 0.6};
   scaleFactor = 8.0f;
   int totalFoxFrames = 6; // Total number of frames in the fox animation
   foxFrameWidth = foxTexture.width / totalFoxFrames;
@@ -101,15 +101,6 @@ DrawTextEx(titlefont, foxText.c_str(), {titlePosX + projectTextSize.x + 10, titl
   if(game.gameOver) {
     DrawText(
       "GAME OVER!\n press Space to return to main menu.",
-      game.settings.screenWidth / 2 - 50,
-      game.settings.screenHeight / 2, 20,
-      RAYWHITE
-      );
-  }
-  // placeholder, to be replaced
-  else {
-    DrawText(
-      "Press Space to Start A New Game\n or [ to load your saved game",
       game.settings.screenWidth / 2 - 50,
       game.settings.screenHeight / 2, 20,
       RAYWHITE
