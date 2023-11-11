@@ -10,6 +10,7 @@
 Game::Game()
 {
   gameState = START_MENU; // Set the initial state to "start"
+  double appStartTime = 0;
 
   // Initialize grid (adjust size accordingly)
   for (int x = 0; x < screenWidth / gridSize; x++)
@@ -279,39 +280,208 @@ void Game::spawnTiles()
   // ChestTile* chestTile = new ChestTile("chest_1", 3, 3);
   // interactableTiles.push_back(chestTile);
 }
+
+
+
+
+
+
+
+
+
+
 void Game::run()
 {
   int framesCounter = 0;
-  //
-  InitWindow(screenWidth, screenHeight, "Name of Game TBD");
 
-  // Character playerCharacter(1, 1); // Create the character object
-  player = std::make_unique<Character>(1, 1); // Create the character object
+InitWindow(screenWidth, screenHeight, "Project:Fox");
+appStartTime = GetTime();
 
-  SetTargetFPS(60);
-  // Loads in starting screen image
-  Texture2D start_img = LoadTexture("assets/start-bg.png");
-  // Load Font
-  Font font = LoadFont("assets/font.ttf");
+player = std::make_unique<Character>(1, 1);
 
-  while (!WindowShouldClose())
-  {
+SetTargetFPS(60);
 
+Texture2D start_img = LoadTexture("assets/MainMenuBackground.png");
+
+Font font = LoadFontEx("assets/font.ttf", 55, 0, 0);
+Font titlefont = LoadFontEx("assets/TitleFont.ttf", 110, 0, 0);
+float bounceHeight = 10.0f; // The maximum height of the bounce
+float bounceSpeed = 5.0f;   // How fast the title bounces
+float bounceTime = 0.0f;    // A timer to control the bounce effect
+
+Texture2D treeTexture = LoadTexture("assets/trees.png");
+int frameWidth = treeTexture.width / 2; // 2 for the number of frames
+int frameHeight = treeTexture.height; // The height is the same for each frame
+Rectangle frameRec = { 0.0f, 0.0f, (float)frameWidth, (float)frameHeight };
+Vector2 treePosition = { -20, 470 }; // Change to where you want the tree to be drawn
+Vector2 treePosition2 = { 1300, 470};
+float scaleFactor = 8.0f; //Sizing of Image
+
+Texture2D foxTexture = LoadTexture("assets/fox(Title).png");
+const int foxFrames = 6; // Total number of frames in the fox animation
+const int foxFrameWidth = foxTexture.width / foxFrames;
+const int foxFrameHeight = foxTexture.height;
+Rectangle foxFrameRec = { 0.0f, 0.0f, (float)foxFrameWidth, (float)foxFrameHeight };
+Vector2 foxPosition = { static_cast<float>(-foxFrameWidth), screenHeight / 2.0f }; // Starting off-screen to the left
+const float foxSpeed = 80.0f; // Adjust as necessary for speed
+bool foxReachedCenter = false;
+
+//Exit Button
+Rectangle exitButton = { static_cast<float>(screenWidth - 120), 20.0f, 100.0f, 40.0f }; // x, y, width, height
+const char* exitButtonText = "Exit";
+
+
+
+while (!WindowShouldClose())
+{
     if (gameState == START_MENU)
     {
-      framesCounter++;
-      BeginDrawing();
-      ClearBackground(RAYWHITE);
-      DrawTexture(start_img, 0, 0, WHITE);
-      if ((framesCounter / 30) % 2)
-        DrawTextEx(font, "PRESS SPACE TO START YOUR ADVENTURE!", (Vector2){screenWidth / 2 - 240, screenHeight / 2 + 350}, font.baseSize * 2, 0, WHITE);
-      EndDrawing();
-      if (IsKeyPressed(KEY_SPACE))
-      {
-        gameState = IN_GAME;
-        framesCounter = 0;
-      }
+        framesCounter++;
+        
+
+        int imgWidth = start_img.width;
+        int imgHeight = start_img.height;
+        int imgPosX = (screenWidth - imgWidth) / 2;
+        int imgPosY = (screenHeight - imgHeight) / 2;
+
+        const char* text = "PRESS SPACE TO START YOUR ADVENTURE!";
+        Vector2 textSize = MeasureTextEx(font, text, font.baseSize * 2, 0);
+        float textPosX = (screenWidth - textSize.x) / 2;
+        float textPosY = screenHeight / 2 + 350; 
+
+        const char* projectText = "PROJECT:";
+        Vector2 projectSize = MeasureTextEx(titlefont, projectText, titlefont.baseSize * 4, 0);
+        
+        const char* foxText = "FOX";
+        Vector2 foxSize = MeasureTextEx(titlefont, foxText, titlefont.baseSize * 4, 0);
+        
+
+        float entireTitleWidth = projectSize.x + foxSize.x; 
+        float titlePosX = (screenWidth - entireTitleWidth) / 2;
+        float foxPosX = titlePosX + projectSize.x;
+
+        double elapsedTime = GetTime() - appStartTime;
+        float titlePosY;
+if (elapsedTime < 3)
+{
+    titlePosY = -190; // Before 3 seconds, the title is off-screen
+}
+else if (elapsedTime >= 3 && elapsedTime < 4)
+{
+    // Between 3 and 4 seconds, we animate the title to its position
+    float animationTime = elapsedTime - 3;
+    titlePosY = animationTime * (screenHeight / 2 - 400); 
+    if (titlePosY > screenHeight / 2 - 400)
+    {
+        titlePosY = screenHeight / 2 - 400;
+        bounceTime = 0.0f; 
     }
+}
+else
+{
+    // After 4 seconds, the title bounces around its position
+    titlePosY = screenHeight / 2 - 400;
+
+    bounceTime += GetFrameTime();
+    float bounceOffset = sinf(bounceTime * bounceSpeed) * bounceHeight;
+    titlePosY += bounceOffset;
+}
+        //Tree animation
+        int currentFrame = (framesCounter / 30) % 2; // Adjust the speed if necessary
+        frameRec.x = (float)currentFrame * (float)frameWidth;
+        
+
+        // Create a destination rectangle for drawing the scaled tree
+        Rectangle destRec = {
+            treePosition.x,
+            treePosition.y,
+            frameWidth * scaleFactor, // Scale the frame width
+            frameHeight * scaleFactor // Scale the frame height
+        };
+        Rectangle destRec2 = {
+    treePosition2.x,
+    treePosition2.y,
+    frameWidth * scaleFactor, // Scale the frame width
+    frameHeight * scaleFactor // Scale the frame height
+};
+      if (!foxReachedCenter)
+        {
+            // Repeat first three frames until the fox reaches the screen center
+            int frame = (framesCounter / 15) % 3; 
+            foxFrameRec.x = frame * foxFrameWidth;
+        }
+        else
+        {
+            // Play frames 4, 5, 6 once when the fox reaches the center
+            int frame = 3 + ((framesCounter / 15) % 3);
+            foxFrameRec.x = frame * foxFrameWidth;
+        }
+
+        // Move fox to the center
+        if (foxPosition.x < screenWidth / 2 - foxFrameWidth / 2)
+        {
+            foxPosition.x += foxSpeed * GetFrameTime();
+        }
+        else
+        {
+            foxReachedCenter = true;
+        }
+
+
+        BeginDrawing();
+
+ClearBackground(RAYWHITE);
+DrawTexture(start_img, imgPosX, imgPosY, WHITE);
+
+// Trees
+DrawTexturePro(treeTexture, frameRec, destRec, (Vector2){ 0, 0 }, 0.0f, WHITE);
+DrawTexturePro(treeTexture, frameRec, destRec2, (Vector2){ 0, 0 }, 0.0f, WHITE);
+
+//Fox
+DrawTexturePro(foxTexture, foxFrameRec, (Rectangle){ foxPosition.x, foxPosition.y, foxFrameWidth, foxFrameHeight }, (Vector2){ 0, 0 }, 0.0f, WHITE);
+
+// Title
+std::string fullTitle = std::string(projectText) + foxText;
+Vector2 fullTitleSize = MeasureTextEx(titlefont, fullTitle.c_str(), titlefont.baseSize * 2, 0);
+Vector2 fullTitlePosition = { (screenWidth - fullTitleSize.x) / 2, titlePosY };
+DrawTextEx(titlefont, fullTitle.c_str(), fullTitlePosition, titlefont.baseSize * 2, 0, WHITE);
+Vector2 projectPartSize = MeasureTextEx(titlefont, projectText, titlefont.baseSize * 2, 0);
+Vector2 foxPartPosition = { fullTitlePosition.x + projectPartSize.x, titlePosY };
+
+//Fox
+DrawTextEx(titlefont, foxText, foxPartPosition, titlefont.baseSize * 2, 0, ORANGE);
+
+if (foxReachedCenter && (framesCounter / 30) % 2) // blinking effect
+{
+    DrawTextEx(font, text, (Vector2){textPosX, textPosY}, font.baseSize * 2, 0, WHITE);
+}
+// Draw the exit button
+DrawRectangleRec(exitButton, GRAY); // Draw the button rectangle
+Vector2 buttonTextSize = MeasureTextEx(font, exitButtonText, font.baseSize, 1);
+Vector2 buttonTextPosition = {
+    exitButton.x + (exitButton.width - buttonTextSize.x) / 2,
+    exitButton.y + (exitButton.height - buttonTextSize.y) / 2
+};
+DrawTextEx(font, exitButtonText, buttonTextPosition, font.baseSize, 1, WHITE);
+
+// Check for button clicks
+if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+    Vector2 mousePosition = GetMousePosition();
+    if (CheckCollisionPointRec(mousePosition, exitButton)) {
+        // Exit the application
+        CloseWindow(); // This will break the loop and can close the window
+        return; // If needed, to exit the function or you can use `exit(0);` to terminate the program
+    }
+}
+EndDrawing();
+
+        if (IsKeyPressed(KEY_SPACE))
+        {
+            gameState = IN_GAME;
+            framesCounter = 0;
+        }
+    }
+
     else if (gameState == IN_GAME)
     {
       handleUserInput();
@@ -355,6 +525,8 @@ void Game::run()
 
   UnloadTexture(player->texture);
   UnloadFont(font);
+  UnloadTexture(treeTexture);
+  UnloadTexture(foxTexture);
 
   CloseWindow();
   framesCounter = 0;
