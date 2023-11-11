@@ -49,13 +49,11 @@ class Game {
     GameSettings settings;
     // TODO: add some way to change the resolution variables back and forth
 
+    // Initialization variables
+    std::string startingRoomId = "05-06";
+
     // DialogQueue dialogueQueue;
     std::queue<std::string> dialogQueue;
-
-    // savedata.json contains
-    std::string currentRoomId = "05-06";
-    std::vector<std::string> completed;
-    // std::vector<std::string> tempCompleted;
 
     // inventory mini-class (don't make a class for this yet)
     int gold = 0;
@@ -79,6 +77,7 @@ class Game {
 
     void changeStateByString(std::string state); // will be deprecated
     void changeState(GameState* newGameState);
+    void startNewGame();
 
     void renderDialog();
 

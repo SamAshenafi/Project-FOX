@@ -11,14 +11,6 @@ World::World(
 
   loadRoom(roomId);
 
-  std::string roomFilePath = "./assets/room/" + roomId + "-bg.png";
-  if (std::ifstream(roomFilePath)) {
-    background = LoadTexture(roomFilePath.c_str());
-  }
-  else {
-    fprintf(stderr, "not found bg image file %s\n", roomFilePath.c_str());
-  }
-
   player = new Player(
       "player-01",
       playerX,
@@ -66,9 +58,8 @@ void World::loadRoom(const std::string& roomId) {
 
 void World::update(Game& game) {
   player->update();
+  if (!game.dialogQueue.empty()) player->movable = false;
 }
-
-
 
 void World::enterCombat(Game& game, const std::string& battleId) {
   GameState* combat = new Combat(battleId);

@@ -47,7 +47,6 @@ void Player::processInput(Game& game) {
             }
           else if (tileType == "npc") {
             game.dialogQueue.push(tileText);
-            movable = false;
             }
         }
       }

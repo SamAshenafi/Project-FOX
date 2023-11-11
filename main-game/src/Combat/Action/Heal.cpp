@@ -3,6 +3,7 @@
 Heal::Heal(int insert) {
   targetType = "self";
   amount = insert;
+  animationDuration = 92;
   actionDesc = {
       "Heals Targets' ",
       "For " + std::to_string(amount) + "HP"
@@ -44,5 +45,5 @@ int Heal::perform(Unit* user, std::vector<Unit*> targets,  Game& game) {
   }
   user->energy -= energyCost;
   // fprintf(stderr, "%s performed [Strike]!!!\n", user->id.c_str());
-  return animationDuration + 80;
+  return animationDuration;
 };

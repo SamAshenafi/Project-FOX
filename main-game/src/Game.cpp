@@ -9,15 +9,9 @@ Game::Game() {
 
   // IMPORTANT: Any texture loading have to go after InitWindow
 
-  // settings.settings.screenWidth = 1920 / 2;
-  // settings.settings.screenHeight = 1080 / 2;
-  world = new World(currentRoomId);
-
-  // set initinal game state
+  // set initial game state
   gameOver = false;
   GameState* newState = new MainMenu();
-  // GameState* newState = world;
-  // GameState* newState = new Combat();
   currentState = newState;
 }
 
@@ -38,43 +32,6 @@ void Game::run() {
     }
   }
 }
-
-// TODO: FIX THIS!!!!!!
-// NOTE: This is very very bad code (it work tho lol), pls fix !!!
-// void Game::changeStateByString(std::string state) {
-//   GameState* newState = nullptr;
-//
-//   if (state == "mainMenu") {
-//     fprintf(stderr, "gameState is now MainMenu!\n");
-//     newState = new MainMenu();
-//   }
-//   else if (state == "world") {
-//     if (currentState == world) {
-//       fprintf(stderr, "gameState is already world!!!\n");
-//       return;
-//     }
-//     else {
-//       fprintf(stderr, "gameState is now world!\n");
-//       // loadSave("savedata-01");
-//       delete currentState;
-//       currentState = world;
-//       return;
-//       // newState = new World(currentRoomId);
-//
-//     }
-//   }
-//   else if (state == "combat") {
-//     fprintf(stderr, "gameState is now Combat!\n");
-//     newState = new Combat();
-//   }
-//
-//   if (currentState != newState) {
-//     if (currentState != world) {
-//       delete currentState;
-//     }
-//     currentState = newState;
-//   }
-// }
 
 void Game::changeState(GameState* newGameState) {
   if (newGameState == currentState) return;
@@ -153,12 +110,6 @@ void Game::loadSave(const std::string& filename) {
       Room* roomToSet = dynamic_cast<World*>(world)->findRoom(worldData["currentRoomId"]);
       dynamic_cast<World*>(world)->setRoom(roomToSet);
 
-      // Completed
-      completed.clear();
-      for (const auto& item : root["completed"]) {
-        completed.push_back(item.get<std::string>());
-      }
-
       inputFile.close();
     }
     catch (const std::exception& e) {
@@ -176,19 +127,10 @@ void Game::saveSave(const std::string& filename) {
   const std::string jsonFileType = ".json";
   const std::string fullFilePath = saveFilePath + filename + jsonFileType;
   nlohmann::json root;
-  // TODO: this part is also WIP, more work need to be done here
-  // Mostly,
-  // - Player x, y, and other data members also need to be saved
-  // - Room does not need to be saved since we load it when we load the save
 
   // Serialize member data to JSON
-  root["completed"] = nlohmann::json::array();
   root["WorldData"] = nlohmann::json::object();
-  root["WorldData"]["currentRoomId"] = currentRoomId;
-
-  for (const std::string& item : completed) {
-    root["completed"].push_back(item);
-  }
+  root["WorldData"]["currentRoomId"] = dynamic_cast<World*>(world)->currentRoom->roomId;
 
   // -------- WorldData members
   root["WorldData"]["Players"] = nlohmann::json::array();
@@ -246,4 +188,9 @@ void Game::saveSave(const std::string& filename) {
   else {
     fprintf(stderr, "Unable to open the file for writing\n");
   }
+}
+
+void Game::startNewGame() {
+  world = new World(startingRoomId);
+  changeState(world);
 }

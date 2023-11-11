@@ -3,6 +3,7 @@
 InflictPoison::InflictPoison(int stack) {
     targetType = "enemy";
     amount = stack;
+    animationDuration = 92;
     actionDesc = {
       "Poisons a target dealing 5 damage",
       "For " + std::to_string(amount) + " Turns"
@@ -54,5 +55,5 @@ int InflictPoison::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   user->actionDialouge += " for " + std::to_string(amount) + " turns";
   user->energy -= energyCost;
   // fprintf(stderr, "%s performed [Strike]!!!\n", user->id.c_str());
-  return animationDuration + 80;
+  return animationDuration;
 };

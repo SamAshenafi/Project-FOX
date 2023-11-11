@@ -29,14 +29,16 @@ void MainMenu::render(Game& game) {
 void MainMenu::processInput(Game& game) {
   if (IsKeyPressed(KEY_SPACE)) {
     if (game.gameOver) game.gameOver = false;
-    else game.changeState(game.world);
+    else {
+      game.startNewGame();
+    }
   }
   else if(IsKeyPressed(KEY_LEFT_BRACKET)) {
     fprintf(stderr, "%s\n", "[ was pressed");
     fprintf(stderr, "%s\n", "loaded from savedata-01.json");
     game.gameOver = false;
-    game.changeState(game.world);
     game.loadSave("savedata-01");
+    game.changeState(game.world);
   }
 }
 

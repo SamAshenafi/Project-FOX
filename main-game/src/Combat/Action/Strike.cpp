@@ -2,6 +2,7 @@
 
 Strike::Strike() {
   targetType = "enemy";
+  animationDuration = 92;
   actionDesc.push_back("Strikes the Target with your Might!!");
   actionDesc.push_back("All that can stop this force is your");
   actionDesc.push_back("Opponent's Defense!!!");
@@ -41,5 +42,5 @@ int Strike::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   }
   user->energy -= energyCost;
   // fprintf(stderr, "%s performed [Strike]!!!\n", user->id.c_str());
-  return animationDuration + 80;
+  return animationDuration;
 };

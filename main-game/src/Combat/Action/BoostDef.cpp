@@ -3,6 +3,7 @@
 BoostDef::BoostDef(int stack) {
     targetType = "self";
     amount = stack;
+    animationDuration = 92;
     actionDesc = {
       "Boosts targets' Defense by 50%",
       "For " + std::to_string(amount) + " Turns"
@@ -58,5 +59,5 @@ int BoostDef::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   user->actionDialouge += "Def by 50%";
   user->energy -= energyCost;
   // fprintf(stderr, "%s performed [Strike]!!!\n", user->id.c_str());
-  return animationDuration + 80;
+  return animationDuration;
 };
