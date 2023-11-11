@@ -2,13 +2,6 @@
 #include <algorithm>
 #include <string>
 
-void World::resetGrid() {
-  for (int x = 0; x < 20; x++) {
-    for (int y = 0; y < 12; y++) {
-      grid[x][y] = 0; // Set all to 0 (walkable)
-    }
-  }
-}
 
 // Should be called whenever entities changes or existing entities change their y position
 void World::sortGameObjects() {
@@ -152,4 +145,18 @@ Room* World::findRoom(const std::string& roomId) {
   auto foundRoom = std::find_if(rooms.begin(), rooms.end(), found);
   if (foundRoom == rooms.end()) return nullptr;
   return *foundRoom;
+}
+
+void World::initializeWorld(std::string roomId) {
+  loadRoom(roomId);
+
+  player = new Player(
+      "player-01",
+      playerX,
+      playerY,
+      playerFacing,
+      playerInventory
+      );
+  entities.push_back(player);
+  players.push_back(player);
 }

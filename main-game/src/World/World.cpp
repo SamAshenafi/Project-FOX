@@ -7,19 +7,7 @@
 World::World(
     std::string roomId
     ) {
-  //resetGrid();
-
-  loadRoom(roomId);
-
-  player = new Player(
-      "player-01",
-      playerX,
-      playerY,
-      playerFacing,
-      playerInventory
-      );
-  entities.push_back(player);
-  players.push_back(player);
+  initializeWorld(roomId);
 }
 
 World::~World() {

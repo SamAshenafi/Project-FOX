@@ -37,7 +37,7 @@ class World : public GameState {
     std::vector<Player*> players;
     Player* player = nullptr;
 
-    // these will only be used when loadSave() & saveSave() is called
+    // these will only be used when starting a new game
     //// player data
     int playerX = 0;
     int playerY = 0;
@@ -57,10 +57,10 @@ class World : public GameState {
 
     void enterCombat(Game& game, const std::string& battleId);
 
-    void resetGrid(); // set all in grid to 0
     void sortGameObjects();
     void removeEntity(const std::string& tileId);
 
   private:
     void setGridFromString(std::string roomInfo);
+    void initializeWorld(std::string roomId);
 };
