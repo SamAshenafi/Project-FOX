@@ -5,6 +5,14 @@
 #include <cstdio>
 #include <raylib.h>
 
+
+std::vector<std::string> combatInputTutorial =
+{
+  "p --- select",
+  "o --- confirm selection",
+  "l --- cancels selection"
+};
+
 void rUnitSprite(Texture2D sprite, int pos, int screenWidth, int screenHeight)
 {
     int spriteWidth = 96 * 2;
@@ -81,7 +89,7 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
     screenWidth - screenWidth*0.98,
     screenHeight - screenHeight*0.40,
     screenWidth*0.96,
-    screenHeight*0.30,
+    screenHeight*0.28,
     GRAY
   );
     //Box Showing Available Actions
@@ -89,7 +97,7 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
     screenWidth - screenWidth*0.96,
     screenHeight - screenHeight*0.38,
     screenWidth*0.30,
-    screenHeight*0.26,
+    screenHeight*0.25,
     ORANGE
   );
     //Box containing actions descriptions
@@ -97,14 +105,17 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
     screenWidth - screenWidth*0.65,
     screenHeight - screenHeight*0.38,
     screenWidth*0.62,
-    screenHeight*0.26,
+    screenHeight*0.25,
     ORANGE
   );
 
   //renders the actions
   if(currentUnit != nullptr && isHero(currentUnit)) {
     std::vector<std::string> actionBox = {};
-    actionBox = currentUnit->actionList;
+    for(std::pair<std::string,int> list : currentUnit->actionList)
+    {
+      actionBox.push_back(list.first);
+    }
 
     if (selected > 3) {
       for (int i = selected - 3 ; i>0 ; i--) {
@@ -119,28 +130,56 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
       DrawText(
       actions.c_str(),
       screenWidth - (screenWidth*0.96 - 20),  // X position of the text
-      screenHeight - (screenHeight*0.20 + (25*pos)),  // Y position of the text
+      screenHeight - (screenHeight*0.38 - (25*pos)),  // Y position of the text
       28,  // Font size
       WHITE
       );
       pos++;
     }
-    //renders the action descriptions
-    
-    //renders the pointer (use selected)
+
     Action* action = currentUnit->getAction();
-    if (action == nullptr) {
+    
+    //renders the action descriptions
+    int i = 0;
+    if (highlightedAction != nullptr || action != nullptr && !action->actionDesc.empty()) {
+      std::vector<std::string> actionDesc = currentUnit->actions[selected]->actionDesc;
+      for (std::string line : actionDesc) {
+        DrawText(
+        line.c_str(),
+        screenWidth - screenWidth*0.64,  // X position of the text
+        screenHeight - (screenHeight*0.38 - (25*i)),  // Y position of the text
+        28,  // Font size
+        WHITE
+      );
+      i++;
+      }   
+    }
+    else {
+      // shows instructions
+      for (std::string line : combatInputTutorial) {
+        DrawText(
+        line.c_str(),
+        screenWidth - screenWidth*0.64,  // X position of the text
+        screenHeight - (screenHeight*0.38 - (25*i)),  // Y position of the text
+        28,  // Font size
+        WHITE
+      );
+      i++;
+      }
+    }
+    //renders the pointer (use selected)
+    if (action == nullptr && highlightedAction != nullptr) {
       int pos = selected;
       if (selected > 3) pos = 3;
       DrawRectangle(
         screenWidth - (screenWidth*0.96),
-        screenHeight - (screenHeight*0.20 + (25*pos)),
+        screenHeight - (screenHeight*0.38 - (25*pos)),
         10,
         10,
         BLUE
       );
     }
-    else {
+    else if (highlightedTarget != nullptr) {
       DrawRectangle(
         screenWidth/2 + (96*(selected) + 32*(selected+1)),
         screenHeight*0.10,
@@ -243,7 +282,7 @@ void Unit::RenderSprite
     //renders tokens if available
     int i = 0;
     for(Token* token : tokens) {
-      int tokenPos = pos + (tokens.size() * 15);
+      int tokenPos = pos + (i * 15);
       DrawRectangle(
         tokenPos,
         screenHeight*0.18,

@@ -1,14 +1,8 @@
 #include "World.h"
 #include <algorithm>
 #include <string>
+#include "../Helper.h"
 
-void World::resetGrid() {
-  for (int x = 0; x < 20; x++) {
-    for (int y = 0; y < 12; y++) {
-      grid[x][y] = 0; // Set all to 0 (walkable)
-    }
-  }
-}
 
 // Should be called whenever entities changes or existing entities change their y position
 void World::sortGameObjects() {
@@ -54,7 +48,15 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
     bool blocked = tileData[1].get<bool>();
     int tileX = tileData[2].get<int>();
     int tileY = tileData[3].get<int>();
-    Tile* tile = new Tile(tileID.c_str(), tileX, tileY, blocked);
+
+    std::string tileType = Helper::parseGameObjectType(tileID);
+    Tile* tile = nullptr;
+    if (tileType == "battle") tile = new CombatTile(tileID.c_str(), tileX, tileY, blocked);
+    else if (tileType == "npc") tile = new NpcTile(tileID.c_str(), tileX, tileY, blocked);
+    else if (tileType == "chest") tile = new ChestTile(tileID.c_str(), tileX, tileY, blocked);
+    else if (tileType == "door") tile = new DoorTile(tileID.c_str(), tileX, tileY, blocked);
+    else tile = new Tile(tileID.c_str(), tileX, tileY, blocked);
+
     roomTiles.push_back(tile);
   }
 
@@ -69,7 +71,6 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
     roomTransitions.push_back(transitionTile);
   }
   // Construct new room and add it to the rooms vector
-  // TODO: Uncomment later
   Room* roomToBuild = new Room(roomId, roomInfo, roomTiles, roomTransitions, roomBackground);
   return roomToBuild;
 }
@@ -153,4 +154,18 @@ Room* World::findRoom(const std::string& roomId) {
   auto foundRoom = std::find_if(rooms.begin(), rooms.end(), found);
   if (foundRoom == rooms.end()) return nullptr;
   return *foundRoom;
+}
+
+void World::initializeWorld(std::string roomId) {
+  loadRoom(roomId);
+
+  player = new Player(
+      "player-01",
+      playerX,
+      playerY,
+      playerFacing,
+      playerInventory
+      );
+  entities.push_back(player);
+  players.push_back(player);
 }

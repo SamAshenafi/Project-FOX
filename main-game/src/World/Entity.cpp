@@ -27,3 +27,7 @@ void Entity::renderHelper(int gridWidth, int gridHeight, bool flipped) {
       );
   return;
 }
+
+std::pair<std::string, std::string> Entity::interact() {
+  return std::make_pair("", "");
+}

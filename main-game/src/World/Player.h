@@ -12,21 +12,8 @@ class Player : public Entity {
   public:
     std::string facing;
 
-    // Rectangle right = { 0, 0, 96 * 2, 80 * 3 };
-    // Rectangle down = { 0, 80 * 3, 96 * 2, 80 * 3 * 2 };
-    // Rectangle up = { 0, 80 * 3 * 2, 96 * 2, 80 * 3 * 3 };
-    // Rectangle left = { 0, 0, 96 * 2, 80 * 3 };
-    //
-    // Rectangle right = { 0, 0, 48 * 2, 40 * 3 };
-    // Rectangle down = { 0, 40 * 3, 48 * 2, 40 * 3 * 2 };
-    // Rectangle up = { 0, 40 * 3 * 2, 48 * 2, 40 * 3 * 3 };
-    // Rectangle left = { 0, 0, 48 * 2, 40 * 3 };
-
     // For stopping movement during dialogue
     bool movable;
-
-    // Animation duration
-    int animationDuration = 0;
 
     Player(
         const std::string& playerId,
@@ -50,12 +37,12 @@ class Player : public Entity {
     void render(int gridWidth, int gridHeight);
     void update();
 
+  private:
+    // Animation duration
+    int animationDuration = 0;
+
+    // Private Helpers to reduce redundancy
     std::string inputHelper(std::string facing);
+    void resetAnimationDuration();
     void findShortestPath(World& world, int startX, int startY, int targetX, int targetY);
-
-    private:
-      // Private Helpers to reduce redundancy
-      void resetAnimationDuration();
 };
-
-

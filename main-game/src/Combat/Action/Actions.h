@@ -5,3 +5,4 @@
 #include "InflictPoison.h"
 #include "Heal.h"
 #include "BoostAtk.h"
+#include "BoostDef.h"

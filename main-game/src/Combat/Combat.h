@@ -54,6 +54,7 @@ class Combat : public GameState {
     std::vector<Unit*> previousAvailable = {};
 
     bool isRoundOver = false;;
+    bool combatConcluded = false;
 
     int animationDuration = 0;
 
@@ -74,7 +75,7 @@ class Combat : public GameState {
     bool isFoe(Unit* unit);
     std::vector<Unit*> unitsVanquished (std::vector<Unit*> units);
     Foe* createFoe(const std::string& foeId);
-    Action* createAction(const std::string& actionId);
+    Action* createAction(const std::string& actionId, int amount);
     
     void RenderUI(int screenWidth,int screenHeight);
     void RenderUnits(

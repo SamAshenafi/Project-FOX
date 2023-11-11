@@ -1,27 +1,28 @@
-#include "BoostAtk.h"
+#include "BoostDef.h"
 
-BoostAtk::BoostAtk(int stack) {
+BoostDef::BoostDef(int stack) {
     targetType = "self";
     amount = stack;
+    animationDuration = 92;
     actionDesc = {
-      "Boosts targets' Attack by 50%",
+      "Boosts targets' Defense by 50%",
       "For " + std::to_string(amount) + " Turns"
     };
 }
 
-BoostAtk::~BoostAtk() {
+BoostDef::~BoostDef() {
 }
 
-int BoostAtk::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
+int BoostDef::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   user->actionDialouge += "has boosted ";
   for (Unit* target : targets) {
 
     user->actionDialouge += target->id + "'s, ";
 
     // perform algorithm for the action
-    Token* new_token = target->createToken("AtkBoost", amount);
+    Token* new_token = target->createToken("DefBoost", amount);
     if (target->tokens.size() == 0) {
-      target->bonusAtk += target->baseAtk * 0.50;
+      target->bonusDef += target->baseDef * 0.50;
       target->tokens.push_back(new_token);
     } 
     else if (target->tokens.size() <= 10) {
@@ -31,14 +32,14 @@ int BoostAtk::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
           pending = target->tokens[0];
         }
       }
-      target->bonusAtk += target->baseAtk * 1.20;
+      target->bonusDef += target->baseDef * 0.50;
       target->tokens.push_back(new_token);
     }
 
     //will need to modigy for actions containing multiple
     fprintf(
       stderr,
-      "%s performed [Boost Attack] on %s!!!\n",
+      "%s performed [Boost Defence] on %s!!!\n",
       user->id.c_str(),
       target->id.c_str()
     );
@@ -49,9 +50,9 @@ int BoostAtk::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
     // );
     fprintf(
       stderr,
-      "%s attack is now %i!!!\n",
+      "%s defnece is now %i!!!\n",
       target->id.c_str(),
-      target->getAtk()
+      target->getDef()
     );
     
   }

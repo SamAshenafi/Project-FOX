@@ -2,17 +2,24 @@
 
 Strike::Strike() {
   targetType = "enemy";
+  animationDuration = 92;
+  actionDesc.push_back("Strikes the Target with your Might!!");
+  actionDesc.push_back("All that can stop this force is your");
+  actionDesc.push_back("Opponent's Defense!!!");
 }
 
 Strike::~Strike() {
 }
 
 int Strike::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
+  user->actionDialouge += "Strikes the target(s) ";
   for (Unit* target : targets) {
 
     // perform algorithm
-    target->hp -= user->getAtk();
+    target->hp -= (user->getAtk() - target->getDef());
 
+    user->actionDialouge += target->id + " -" 
+                         + std::to_string(user->getAtk() - target->getDef()) + ", ";
 
     fprintf(
       stderr,

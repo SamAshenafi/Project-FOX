@@ -23,8 +23,8 @@ class FoxFoe : public Foe {
       // expGain
       // loot
 
-      actionList.push_back("DoNothing");
-      actionList.push_back("Strike");
+      actionList.push_back({"DoNothing",0});
+      actionList.push_back({"Strike",0});
     };
 
 

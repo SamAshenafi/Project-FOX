@@ -23,6 +23,7 @@ class Action {
     int animationDuration = 12;
     int multiSelect;
     int amount;
+    std::vector<std::string> actionDesc = {};
 
     virtual int perform(Unit* user, std::vector<Unit*> targets, Game& game) = 0;
 };

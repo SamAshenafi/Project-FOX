@@ -13,7 +13,6 @@ void World::processInput(Game& game) {
       break;
     case KEY_O:
       {
-        player->movable = false;
         fprintf(stderr, "%s\n", "o was pressed");
         std::string placeholderDialog = "Lorem ipsum...";
         int d4Result = GetRandomValue(1, 4);

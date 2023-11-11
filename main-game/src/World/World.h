@@ -23,9 +23,6 @@ class World : public GameState {
     void update(Game& game) override;
     void render(Game& game) override;
 
-    const double moveSpeed = 0.1;
-    double lastMoveTime = 0;
-
     int grid[20][12];
     // int rows = sizeof(grid) / sizeof(grid[0]);
     // int columns = sizeof(grid[0]) / sizeof(grid[0][0]);
@@ -40,16 +37,12 @@ class World : public GameState {
     std::vector<Player*> players;
     Player* player = nullptr;
 
-    // these will only be used when loadSave() & saveSave() is called
+    // these will only be used when starting a new game
     //// player data
     int playerX = 0;
     int playerY = 0;
     std::string playerFacing = "down";
     Inventory playerInventory;
-    // Input
-
-
-    std::queue<std::pair<int, int>> pathQueue;
 
     Texture2D background;
 
@@ -57,7 +50,6 @@ class World : public GameState {
 
     // Helpers
     Room* buildRoom(const std::string& roomId, nlohmann::json source);
-    void setGridFromString(std::string roomInfo);
     void setRoom(Room* roomToSet);
     Room* findRoom(const std::string& roomId);
     // std::string inputHelper(std::string facing);
@@ -65,14 +57,10 @@ class World : public GameState {
 
     void enterCombat(Game& game, const std::string& battleId);
 
-    void resetGrid(); // set all in grid to 0
     void sortGameObjects();
-    void clearPathQueue();
     void removeEntity(const std::string& tileId);
 
   private:
-    // void handleKeyPressO();
-
-    // processMovement();
-
+    void setGridFromString(std::string roomInfo);
+    void initializeWorld(std::string roomId);
 };

@@ -21,7 +21,7 @@ class AtkBoost : public Token {
       stack--;
       if (stack <= 0) {
         int i = 0;
-        unit.bonusAtk -= unit.baseAtk * 1.20;
+        unit.bonusAtk -= unit.baseAtk * 0.50;
         for(Token* pending : unit.tokens) {
           if (pending->tokenID == this->tokenID) {
             unit.tokens.erase(unit.tokens.begin()+i);

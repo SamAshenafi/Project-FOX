@@ -8,7 +8,7 @@ class BoostAtk : public Action {
     // InflictPoison() {
     //   energyCost = 1;
     // }
-    BoostAtk();
+    BoostAtk(int stack);
     ~BoostAtk();
 
     int perform(Unit* user, std::vector<Unit*> targets, Game& game) override;

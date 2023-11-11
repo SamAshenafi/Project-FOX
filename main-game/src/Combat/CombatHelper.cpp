@@ -9,7 +9,7 @@ void Combat::loadTokenTextures()
 {
   tokenTextures.push_back(loadTexture("Poison"));
   tokenTextures.push_back(loadTexture("AtkBoost"));
-  // tokenTextures.push_back(loadTexture("DefBoost"));
+  tokenTextures.push_back(loadTexture("DefBoost"));
 }
 
 bool Combat::isHero(Unit* unit) {
@@ -27,19 +27,21 @@ Foe* Combat::createFoe(const std::string& foeId) {
   return nullptr;
 }
 
-Action* Combat::createAction(const std::string& actionId) {
+Action* Combat::createAction(const std::string& actionId, int amount) {
   // add more here
   if (actionId == "DoNothing") return new DoNothing();
   if (actionId == "Strike") return new Strike();
-  if (actionId == "InflictPoison") return new InflictPoison();
-  if (actionId == "BoostAtk") return new BoostAtk();
-  if (actionId == "Heal") return new Heal(5);
+  if (actionId == "InflictPoison") return new InflictPoison(amount);
+  if (actionId == "BoostAtk") return new BoostAtk(amount);
+  if (actionId == "BoostDef") return new BoostDef(amount);
+  if (actionId == "Heal") return new Heal(amount);
   return nullptr;
 }
 
 Token* Unit::createToken(const std::string& tokenId, int stack) {
   if (tokenId == "Poison") return new Poison(stack, tokenTextures[0]);
   if (tokenId == "AtkBoost") return new AtkBoost(stack, tokenTextures[1]);
+  if (tokenId == "DefBoost") return new DefBoost(stack, tokenTextures[2]);
 }
 
 

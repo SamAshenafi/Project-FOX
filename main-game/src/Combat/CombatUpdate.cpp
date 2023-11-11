@@ -8,6 +8,41 @@ void Combat::update(Game& game) {
     fprintf(stderr, "[ANIMATION]: %d\n", animationDuration);
     return;
   }
+
+
+  if (foes.empty()) {
+        if (!combatConcluded) {
+          while(!game.dialogQueue.empty()) game.dialogQueue.pop();
+          game.dialogQueue.push("You WIN!!!");
+          fprintf(stderr,"You WIN!!!");
+          animationDuration += 40;
+          combatConcluded = true;
+          return;
+          }
+        // TODO: implement loot and exp gain
+        // should delete tile/flag the tile as defeated
+        if(!game.dialogQueue.empty()) game.dialogQueue.pop();
+        game.changeState(game.world);
+        return;
+      }
+
+      if (heroes.empty()) {
+        if (!combatConcluded){
+          while(!game.dialogQueue.empty()) game.dialogQueue.pop();
+          game.dialogQueue.push("Fen has been slain :(");
+          fprintf(stderr,"You Died\n");
+          animationDuration += 40;
+          combatConcluded = true;
+          return;
+        }
+          // TODO: implement game over
+          // will likely consist of taken to a screen before being brough to the main menu
+          if(!game.dialogQueue.empty()) game.dialogQueue.pop();
+          game.gameOver = true;
+          game.changeState(new MainMenu());
+          return;
+      }
+
   if (isRoundOver) {
     // start new round
     fprintf(stderr, "[ROUND END]: %d\n", currentRound);
@@ -15,11 +50,11 @@ void Combat::update(Game& game) {
     fprintf(stderr, "----------------\n");
     fprintf(stderr, "[ROUND START]: %d\n", currentRound);
     for (Unit* hero : heroes) {
-      animationDuration += hero->onRoundStart();
+      animationDuration += hero->onRoundStart(combatConcluded);
       fprintf(stderr, "%s speed: %d\n maxHp: %d\n hp: %d\n", hero->id.c_str(), hero->getSpeed(), hero->getMaxHp(), hero->hp);
     }
     for (Unit* foe : foes) {
-      animationDuration += foe->onRoundStart();
+      animationDuration += foe->onRoundStart(combatConcluded);
       fprintf(stderr, "%s speed: %d\n maxHp: %d\n hp: %d\n", foe->id.c_str(), foe->getSpeed(), foe->getMaxHp(), foe->hp);
     }
     // sort by speed -> add to turnQueue
@@ -70,7 +105,9 @@ void Combat::update(Game& game) {
       currentUnit = turnQueue.front();
       turnQueue.pop();
       fprintf(stderr, "turnStart being called for %s, current number of tokens: %d\n", currentUnit->id.c_str(), currentUnit->tokens.size());
-      animationDuration += currentUnit->onTurnStart();
+      animationDuration += currentUnit->onTurnStart(combatConcluded);
+      while(!game.dialogQueue.empty()) game.dialogQueue.pop();
+      game.dialogQueue.push(currentUnit->actionDialouge);
       // currentUnit->animationTimer = 0.5;
       // currentUnit->startAnimationTime = GetTime();
       return;
@@ -81,8 +118,14 @@ void Combat::update(Game& game) {
     return;
   }
   else {
+    while(!game.dialogQueue.empty()) game.dialogQueue.pop();
+    game.dialogQueue.push(currentUnit->actionDialouge);
     if (currentUnit->energy < 1) {
-      animationDuration += currentUnit->onTurnEnd();
+      animationDuration += currentUnit->onTurnEnd(combatConcluded);
+
+      while(!game.dialogQueue.empty()) game.dialogQueue.pop();
+      currentUnit->actionDialouge = "";
+
       currentUnit = nullptr;
       return;
     }
@@ -94,6 +137,12 @@ void Combat::update(Game& game) {
     if (action == nullptr) return; // extra, maybe need later?
     if (action != nullptr && !targets.empty()) {
       animationDuration += action->perform(currentUnit, targets, game);
+
+      while(!game.dialogQueue.empty()) game.dialogQueue.pop();
+      game.dialogQueue.push(currentUnit->actionDialouge);
+      fprintf(stderr, "actionDialouge: %s\n", currentUnit->actionDialouge.c_str());
+
+      //reseting values for next decided action
       currentUnit->selectedAction = nullptr;
       currentUnit->selectedTargets = {};
       highlightedAction = nullptr;
@@ -101,22 +150,12 @@ void Combat::update(Game& game) {
       targets = {};
       availableTargets = {};
       action = nullptr;
-
-      foes = unitsVanquished(foes);
-      heroes = unitsVanquished(heroes);
-
-      if (foes.empty()) {
-      fprintf(stderr,"You WIN");
-      // TODO: implement loot and exp gain
-      // should delete tile/flag the tile as defeated
-      game.changeState(game.world);
-      }
-      if (heroes.empty()) {
-      fprintf(stderr,"You Died");
-      // TODO: implement game over
-      // will likely consist of taken to a screen before being brough to the main menu
-      game.changeState(game.world);
-      }
     }
+
+    foes = unitsVanquished(foes);
+    heroes = unitsVanquished(heroes);
+
+    return;
   }
 }
+

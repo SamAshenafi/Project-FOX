@@ -47,8 +47,33 @@ void Player::processInput(Game& game) {
             }
           else if (tileType == "npc") {
             game.dialogQueue.push(tileText);
-            movable = false;
+          }
+          else if (tileType == "chest") {
+            inventory.addKeys(tile->inventory.getKeys());
+            // TODO: add chest inventory to player's inventory
+
+            world->removeEntity(tile->id);
+            world->currentRoom->removeTile(tile->id);
+            game.dialogQueue.push(tileText);
+          }
+          else if (tileType == "door") {
+            if (!(tile->isBlockMovement)) {
+              game.dialogQueue.push("The door is already open, silly!");
             }
+            // TODO: check if player has a key. If so, run this and remove the key
+            else if (inventory.hasKey()) {
+              game.dialogQueue.push("Unlocking door");
+              // Remove one key from the player
+              inventory.removeKey();
+              // Remove door
+              world->removeEntity(tile->id);
+              world->currentRoom->removeTile(tile->id);
+              world->grid[tile->x][tile->y] = 0;
+            }
+            else {
+              game.dialogQueue.push("Cannot unlock door! No keys!");
+            }
+          }
         }
       }
     }
@@ -157,7 +182,27 @@ void Player::processInput(Game& game) {
           return;
         }
       }
-      // lastMoveTime = currentTime;
+      for (Entity* entity : dynamic_cast<World*>(game.world)->entities) {
+        bool isAtTile =
+          entity->x == x &&
+          entity->y == y
+          ;
+        if (!isAtTile) {
+          continue;
+        }
+        Tile* tile = dynamic_cast<Tile*>(entity);
+        if (tile != nullptr) {
+          std::pair<std::string, std::string> tileData = tile->interact();
+          std::string tileType = tileData.first;
+          std::string tileText = tileData.second;
+          if (tileType == "battle") {
+            fprintf(stderr, "Entering Combat\n");
+            world->enterCombat(game, tile->id);
+            world->removeEntity(tile->id);
+            world->currentRoom->removeTile(tile->id);
+          }
+        }
+      }
     }
   }
 }

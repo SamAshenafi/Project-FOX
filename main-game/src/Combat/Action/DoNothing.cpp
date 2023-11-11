@@ -2,12 +2,17 @@
 
 DoNothing::DoNothing() {
   targetType = "all";
+  animationDuration = 92;
+  actionDesc = {
+      "Does Nothing Lol"
+    };
 }
 
 DoNothing::~DoNothing() {
 }
 
 int DoNothing::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
+  user->actionDialouge += "Is loafing Around";
   for (Unit* target : targets) {
     fprintf(
       stderr,
