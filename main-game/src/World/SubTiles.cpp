@@ -1,5 +1,6 @@
 #include "Tile.h"
 #include "../../external-libs/nlohmann/json.hpp"
+#include "../Helper.h"
 
 // ---------------------------------------------- Combat Tile
 CombatTile::CombatTile(
@@ -93,7 +94,14 @@ ChestTile::ChestTile(
     }
   }
 
-  // sprite = Helper::loadTexture("path_to_your_tile_texture.png");
+  // Rendering values
+  offsetX = 0.8;
+  offsetY = 1.1;
+  spriteWidth = 16;
+  spriteHeight = 14;
+  xScale = 0.8;
+  yScale = 1.2;
+  sprite = Helper::loadTexture("chest.png");
 }
 
 // ---------------------------------------------- Door Tile

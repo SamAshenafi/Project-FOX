@@ -5,10 +5,10 @@ void Entity::renderHelper(int gridWidth, int gridHeight, bool flipped) {
   // As I am not sure where certain non-variable integers came from,
   // some things may need to be changed when we bring in a sprite
   Rectangle src = {
-    static_cast<float>(animationFrame * gridWidth * 4),
+    static_cast<float>(animationFrame * gridWidth * xScale),
     static_cast<float>(spriteHeight * animationRow),
-    static_cast<float>(gridWidth * 4),
-    static_cast<float>(gridHeight * 6)
+    static_cast<float>(gridWidth * xScale),
+    static_cast<float>(gridHeight * yScale)
   };
   if (flipped) src.width *= -1;
   Rectangle dest = {
