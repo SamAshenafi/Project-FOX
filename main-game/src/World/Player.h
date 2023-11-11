@@ -28,11 +28,6 @@ class Player : public Entity {
     void processInput(Game&);
     void move(int newX, int newY);
 
-    //stats specific
-    // int exp;
-    // int level = (level * 100 * 1.25) * exp;
-    // std::vector<equipment*> equipments;
-
     // Shared
     void render(int gridWidth, int gridHeight);
     void update();
