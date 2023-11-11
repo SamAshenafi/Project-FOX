@@ -95,8 +95,16 @@ void Game::loadSave(const std::string& filename) {
       nlohmann::json worldData = root["WorldData"];
       dynamic_cast<World*>(world)->players.clear();
       for (const auto& pc : worldData["Players"]) {
+        std::string pcId = pc["id"];
+        int pcX = pc["x"];
+        int pcY = pc["y"];
+        std::string pcFacing = pc["facing"];
+        Inventory pcInventory;
+        for (const auto& jsonItem : pc["Inventory"]) {
+          pcInventory.AddItem(jsonItem["id"], jsonItem["quantity"]);
+        }
         Player* PC = new Player(
-          pc["id"], pc["x"], pc["y"], pc["facing"], Inventory()
+          pcId, pcX, pcY, pcFacing, pcInventory
         );
         dynamic_cast<World*>(world)->players.push_back(PC);
         // TODO: If we add more "player" objects, then we need to alter this. We've only ever had 1, so this works fine.
@@ -143,13 +151,15 @@ void Game::saveSave(const std::string& filename) {
       {"y", player->y},
       {"facing", player->facing}
     });
-    //new inventory code
-    nlohmann::json inventoryJson = nlohmann::json::object();
-        for (const auto& item : player->inventory.GetItems()) {
-            inventoryJson[item.first] = item.second;
-        }
-    playerInfo["Inventory"] = inventoryJson;
-    ///////
+    playerInfo["Inventory"] = nlohmann::json::array();
+    for (const auto& item : player->inventory.GetItems()) {
+      nlohmann::json jsonItem = nlohmann::json::object({
+        {"id", item.first},
+        {"quantity", item.second}
+      });
+      playerInfo["Inventory"].push_back(jsonItem);
+    }
+    playerInfo["Keys"] = player->inventory.getKeys();
     root["WorldData"]["Players"].push_back(playerInfo);
   }
 

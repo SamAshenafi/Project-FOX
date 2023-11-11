@@ -10,7 +10,7 @@
 
 class Tile : public Entity {
   public:
-    // NOTE: id, x, and y are inherited from GameObject already
+    // NOTE: id, x, and y are inherited from Entity already
     bool isBlockMovement;
 
     Tile(
@@ -61,10 +61,6 @@ class ChestTile : public Tile {
       int tileY,
       bool isBlockMovement
       );
-
-    std::pair<std::string, std::string> interact() override;
-
-    // Inventory data below:
 };
 
 class DoorTile : public Tile {
@@ -75,8 +71,6 @@ class DoorTile : public Tile {
       int tileY,
       bool isBlockMovement
       );
-
-    std::pair<std::string, std::string> interact() override;
     // Depending on what we have art-wise, we can either have doors open, and change their sprite,
     // Or we can delete them, so we only need one sprite
     void open();

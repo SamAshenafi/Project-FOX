@@ -2,12 +2,16 @@
   "WorldData": {
     "Players": [
       {
-        "Inventory": {
-          "bronze_sword": 1
-        },
+        "Inventory": [
+          {
+            "id": "bronze_sword",
+            "quantity": 1
+          }
+        ],
+        "Keys": 0,
         "facing": "right",
         "id": "player-01",
-        "x": 7,
+        "x": 4,
         "y": 5
       }
     ],
@@ -47,6 +51,5 @@
       }
     ],
     "currentRoomId": "05-06"
-  },
-  "completed": []
+  }
 }

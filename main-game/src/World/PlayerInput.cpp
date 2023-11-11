@@ -49,23 +49,29 @@ void Player::processInput(Game& game) {
             game.dialogQueue.push(tileText);
           }
           else if (tileType == "chest") {
-            // TODO: add and use chest functions for getting chest contents and moving them to the player inventory 
+            inventory.addKeys(tile->inventory.getKeys());
+            // TODO: add chest inventory to player's inventory
+
+            world->removeEntity(tile->id);
+            world->currentRoom->removeTile(tile->id);
+            game.dialogQueue.push(tileText);
           }
           else if (tileType == "door") {
             if (!(tile->isBlockMovement)) {
               game.dialogQueue.push("The door is already open, silly!");
             }
             // TODO: check if player has a key. If so, run this and remove the key
-            else if (true) {
-              fprintf(stderr, "Unlocking door\n");
-              // remove key from the player
-
-              // Unlock door
-              dynamic_cast<DoorTile*>(tile)->open();
+            else if (inventory.hasKey()) {
+              game.dialogQueue.push("Unlocking door");
+              // Remove one key from the player
+              inventory.removeKey();
+              // Remove door
+              world->removeEntity(tile->id);
+              world->currentRoom->removeTile(tile->id);
               world->grid[tile->x][tile->y] = 0;
             }
             else {
-              fprintf(stderr, "Cannot unlock door! No keys!");
+              game.dialogQueue.push("Cannot unlock door! No keys!");
             }
           }
         }

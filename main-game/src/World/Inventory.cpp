@@ -5,6 +5,11 @@ void Inventory::AddItem(const std::string& itemId) {
     items[itemId]++;
 }
 
+void Inventory::AddItem(const std::string& itemId, int quantity) {
+  if (quantity < 1) fprintf(stderr, "Tried to add negative number of items\n");
+  else items[itemId] += quantity;
+}
+
 void Inventory::UseItem(const std::string& itemId) {
     auto it = items.find(itemId);
     if (it != items.end() && it->second > 0) {
@@ -26,3 +31,32 @@ void Inventory::UseItem(const std::string& itemId) {
     }
 }
 
+bool Inventory::hasKey() {
+  return (keys > 0);
+}
+
+int Inventory::getKeys() {
+  return keys;
+}
+
+void Inventory::addKeys(int numberOfKeys) {
+  if (numberOfKeys < 0) fprintf(stderr, "Error: Tried to add negative number of keys to inventory\n");
+  else keys += numberOfKeys;
+}
+
+void Inventory::setKeys(int numberOfKeys) {
+  if (numberOfKeys < 0) {
+    fprintf(stderr, "Error: Tried to set an inventory to have a negative number of keys\n");
+    keys = 0;
+  }
+  else keys = numberOfKeys;
+}
+
+void Inventory::removeKey() {
+  if (keys < 1) {
+    fprintf(stderr, "Error: Tried to remove key from inventory without keys\n");
+  }
+  else {
+    --keys;
+  }
+}

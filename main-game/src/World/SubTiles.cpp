@@ -60,15 +60,6 @@ ChestTile::ChestTile(
     bool isBlockMovement
 ) : Tile(tileId, tileX, tileY, isBlockMovement)
 {
-  // Additional constructor functionality to add to base constructor
-
-  // sprite = Helper::loadTexture("path_to_your_tile_texture.png");
-}
-
-std::pair<std::string, std::string> ChestTile::interact() {
-  
-  // TODO: change stderr print to setting chest inventory and move this to constructor
-  // TODO: have interact() take stuff out the chest
   const std::string chestFilePath = "./json/chest/";
   const std::string jsonFileType = ".json";
   const std::string fullFilePath = chestFilePath + id + jsonFileType;
@@ -77,25 +68,32 @@ std::pair<std::string, std::string> ChestTile::interact() {
   if (jsonFile.is_open()) {
     try {
       jsonFile >> root;
-      
-      // Part of placeholder below
-      fprintf(stderr, "Chest contains:\n");
+
+      tileText = "Obtained:";
+
+      int chestKeys = root["keys"];
+      inventory.setKeys(chestKeys);
+      if (inventory.hasKey()) tileText = tileText + " " + std::to_string(chestKeys) + " key \\\\";
 
       // Parse Chest
       for (const auto& itemData : root["items"]) {
-          std::string itemID = itemData["id"].get<std::string>();
-          int quantity = itemData["quantity"].get<int>();
-          // TODO: Menu and implementation for taking things in and out of chests
-          // Placeholder
-          fprintf(stderr, "%i %s\n", quantity, itemID.c_str());
-          }
+        std::string itemID = itemData["id"].get<std::string>();
+        int quantity = itemData["quantity"].get<int>();
+        tileText = tileText + " " + std::to_string(quantity) + " " + itemID.c_str() + " \\\\";
 
+        // TODO: Fill chest inventory here:
+
+
+
+
+      }
     }
     catch (const std::exception& e) {
       fprintf(stderr, "JSON parsing failed: %s\n", e.what());
     }
   }
-  return Tile::interact();
+
+  // sprite = Helper::loadTexture("path_to_your_tile_texture.png");
 }
 
 // ---------------------------------------------- Door Tile
@@ -109,11 +107,6 @@ DoorTile::DoorTile(
   // Additional constructor functionality to add to base constructor
 
   // sprite = Helper::loadTexture("path_to_your_tile_texture.png");
-}
-
-std::pair<std::string, std::string> DoorTile::interact() {
-
-  return Tile::interact();
 }
 
 void DoorTile::open() {
