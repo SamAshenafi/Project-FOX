@@ -34,7 +34,7 @@ MainMenu::MainMenu()
   startText = "PRESS SPACE TO BEGIN!";
   // For animation
   framesCounter = 0;
-  appStartTime = GetTime();
+  menuStartTime = GetTime();
   foxReachedCenter = false;
   titlePosY = -50; 
 }
@@ -52,6 +52,13 @@ void MainMenu::render(Game &game)
 {
   BeginDrawing();
 
+  if (game.gameOver) renderGameOver(game);
+  else renderMain(game);
+
+  EndDrawing();
+}
+
+void MainMenu::renderMain(Game& game) {
   // Background image
   Rectangle sourceRec = {0.0f, 0.0f, static_cast<float>(start_img.width), static_cast<float>(start_img.height)};
   Rectangle destRecBG = {0.0f, 0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight)};
@@ -69,11 +76,11 @@ void MainMenu::render(Game &game)
 
   // Text elements
   // Title text
-Vector2 projectTextSize = MeasureTextEx(titlefont, projectText.c_str(), titlefont.baseSize, 0);
-Vector2 foxTextSize = MeasureTextEx(titlefont, foxText.c_str(), titlefont.baseSize, 0);
-float titlePosX = (screenWidth - (projectTextSize.x + foxTextSize.x + 10)) / 2;  
-DrawTextEx(titlefont, projectText.c_str(), {titlePosX, titlePosY}, titlefont.baseSize, 0, WHITE);
-DrawTextEx(titlefont, foxText.c_str(), {titlePosX + projectTextSize.x + 10, titlePosY}, titlefont.baseSize, 0, ORANGE);
+  Vector2 projectTextSize = MeasureTextEx(titlefont, projectText.c_str(), titlefont.baseSize, 0);
+  Vector2 foxTextSize = MeasureTextEx(titlefont, foxText.c_str(), titlefont.baseSize, 0);
+  float titlePosX = (screenWidth - (projectTextSize.x + foxTextSize.x + 10)) / 2;  
+  DrawTextEx(titlefont, projectText.c_str(), {titlePosX, titlePosY}, titlefont.baseSize, 0, WHITE);
+  DrawTextEx(titlefont, foxText.c_str(), {titlePosX + projectTextSize.x + 10, titlePosY}, titlefont.baseSize, 0, ORANGE);
 
   // Start text
   Vector2 startTextSize = MeasureTextEx(font, startText.c_str(), font.baseSize, 0);
@@ -95,39 +102,47 @@ DrawTextEx(titlefont, foxText.c_str(), {titlePosX + projectTextSize.x + 10, titl
   Vector2 buttonTextSize = MeasureTextEx(font, exitButtonText, font.baseSize, 1);
   Vector2 buttonTextPosition = {exitButton.x + (exitButton.width - buttonTextSize.x) / 2, exitButton.y + (exitButton.height - buttonTextSize.y) / 2};
   DrawTextEx(font, exitButtonText, buttonTextPosition, font.baseSize, 1, WHITE);
+}
 
+void MainMenu::renderGameOver(Game& game) {
   ClearBackground(DARKGRAY);
   if(game.gameOver) {
     DrawText(
-      "GAME OVER!\n press Space to return to main menu.",
+      "GAME OVER!\n Press Space to return to main menu\n Or Press Shift+Enter to load your last save.",
       game.settings.screenWidth / 2 - 50,
       game.settings.screenHeight / 2, 20,
       RAYWHITE
       );
   }
-  EndDrawing();
 }
 
 void MainMenu::processInput(Game& game) {
   if (IsKeyPressed(KEY_SPACE)) {
-    if (game.gameOver) game.gameOver = false;
+    if (game.gameOver) {
+      game.gameOver = false;
+      framesCounter = 0;
+      menuStartTime = GetTime();
+    }
     else {
       game.startNewGame();
     }
   }
-  else if(IsKeyPressed(KEY_LEFT_BRACKET)) {
-    fprintf(stderr, "%s\n", "[ was pressed");
+  else if ((IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)) && IsKeyPressed(KEY_ENTER)) {
     fprintf(stderr, "%s\n", "loaded from savedata-01.json");
     game.gameOver = false;
+    game.startNewGame();
     game.loadSave("savedata-01");
-    game.changeState(game.world);
   }
 }
 
 void MainMenu::update(Game &game)
 {
-  framesCounter++;
+  ++framesCounter;
+  if (game.gameOver) updateGameOver(game);
+  else updateMain(game);
+}
 
+void MainMenu::updateMain(Game& game) {
   // Tree Animation
   int currentFrame = (framesCounter / 30) % 2; // Adjust the speed if necessary
   frameRec.x = (float)currentFrame * (float)frameWidth;
@@ -153,7 +168,7 @@ void MainMenu::update(Game &game)
   }
 
   // Title Bounce Animation
-  double elapsedTime = GetTime() - appStartTime;
+  double elapsedTime = GetTime() - menuStartTime;
   float finalYPosition = screenHeight / 2 - 225; // Final Y-position for the title before bouncing
 
   if (elapsedTime < 3)
@@ -178,4 +193,8 @@ void MainMenu::update(Game &game)
     float bounceOffset = sinf(bounceTime * bounceSpeed) * bounceHeight;
     titlePosY = finalYPosition + bounceOffset; // Apply bounce effect
   }
+}
+
+void MainMenu::updateGameOver(Game& game) {
+
 }

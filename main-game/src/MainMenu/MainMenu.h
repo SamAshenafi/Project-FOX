@@ -5,7 +5,7 @@
 class MainMenu : public GameState {
    private:
     bool isNewGame = true;
-    double appStartTime;  
+    double menuStartTime;  
     Texture2D start_img;
     Font font;
     Font titlefont;
@@ -35,6 +35,11 @@ class MainMenu : public GameState {
     std::string projectText;
     std::string foxText;
     std::string startText;
+
+    void updateGameOver(Game& game);
+    void renderGameOver(Game& game);
+    void updateMain(Game& game);
+    void renderMain(Game& game);
 
   public:
     int screenWidth = 1920 / 2;

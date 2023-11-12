@@ -4,7 +4,6 @@ void Player::processInput(Game& game) {
   World* world = dynamic_cast<World*>(game.world);
 
   if (IsKeyPressed(KEY_SPACE)) {
-    fprintf(stderr, "%s\n", "space was pressed");
     if (movable) {
     int targetX = x;
     int targetY = y;
@@ -57,11 +56,7 @@ void Player::processInput(Game& game) {
             game.dialogQueue.push(tileText);
           }
           else if (tileType == "door") {
-            if (!(tile->isBlockMovement)) {
-              game.dialogQueue.push("The door is already open, silly!");
-            }
-            // TODO: check if player has a key. If so, run this and remove the key
-            else if (inventory.hasKey()) {
+            if (inventory.hasKey()) {
               game.dialogQueue.push("Unlocking door");
               // Remove one key from the player
               inventory.removeKey();

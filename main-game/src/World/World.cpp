@@ -50,8 +50,8 @@ void World::update(Game& game) {
     --transitionTimer;
     return;
   }
-  player->update();
   if (!game.dialogQueue.empty()) player->movable = false;
+  player->update();
 }
 
 void World::enterCombat(Game& game, const std::string& battleId) {

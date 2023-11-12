@@ -6,8 +6,8 @@
         "Keys": 0,
         "facing": "right",
         "id": "player-01",
-        "x": 2,
-        "y": 3
+        "x": 4,
+        "y": 5
       }
     ],
     "Rooms": [
