@@ -12,7 +12,7 @@ class Player : public Entity {
   public:
     std::string facing;
 
-    // For stopping movement during dialogue
+    // For stopping movement during dialogue and such
     bool movable;
 
     Player(

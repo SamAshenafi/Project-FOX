@@ -62,7 +62,6 @@ void Player::move(int newX, int newY) {
 
 void Player::update() {
   if (animationDuration > 0) {
-    // fprintf(stderr, "[ANIMATION]: %d\n", animationDuration);
     animationDuration -= 1;
     return;
   }
