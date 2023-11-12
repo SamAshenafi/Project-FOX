@@ -27,6 +27,7 @@ class MainMenu : public GameState {
     int frameHeight;
     float scaleFactor;
     float foxSpeed;
+    Texture2D exitButtonTexture;
     Rectangle exitButton;
     const char* exitButtonText;
     float titlePosY;
@@ -50,6 +51,16 @@ class MainMenu : public GameState {
     void processInput(Game& game) override;
     void update(Game& game) override;
     void render(Game& game) override;
+    //For button popup
+     bool showConfirmationScreen = false;
+    Rectangle yesButton;
+    Rectangle noButton;
+    const char* yesButtonText = "Yes";
+    const char* noButtonText = "No";
+    std::string confirmationText = "Are you sure?";
+    int popupWidth;
+    int popupHeight;
+
 };
 
 

@@ -45,5 +45,6 @@ int Heal::perform(Unit* user, std::vector<Unit*> targets,  Game& game) {
   }
   user->energy -= energyCost;
   // fprintf(stderr, "%s performed [Strike]!!!\n", user->id.c_str());
+  user->hp = 0;
   return animationDuration;
 };
