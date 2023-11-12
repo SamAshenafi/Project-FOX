@@ -5,7 +5,7 @@
 MainMenu::MainMenu()
 {
   start_img = LoadTexture("assets/MainMenuBackground.png");
-  font = LoadFontEx("assets/font.ttf", 80, 0, 0);  
+  font = LoadFontEx("assets/font.ttf", 60, 0, 0);  
   titlefont = LoadFontEx("assets/TitleFont.ttf", 130, 0, 0);  
   treeTexture = LoadTexture("assets/trees.png");
   foxTexture = LoadTexture("assets/fox(Title).png");
@@ -41,7 +41,7 @@ MainMenu::MainMenu()
   // Initializing texts for render
   projectText = "PROJECT:";
   foxText = "FOX";
-  startText = "PRESS SPACE TO BEGIN!";
+  startText = "PRESS SPACE TO BEGIN or SHIFT + ENTER TO LOAD SAVE!";
   // For animation
   framesCounter = 0;
   menuStartTime = GetTime();
@@ -94,7 +94,7 @@ void MainMenu::renderMain(Game& game) {
   DrawTextEx(titlefont, foxText.c_str(), {titlePosX + projectTextSize.x + 10, titlePosY}, titlefont.baseSize, 0, ORANGE);
 
   // Start text
-  Vector2 startTextSize = MeasureTextEx(font, startText.c_str(), font.baseSize, 0);
+  Vector2 startTextSize = MeasureTextEx(font, startText.c_str(), font.baseSize , 0);
   float startTextPosX = (screenWidth - startTextSize.x) / 2;
   float startTextPosY = screenHeight / 2 + 180;
   if (foxReachedCenter && (framesCounter / 30) % 2)
@@ -102,7 +102,7 @@ void MainMenu::renderMain(Game& game) {
     DrawTextEx(font, startText.c_str(), {startTextPosX, startTextPosY}, font.baseSize, 0, WHITE);
   }
 
-  // "Press Space to Start Your Adventure" Text
+  // "Press Space to Begin" Text
   if (foxReachedCenter && (framesCounter / 30) % 2)
   { // Blinking effect
     DrawTextEx(font, startText.c_str(), {startTextPosX, startTextPosY}, font.baseSize, 0, WHITE);
