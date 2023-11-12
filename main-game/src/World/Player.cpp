@@ -24,8 +24,9 @@ Player::Player(
   offsetY = 2;
   spriteWidth = 192; // 96 * 2
   spriteHeight = 240; // 80 * 3
+  xScale = 4;
+  yScale = 6;
   ItemAssets::Initialize();
-  inventory.AddItem("bronze_sword");
 }
 
 void Player::render(int gridWidth, int gridHeight) {
@@ -61,7 +62,6 @@ void Player::move(int newX, int newY) {
 
 void Player::update() {
   if (animationDuration > 0) {
-    // fprintf(stderr, "[ANIMATION]: %d\n", animationDuration);
     animationDuration -= 1;
     return;
   }
@@ -93,4 +93,10 @@ void Player::update() {
 
 void Player::resetAnimationDuration() {
   animationDuration += 10;
+}
+
+void Player::takeItems(Inventory itemsToTake) {
+  for (const auto& item : itemsToTake.GetItems()) {
+    inventory.AddItem(item.first, item.second);
+  }
 }

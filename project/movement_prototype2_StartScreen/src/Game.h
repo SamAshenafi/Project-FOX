@@ -15,6 +15,8 @@ enum GameState {
 class Game {
   private:
     std::unique_ptr<Character> player; // Use a unique_ptr for deferred initialization
+    bool isNewGame = true;
+    double appStartTime;
   public:
     const int screenWidth = 1600;
     const int screenHeight = 1000;
@@ -24,6 +26,9 @@ class Game {
     const double moveSpeed = 0.1;
     // const double notMoveSpeed = 0.1;
     // const int gridSize = 100;
+
+    bool getIsNewGame() const { return isNewGame; }
+    void setIsNewGame(bool value) { isNewGame = value; }
 
     GameState gameState;
 

@@ -12,7 +12,7 @@ class Player : public Entity {
   public:
     std::string facing;
 
-    // For stopping movement during dialogue
+    // For stopping movement during dialogue and such
     bool movable;
 
     Player(
@@ -28,14 +28,11 @@ class Player : public Entity {
     void processInput(Game&);
     void move(int newX, int newY);
 
-    //stats specific
-    // int exp;
-    // int level = (level * 100 * 1.25) * exp;
-    // std::vector<equipment*> equipments;
-
     // Shared
     void render(int gridWidth, int gridHeight);
     void update();
+
+    void takeItems(Inventory itemsToTake);
 
   private:
     // Animation duration

@@ -9,7 +9,6 @@
 #include "Foe/Foes.h"
 #include "../Game.h"
 #include "./Action/Action.h"
-// #include "./Action/Actions.h" // Error, use this in cpp instead
 
 // class Game;
 class Unit;

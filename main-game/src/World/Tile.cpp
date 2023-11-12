@@ -28,9 +28,9 @@ void Tile::render(int gridWidth, int gridHeight) {
   Color color = BLUE;
   std::string tileType = Helper::parseGameObjectType(id);
   if (tileType == "chest") {
-    color = YELLOW;
-    // renderHelper(gridWidth, gridHeight);
-    // return;
+    // color = YELLOW;
+    renderHelper(gridWidth, gridHeight);
+    return;
   }
   else if (tileType == "npc") {
     color = GREEN;

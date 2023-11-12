@@ -1,31 +1,7 @@
 {
     "enemies": [
         {
-          "id": "goblin",
-          "maxHP":10,
-          "HP":10,
-          "baseAtk": 2,
-          "baseDef": 3,
-          "maxEnergy": 1,
-          "speed": 1
-        },
-        {
-          "id": "soldier",
-          "maxHP":15,
-          "HP":10,
-          "baseAtk": 4,
-          "baseDef": 8,
-          "maxEnergy": 1,
-          "speed": 1
-        },
-        {
-          "id": "wolf",
-          "maxHP":8,
-          "HP":8,
-          "baseAtk": 3,
-          "baseDef": 1,
-          "maxEnergy": 1,
-          "speed": 1
+          "id": "BlueBerry"
         }
       ],
       "conditions": ["rain", "night"]

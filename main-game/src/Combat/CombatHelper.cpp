@@ -10,6 +10,7 @@ void Combat::loadTokenTextures()
   tokenTextures.push_back(loadTexture("Poison"));
   tokenTextures.push_back(loadTexture("AtkBoost"));
   tokenTextures.push_back(loadTexture("DefBoost"));
+  tokenTextures.push_back(loadTexture("Warning"));
 }
 
 bool Combat::isHero(Unit* unit) {
@@ -24,6 +25,8 @@ bool Combat::isFoe(Unit* unit) {
 Foe* Combat::createFoe(const std::string& foeId) {
   // add more here
   if (foeId == "FoxFoe") return new FoxFoe();
+  if (foeId == "RazzBerry") return new RazzBerry();
+  if (foeId == "BlueBerry") return new BlueBerry();
   return nullptr;
 }
 
