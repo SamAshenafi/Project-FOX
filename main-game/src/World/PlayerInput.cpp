@@ -176,9 +176,7 @@ void Player::processInput(Game& game) {
           transition->y == this->y
           ;
         if (isAtTransition) {
-          fprintf(stderr, "Trying to go to next room\n");
-          move(transition->enterX, transition->enterY);
-          world->loadRoom(transition->destinationRoomId);
+          world->transitionRoom(transition);
           return;
         }
       }

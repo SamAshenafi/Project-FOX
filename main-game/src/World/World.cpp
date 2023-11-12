@@ -45,6 +45,11 @@ void World::loadRoom(const std::string& roomId) {
 
 
 void World::update(Game& game) {
+  if (transitionTimer > -1) {
+    if (transitionTimer == 0) transitionHelper();
+    --transitionTimer;
+    return;
+  }
   player->update();
   if (!game.dialogQueue.empty()) player->movable = false;
 }
@@ -52,4 +57,16 @@ void World::update(Game& game) {
 void World::enterCombat(Game& game, const std::string& battleId) {
   GameState* combat = new Combat(battleId);
   game.changeState(combat);
+}
+
+void World::transitionRoom(TransitionTile* transition) {
+  destination = transition;
+  transitionTimer = 30;
+  player->movable = false;
+}
+
+void World::transitionHelper() {
+  player->movable = true;
+  player->move(destination->enterX, destination->enterY);
+  loadRoom(destination->destinationRoomId);
 }
