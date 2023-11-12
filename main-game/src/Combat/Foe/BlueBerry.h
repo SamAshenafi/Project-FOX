@@ -1,17 +1,17 @@
 #pragma once
 #include "./Foe.h"
 
-class FoxFoe : public Foe {
+class BlueBerry : public Foe {
   public:
-    FoxFoe() {
-      id = "FoxFoe";
-      hp = 100;
-      maxHp = 100;
+    BlueBerry() {
+      id = "BlueBerry";
+      hp = 50;
+      maxHp = 50;
       bonusMaxHp;
 
-      baseAtk = 10;
+      baseAtk = 6;
       bonusAtk = 0;
-      baseDef = 4;
+      baseDef = 7;
       bonusDef = 0;
 
       baseSpeed = 6;
@@ -25,6 +25,7 @@ class FoxFoe : public Foe {
 
       actionList.push_back({"DoNothing",0});
       actionList.push_back({"Strike",0});
+      actionList.push_back({"BoostDef",5});
     };
 
 

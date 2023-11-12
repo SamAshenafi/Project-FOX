@@ -15,8 +15,8 @@ std::vector<std::string> combatInputTutorial =
 
 void rUnitSprite(Texture2D sprite, int pos, int screenWidth, int screenHeight)
 {
-    int spriteWidth = 96 * 2;
-    int spriteHeight = 80 * 3;
+    int spriteWidth = 171;
+    int spriteHeight = 236;
     Rectangle src = {
       0,
       0,
@@ -27,7 +27,7 @@ void rUnitSprite(Texture2D sprite, int pos, int screenWidth, int screenHeight)
     Rectangle dest = {
       static_cast<float>(pos),
       static_cast<float>(0.30 * screenHeight),
-      static_cast<float>(screenWidth/8), //sizes are planned to change
+      static_cast<float>(screenWidth/10), //sizes are planned to change
       static_cast<float>(screenHeight/4), //sizes are planned to change
     };
 
@@ -44,8 +44,8 @@ void rUnitSprite(Texture2D sprite, int pos, int screenWidth, int screenHeight)
 
 void rTokenSprite (Texture2D sprite, int pos, int screenWidth, int screenHeight)
 {
-  int spriteWidth = 10 * 2;
-  int spriteHeight = 10 * 3;
+  int spriteWidth = 80;
+  int spriteHeight = 80;
   Rectangle src = {
       0,
       0,
@@ -56,8 +56,8 @@ void rTokenSprite (Texture2D sprite, int pos, int screenWidth, int screenHeight)
   Rectangle dest = {
       static_cast<float>(pos),
       static_cast<float>(0.18 * screenHeight),
-      static_cast<float>(screenWidth/8), //sizes are planned to change
-      static_cast<float>(screenHeight/4), //sizes are planned to change
+      static_cast<float>(spriteWidth/4), //sizes are planned to change
+      static_cast<float>(spriteHeight/4), //sizes are planned to change
     };
   
   DrawTexturePro(
@@ -258,13 +258,6 @@ void Unit::RenderSprite
   {
     pos = screenWidth/2 - (96*(pos+1) + (32*pos+1));
     rUnitSprite(sprite, pos, screenWidth, screenHeight);
-    DrawRectangle(
-    pos ,
-    0.30 * screenHeight,
-    10,
-    10,
-    BLUE
-    );
 
     //render's hero's stats
     //health TODO: improve this line?
@@ -282,7 +275,7 @@ void Unit::RenderSprite
     //renders tokens if available
     int i = 0;
     for(Token* token : tokens) {
-      int tokenPos = pos + (i * 15);
+      int tokenPos = pos + (i * 21);
       DrawRectangle(
         tokenPos,
         screenHeight*0.18,
@@ -290,29 +283,19 @@ void Unit::RenderSprite
         10,
         PURPLE
       );
-
-      // Uncomment this and delete above when token sprites are made
-    //   rTokenSprite(
-    //     token->sprite,
-    //     tokenPos,
-    //     screenWidth,
-    //     screenHeight
-    //     );
-    // }
+      rTokenSprite(
+        token->sprite,
+        tokenPos,
+        screenWidth,
+        screenHeight
+        );
       i++;
+      }      
     }
-  }
   else if (isFoe) 
   {
     pos = screenWidth/2 + (96*(pos) + 32*(pos+1));
     rUnitSprite(sprite, pos, screenWidth, screenHeight);
-    DrawRectangle(
-    pos,
-    0.30 * screenHeight,
-    10,
-    10,
-    BLUE
-    );
 
     DrawRectangle(
     screenWidth/2,
@@ -338,7 +321,7 @@ void Unit::RenderSprite
     //renders tokens if available
     int i = 0;
     for(Token* token : tokens) {
-      int tokenPos = pos + (i * 15);
+      int tokenPos = pos + (i * 21);
       DrawRectangle(
         tokenPos,
         screenHeight*0.18,
@@ -347,16 +330,14 @@ void Unit::RenderSprite
         PURPLE
       );
 
-      // Uncomment this and delete above when token sprites are made
-    //   rTokenSprite(
-    //     token->sprite,
-    //     tokenPos,
-    //     screenWidth,
-    //     screenHeight
-    //     );
-    // }
-    i++;
+      rTokenSprite(
+        token->sprite,
+        tokenPos,
+        screenWidth,
+        screenHeight
+        );
+      i++;
     }
-    return;
   }
+  return;
 }

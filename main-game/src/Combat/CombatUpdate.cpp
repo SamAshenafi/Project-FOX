@@ -130,8 +130,11 @@ void Combat::update(Game& game) {
       return;
     }
     if (isFoe(currentUnit)) {
-      dynamic_cast<Foe*>(currentUnit)->decideAction();
-      targets = dynamic_cast<Foe*>(currentUnit)->decideTarget(heroes);
+      dynamic_cast<Foe*>(currentUnit)->decideAction(*this);
+      if (currentUnit->selectedAction->targetType == "self") {
+        targets = dynamic_cast<Foe*>(currentUnit)->decideTarget(foes);
+      }
+      else targets = dynamic_cast<Foe*>(currentUnit)->decideTarget(heroes);
     }
     Action* action = currentUnit->getAction();
     if (action == nullptr) return; // extra, maybe need later?

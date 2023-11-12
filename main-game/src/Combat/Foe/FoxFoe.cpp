@@ -3,7 +3,7 @@
 #include <raylib.h>
 #include <vector>
 
-void FoxFoe::decideAction() {
+void FoxFoe::decideAction(Combat combat) {
   if (actions.empty()) {
     fprintf(stderr, "no actions for enemy AI\n");
     // return nullptr;
