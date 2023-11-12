@@ -1,7 +1,7 @@
 {
     "enemies": [
         {
-          "id": "BlueBerry"
+          "id": "RazzBerry"
         }
       ],
       "conditions": ["rain", "night"]
