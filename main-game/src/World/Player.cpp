@@ -95,3 +95,9 @@ void Player::update() {
 void Player::resetAnimationDuration() {
   animationDuration += 10;
 }
+
+void Player::takeItems(Inventory itemsToTake) {
+  for (const auto& item : itemsToTake.GetItems()) {
+    inventory.AddItem(item.first, item.second);
+  }
+}

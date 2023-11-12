@@ -32,6 +32,8 @@ class Player : public Entity {
     void render(int gridWidth, int gridHeight);
     void update();
 
+    void takeItems(Inventory itemsToTake);
+
   private:
     // Animation duration
     int animationDuration = 0;

@@ -103,6 +103,7 @@ void Game::loadSave(const std::string& filename) {
         for (const auto& jsonItem : pc["Inventory"]) {
           pcInventory.AddItem(jsonItem["id"], jsonItem["quantity"]);
         }
+        pcInventory.addKeys(pc["Keys"]);
         Player* PC = new Player(
           pcId, pcX, pcY, pcFacing, pcInventory
         );

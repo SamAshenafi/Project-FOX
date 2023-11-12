@@ -2,17 +2,12 @@
   "WorldData": {
     "Players": [
       {
-        "Inventory": [
-          {
-            "id": "bronze_sword",
-            "quantity": 1
-          }
-        ],
+        "Inventory": [],
         "Keys": 0,
         "facing": "right",
         "id": "player-01",
-        "x": 4,
-        "y": 5
+        "x": 2,
+        "y": 4
       }
     ],
     "Rooms": [

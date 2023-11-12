@@ -50,7 +50,7 @@ void Player::processInput(Game& game) {
           }
           else if (tileType == "chest") {
             inventory.addKeys(tile->inventory.getKeys());
-            // TODO: add chest inventory to player's inventory
+            takeItems(tile->inventory);
 
             world->removeEntity(tile->id);
             world->currentRoom->removeTile(tile->id);

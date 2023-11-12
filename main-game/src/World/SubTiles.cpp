@@ -12,7 +12,14 @@ CombatTile::CombatTile(
 {
   // Additional constructor functionality to add to base constructor
 
-  // sprite = Helper::loadTexture("path_to_your_tile_texture.png");
+  // Rendering values
+  // offsetX = 0.8;
+  // offsetY = 1.1;
+  // spriteWidth = 16;
+  // spriteHeight = 14;
+  // xScale = 0.8;
+  // yScale = 1.2;
+  // sprite = Helper::loadTexture("sprite path here");
 }
 
 std::pair<std::string, std::string> CombatTile::interact() {
@@ -47,6 +54,15 @@ NpcTile::NpcTile(
       fprintf(stderr, "%s JSON parsing failed: %s\n", id, e.what());
     }
   }
+
+  // Rendering values
+  // offsetX = 0.8;
+  // offsetY = 1.1;
+  // spriteWidth = 16;
+  // spriteHeight = 14;
+  // xScale = 0.8;
+  // yScale = 1.2;
+  // sprite = Helper::loadTexture("sprite path here");
 }
 
 std::pair<std::string, std::string> NpcTile::interact() {
@@ -83,10 +99,7 @@ ChestTile::ChestTile(
         tileText = tileText + " " + std::to_string(quantity) + " " + itemID.c_str() + " \\\\";
 
         // TODO: Fill chest inventory here:
-
-
-
-
+        inventory.AddItem(itemID, quantity);
       }
     }
     catch (const std::exception& e) {
@@ -114,10 +127,12 @@ DoorTile::DoorTile(
 {
   // Additional constructor functionality to add to base constructor
 
-  // sprite = Helper::loadTexture("path_to_your_tile_texture.png");
-}
-
-void DoorTile::open() {
-  isBlockMovement = false;
-  // TODO: Change sprite to sprite for open door
+  // Rendering values
+  // offsetX = 0.8;
+  // offsetY = 1.1;
+  // spriteWidth = 16;
+  // spriteHeight = 14;
+  // xScale = 0.8;
+  // yScale = 1.2;
+  // sprite = Helper::loadTexture("sprite path here");
 }
