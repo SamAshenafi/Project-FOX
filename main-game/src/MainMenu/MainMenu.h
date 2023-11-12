@@ -5,7 +5,7 @@
 class MainMenu : public GameState {
    private:
     bool isNewGame = true;
-    double appStartTime;  // Declaration for app start time
+    double appStartTime;  
     Texture2D start_img;
     Font font;
     Font titlefont;
@@ -18,8 +18,8 @@ class MainMenu : public GameState {
     Vector2 foxPosition;
     int foxFrameWidth;
     int foxFrameHeight;
-    bool foxReachedCenter;  // Declaration for fox reached center
-    int framesCounter;      // Declaration for frames counter
+    bool foxReachedCenter;  
+    int framesCounter;      
     float bounceHeight;
     float bounceSpeed;
     float bounceTime;
@@ -30,11 +30,8 @@ class MainMenu : public GameState {
     Rectangle exitButton;
     const char* exitButtonText;
     float titlePosY;
-
-    // Newly added member variables for positioning and text
     Vector2 treePosition;
     Vector2 treePosition2;
-    // Variables for dynamic text and positions in render method
     std::string projectText;
     std::string foxText;
     std::string startText;

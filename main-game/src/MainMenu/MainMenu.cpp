@@ -5,8 +5,8 @@
 MainMenu::MainMenu()
 {
   start_img = LoadTexture("assets/MainMenuBackground.png");
-  font = LoadFontEx("assets/font.ttf", 80, 0, 0);  // Try sizes between 40 and 60
-  titlefont = LoadFontEx("assets/TitleFont.ttf", 130, 0, 0);  // Same here 
+  font = LoadFontEx("assets/font.ttf", 80, 0, 0);  
+  titlefont = LoadFontEx("assets/TitleFont.ttf", 130, 0, 0);  
   treeTexture = LoadTexture("assets/trees.png");
   foxTexture = LoadTexture("assets/fox(Title).png");
 
@@ -19,7 +19,7 @@ MainMenu::MainMenu()
   treePosition = {-20 * 0.6, 230 * 0.6};
   treePosition2 = {1100 * 0.6, 300 * 0.6};
   scaleFactor = 8.0f;
-  int totalFoxFrames = 6; // Total number of frames in the fox animation
+  int totalFoxFrames = 6; 
   foxFrameWidth = foxTexture.width / totalFoxFrames;
   foxFrameHeight = foxTexture.height;
   foxFrameRec = {0.0f, 0.0f, static_cast<float>(foxFrameWidth), static_cast<float>(foxFrameHeight)};
@@ -36,7 +36,7 @@ MainMenu::MainMenu()
   framesCounter = 0;
   appStartTime = GetTime();
   foxReachedCenter = false;
-  titlePosY = -50; // Initial position off-screen
+  titlePosY = -50; 
 }
 
 MainMenu::~MainMenu()
@@ -69,16 +69,16 @@ void MainMenu::render(Game &game)
 
   // Text elements
   // Title text
- Vector2 projectTextSize = MeasureTextEx(titlefont, projectText.c_str(), titlefont.baseSize, 0);
+Vector2 projectTextSize = MeasureTextEx(titlefont, projectText.c_str(), titlefont.baseSize, 0);
 Vector2 foxTextSize = MeasureTextEx(titlefont, foxText.c_str(), titlefont.baseSize, 0);
-float titlePosX = (screenWidth - (projectTextSize.x + foxTextSize.x + 10)) / 2;  // Adjusted to reduce space between texts
+float titlePosX = (screenWidth - (projectTextSize.x + foxTextSize.x + 10)) / 2;  
 DrawTextEx(titlefont, projectText.c_str(), {titlePosX, titlePosY}, titlefont.baseSize, 0, WHITE);
 DrawTextEx(titlefont, foxText.c_str(), {titlePosX + projectTextSize.x + 10, titlePosY}, titlefont.baseSize, 0, ORANGE);
 
   // Start text
   Vector2 startTextSize = MeasureTextEx(font, startText.c_str(), font.baseSize, 0);
   float startTextPosX = (screenWidth - startTextSize.x) / 2;
-  float startTextPosY = screenHeight / 2 + 180; // Adjust Y-position as needed
+  float startTextPosY = screenHeight / 2 + 180; 
   if (foxReachedCenter && (framesCounter / 30) % 2)
   { // Blinking effect
     DrawTextEx(font, startText.c_str(), {startTextPosX, startTextPosY}, font.baseSize, 0, WHITE);
@@ -96,7 +96,6 @@ DrawTextEx(titlefont, foxText.c_str(), {titlePosX + projectTextSize.x + 10, titl
   Vector2 buttonTextPosition = {exitButton.x + (exitButton.width - buttonTextSize.x) / 2, exitButton.y + (exitButton.height - buttonTextSize.y) / 2};
   DrawTextEx(font, exitButtonText, buttonTextPosition, font.baseSize, 1, WHITE);
 
-  // TODO: put your render for start menu/screen here
   ClearBackground(DARKGRAY);
   if(game.gameOver) {
     DrawText(

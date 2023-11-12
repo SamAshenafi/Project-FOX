@@ -1,4 +1,6 @@
 {
-    "name": "[NPC NAME]",
-    "text": "[Text explaining status and the wizard's charge attack]"
+    "name": "[Captured Fox Rose]",
+    "text":
+     "[Fen, be careful for this final battle! The wizard's charged attack is deadly. He gathers energy before releasing a powerful blast. Be prepared and strike back when he's vulnerable!]"
 }
+
