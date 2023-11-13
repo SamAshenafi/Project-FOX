@@ -50,7 +50,7 @@ void World::update(Game& game) {
     --transitionTimer;
     return;
   }
-  if (narrationReady) playNarrationSequence(game);
+  if (narrationPlaying) playNarrationSequence(game);
   if (!game.dialogQueue.empty()) player->movable = false;
   player->update();
 }
