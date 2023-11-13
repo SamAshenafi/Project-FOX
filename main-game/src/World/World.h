@@ -49,8 +49,8 @@ class World : public GameState {
 
     // these will only be used when starting a new game
     //// player data
-    int playerX = 0;
-    int playerY = 0;
+    int playerX = 4;
+    int playerY = 5;
     std::string playerFacing = "down";
     Inventory playerInventory;
 

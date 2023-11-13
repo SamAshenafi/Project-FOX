@@ -28,20 +28,20 @@ void World::render(Game& game) {
       WHITE
       );
 
-  // Draw the grid (debug only)
-  for (int x = 0; x < columns; x++) {
-    for (int y = 0; y < rows; y++) {
-      // DrawRectangleLines(x, y, gridSize, gridSize, DARKGRAY);
-      DrawRectangleLines(
-          x * game.settings.gridWidth,
-          y * game.settings.gridHeight,
-          game.settings.gridWidth,
-          game.settings.gridHeight,
-          BLACK
-          );
-      //}
-    }
-  }
+  // // Draw the grid (debug only)
+  // for (int x = 0; x < columns; x++) {
+  //   for (int y = 0; y < rows; y++) {
+  //     // DrawRectangleLines(x, y, gridSize, gridSize, DARKGRAY);
+  //     DrawRectangleLines(
+  //         x * game.settings.gridWidth,
+  //         y * game.settings.gridHeight,
+  //         game.settings.gridWidth,
+  //         game.settings.gridHeight,
+  //         BLACK
+  //         );
+  //     //}
+  //   }
+  // }
 
   //Placeholder for testing
   // There should ideally be nothing to render, but this works as a placeholder
