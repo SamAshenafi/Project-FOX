@@ -16,7 +16,10 @@ int Strike::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   for (Unit* target : targets) {
 
     // perform algorithm
-    target->hp -= (user->getAtk() - target->getDef());
+    int damage;
+    if (user->getAtk() <= target->getDef()) damage = 0;
+    else damage = (user->getAtk() - target->getDef());
+    target->hp -= damage;
 
     user->actionDialouge += target->id + " -" 
                          + std::to_string(user->getAtk() - target->getDef()) + ", ";

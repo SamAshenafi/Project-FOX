@@ -15,12 +15,12 @@ void BlueBerry::decideAction(Combat combat) {
   // check if any units have their attack boosted
   for (Unit* foe : combat.foes)
   {
-    bool no_stat = true;
+    int no_stat = 0;
     for (Token* token : foe->tokens)
     {
-        if (token->tokenID/100 == 1) no_stat = false;
+        if (token->tokenID/100 == 1) no_stat++;
     }
-    if (no_stat) {
+    if (no_stat > 0 && no_stat <= 2) {
         actionWeight.push_back(new BoostDef(5));
         targetWeight.push_back(foe);
     }
@@ -29,15 +29,6 @@ void BlueBerry::decideAction(Combat combat) {
   int randomActionIndex = GetRandomValue(0, actionWeight.size() - 1);
   fprintf(stderr, "randomActionIndex rolled: %d\n", randomActionIndex);
   selectedAction = actionWeight[randomActionIndex];
-  // if (selectedAction == nullptr) {
-  // return nullptr;
-  // game.dialogQueue.push("Foe did nothing!");
-  // selectedAction->perform(this, this, game);
-  // startAnimationTime = GetTime();
-  // animationTimer = 2.0;
-  // selectedAction = nullptr;
-  // }
-  // return selectedAction;
 };
 
 std::vector<Unit*> BlueBerry::decideTarget(std::vector<Unit*> targets) {
