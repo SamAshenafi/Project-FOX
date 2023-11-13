@@ -46,10 +46,11 @@ void World::loadRoom(const std::string& roomId) {
 
 void World::update(Game& game) {
   if (transitionTimer > -1) {
-    if (transitionTimer == 0) transitionHelper();
+    if (transitionTimer == 0) transitionHelper(game);
     --transitionTimer;
     return;
   }
+  if (narrationReady) playNarrationSequence(game);
   if (!game.dialogQueue.empty()) player->movable = false;
   player->update();
 }
@@ -65,8 +66,14 @@ void World::transitionRoom(TransitionTile* transition) {
   player->movable = false;
 }
 
-void World::transitionHelper() {
+void World::transitionHelper(Game& game) {
   player->movable = true;
   player->move(destination->enterX, destination->enterY);
-  loadRoom(destination->destinationRoomId);
+  std::string destinationRoomId = destination->destinationRoomId;
+  loadRoom(destinationRoomId);
+}
+
+void World::playNarrationSequence(Game& game) {
+  (narratorData.at(currentRoom->roomId))->playNarrationLines(game);
+  setNarrationFinished();
 }

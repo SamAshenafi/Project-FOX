@@ -14,6 +14,16 @@
 // class Game;
 class Player;
 
+class NarrationInfo {
+  std::vector<std::string> dialogueLines;
+
+  public:
+    NarrationInfo() = default;
+    ~NarrationInfo() = default;
+    void addLine(const std::string& dialogueLine);
+    void playNarrationLines(Game& game);
+};
+
 class World : public GameState {
   public:
     World(std::string roomId); // constructor
@@ -61,13 +71,20 @@ class World : public GameState {
     void removeEntity(const std::string& tileId);
 
     void transitionRoom(TransitionTile* transition);
+    void setNarrationFinished();
 
   private:
     int transitionTimer = -1;
     TransitionTile* destination = nullptr;
     Player* transitionPlayer = nullptr;
-    void transitionHelper();
+    void transitionHelper(Game& game);
 
     void setGridFromString(std::string roomInfo);
     void initializeWorld(std::string roomId);
+
+    // -- Narrator data
+    std::unordered_map<std::string, NarrationInfo*> narratorData; // Maps room id's to narration info
+    bool narrationReady = false;
+    void initializeNarrationData();
+    void playNarrationSequence(Game& game);
 };

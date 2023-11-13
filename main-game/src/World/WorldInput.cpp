@@ -12,4 +12,5 @@ void World::processInput(Game& game) {
       game.dialogQueue.push("Saved game data");
     }
   }
+  else if (game.dialogQueue.empty() && IsKeyPressed(KEY_U)) narrationReady = true;
 }

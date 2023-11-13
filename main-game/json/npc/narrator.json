@@ -1,0 +1,29 @@
+[
+  {
+    "roomId": "05-06",
+    "narrationLines": [
+      "Welcome to Project Fox!\nPress Space to advance the dialogue",
+      "[Exposition information]",
+      "Use the directional keys or WASD to move around,\nand press Space to interact with things",
+      "Press U any time to replay the narration for the current area.\nHave fun!"
+    ]
+  },
+  {
+    "roomId": "05-07",
+    "narrationLines": [
+      "Placeholder Text"
+    ]
+  },
+  {
+    "roomId": "05-08",
+    "narrationLines": [
+      "Placeholder Text"
+    ]
+  },
+  {
+    "roomId": "05-09",
+    "narrationLines": [
+      "Placeholder Text"
+    ]
+  }
+]

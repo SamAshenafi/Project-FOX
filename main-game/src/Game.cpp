@@ -117,6 +117,7 @@ void Game::loadSave(const std::string& filename) {
         dynamic_cast<World*>(world)->rooms.push_back(newRoom);
       }
       Room* roomToSet = dynamic_cast<World*>(world)->findRoom(worldData["currentRoomId"]);
+      dynamic_cast<World*>(world)->setNarrationFinished();
       dynamic_cast<World*>(world)->setRoom(roomToSet);
 
       inputFile.close();

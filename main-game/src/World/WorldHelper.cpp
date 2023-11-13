@@ -2,6 +2,7 @@
 #include <algorithm>
 #include <string>
 #include "../Helper.h"
+#include "../../external-libs/nlohmann/json.hpp"
 
 
 // Should be called whenever entities changes or existing entities change their y position
@@ -72,6 +73,7 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
   }
   // Construct new room and add it to the rooms vector
   Room* roomToBuild = new Room(roomId, roomInfo, roomTiles, roomTransitions, roomBackground);
+  narrationReady = true;
   return roomToBuild;
 }
 
@@ -157,6 +159,7 @@ Room* World::findRoom(const std::string& roomId) {
 }
 
 void World::initializeWorld(std::string roomId) {
+  initializeNarrationData();
   loadRoom(roomId);
 
   player = new Player(
@@ -168,4 +171,49 @@ void World::initializeWorld(std::string roomId) {
       );
   entities.push_back(player);
   players.push_back(player);
+}
+
+void World::initializeNarrationData() {
+  const std::string narratorFilePath = "./json/npc/narrator.json";
+  nlohmann::json root;
+  std::ifstream inputFile(narratorFilePath);
+
+  if (!inputFile.is_open()) {
+    fprintf(stderr, "Unable to open narrator file for reading\n");
+    return;
+  }
+  try {
+    inputFile >> root;
+
+    for (const auto& roomNarrationData : root) {
+      NarrationInfo* roomNarration = new NarrationInfo();
+      std::string roomId = roomNarrationData["roomId"];
+      for (const std::string& narrationLine : roomNarrationData["narrationLines"]) {
+        roomNarration->addLine(narrationLine.c_str());
+      }
+      narratorData.insert_or_assign(roomId, roomNarration);
+    }
+  }
+  catch (const std::exception& e) {
+    fprintf(stderr, "Narrator JSON parsing failed: %s\n", e.what());
+  }
+}
+
+void World::setNarrationFinished() {
+  narrationReady = false;
+}
+
+// ----------- Narration Class
+
+void NarrationInfo::addLine(const std::string& dialogueLine) {
+  dialogueLines.push_back(dialogueLine);
+}
+
+void NarrationInfo::playNarrationLines(Game& game) {
+  if (!(game.dialogQueue.empty())) {
+    fprintf(stderr, "Error: Tried to play narration when dialogue queue was not empty.\n");
+  }
+  for (const auto& dialogueLine : dialogueLines) {
+    game.dialogQueue.push(dialogueLine);
+  }
 }
