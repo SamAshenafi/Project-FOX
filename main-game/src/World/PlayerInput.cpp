@@ -45,7 +45,9 @@ void Player::processInput(Game& game) {
             world->currentRoom->removeTile(tile->id);
             }
           else if (tileType == "npc") {
-            game.dialogQueue.push(tileText);
+            for (const std::string& dialogueLine : dynamic_cast<NpcTile*>(entity)->getDialogue()) {
+              game.dialogQueue.push(dialogueLine);
+            }
           }
           else if (tileType == "chest") {
             inventory.addKeys(tile->inventory.getKeys());
@@ -134,16 +136,6 @@ void Player::processInput(Game& game) {
 
 
     std::queue<std::pair<int, int>>().swap(pathQueue); // empty the queue
-    // pathQueue = {};
-
-    // if (deltaTimeSinceLastMove < moveSpeed) {
-    //   return; // Too soon for another move
-    // }
-
-    // NOTE: this might be uneccessary, add back if break
-    // no movement
-    // if (newX == x && newY == y) {
-    // }
 
     // Check if the new position is out of bounds
     bool isOutOfBound = newX < 0 ||
