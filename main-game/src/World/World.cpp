@@ -74,6 +74,7 @@ void World::transitionHelper(Game& game) {
 }
 
 void World::playNarrationSequence(Game& game) {
-  (narratorData.at(currentRoom->roomId))->playNarrationLines(game);
+  std::string roomId = currentRoom->roomId;
+  if (narratorData.find(roomId) != narratorData.end()) (narratorData.at(roomId))->playNarrationLines(game);
   setNarrationFinished();
 }

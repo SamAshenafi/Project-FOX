@@ -212,7 +212,9 @@ void NarrationInfo::addLine(const std::string& dialogueLine) {
 void NarrationInfo::playNarrationLines(Game& game) {
   if (!(game.dialogQueue.empty())) {
     fprintf(stderr, "Error: Tried to play narration when dialogue queue was not empty.\n");
+    return;
   }
+  if (dialogueLines.empty()) return;
   for (const auto& dialogueLine : dialogueLines) {
     game.dialogQueue.push(dialogueLine);
   }
