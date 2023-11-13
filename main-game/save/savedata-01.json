@@ -6,79 +6,26 @@
         "Keys": 0,
         "facing": "right",
         "id": "player-01",
-        "x": 6,
-        "y": 3
+        "x": 7,
+        "y": 5
       }
     ],
     "Rooms": [
       {
-        "room": "05-06",
-        "roomInfo": "e65e1e95w3e17w3e17w3e36",
-        "specialTiles": [
-          [
-            "chest-001",
-            true,
-            3,
-            3
-          ],
-          [
-            "npc-001",
-            true,
-            4,
-            3
-          ],
-          [
-            "battle-aaa",
-            false,
-            8,
-            5
-          ]
-        ],
+        "room": "01-01",
+        "roomInfo": "e11w10e11w7e1w1e14w2e3w1e1w3e15w1e19w2e18w2e15w1e2w2e1w1e16w2e1w1e16w5e8w3e4w6e7w3e4w7e13",
+        "specialTiles": [],
         "transitionTiles": [
           [
-            "05-07",
-            6,
-            11,
-            6,
-            0
-          ]
-        ]
-      },
-      {
-        "room": "05-07",
-        "roomInfo": "e63e3e42e1e52e3e17e3e17e3e22e1e13",
-        "specialTiles": [
-          [
-            "chest-002",
-            true,
-            7,
-            5
-          ],
-          [
-            "npc-002",
-            true,
-            7,
-            9
-          ]
-        ],
-        "transitionTiles": [
-          [
-            "05-06",
-            6,
-            0,
-            6,
-            11
-          ],
-          [
-            "05-08",
+            "01-02",
             19,
             7,
             0,
-            7
+            6
           ]
         ]
       }
     ],
-    "currentRoomId": "05-07"
+    "currentRoomId": "01-01"
   }
 }

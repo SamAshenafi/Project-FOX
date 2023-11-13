@@ -73,7 +73,7 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
   }
   // Construct new room and add it to the rooms vector
   Room* roomToBuild = new Room(roomId, roomInfo, roomTiles, roomTransitions, roomBackground);
-  narrationReady = true;
+  startNarration();
   return roomToBuild;
 }
 
@@ -199,8 +199,12 @@ void World::initializeNarrationData() {
   }
 }
 
+void World::startNarration() {
+  narrationPlaying = true;
+}
+
 void World::setNarrationFinished() {
-  narrationReady = false;
+  narrationPlaying = false;
 }
 
 // ----------- Narration Class
