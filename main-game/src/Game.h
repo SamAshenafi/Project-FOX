@@ -50,7 +50,7 @@ class Game {
     // TODO: add some way to change the resolution variables back and forth
 
     // Initialization variables
-    std::string startingRoomId = "05-06";
+    std::string startingRoomId = "01-01";
 
     // DialogQueue dialogueQueue;
     std::queue<std::string> dialogQueue;
