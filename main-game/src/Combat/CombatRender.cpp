@@ -276,13 +276,6 @@ void Unit::RenderSprite
     int i = 0;
     for(Token* token : tokens) {
       int tokenPos = pos + (i * 21);
-      DrawRectangle(
-        tokenPos,
-        screenHeight*0.18,
-        10,
-        10,
-        PURPLE
-      );
       rTokenSprite(
         token->sprite,
         tokenPos,
@@ -296,14 +289,6 @@ void Unit::RenderSprite
   {
     pos = screenWidth/2 + (96*(pos) + 32*(pos+1));
     rUnitSprite(sprite, pos, screenWidth, screenHeight);
-
-    DrawRectangle(
-    screenWidth/2,
-    0.30 * screenHeight,
-    10,
-    10,
-    BLUE
-    );
 
     //render's foe's stats
     //health
@@ -322,13 +307,6 @@ void Unit::RenderSprite
     int i = 0;
     for(Token* token : tokens) {
       int tokenPos = pos + (i * 21);
-      DrawRectangle(
-        tokenPos,
-        screenHeight*0.18,
-        10,
-        10,
-        PURPLE
-      );
 
       rTokenSprite(
         token->sprite,

@@ -38,6 +38,7 @@ class Unit {
 
     Action* selectedAction = nullptr;
     std::vector<Unit*> selectedTargets = {};
+    std::vector<Unit*> chargedTarget = {};
     std::string actionDialouge;
 
     int baseSpeed = 0;
@@ -105,7 +106,6 @@ class Unit {
       int totalAnimationDuration = 2;
       fprintf(stderr, "%s's Turn Ended\n", id.c_str());
       for (Token* token : tokens) {
-        fprintf(stderr, "it gets to here");
         totalAnimationDuration += token->onTurnEnd(*this);
       }
 

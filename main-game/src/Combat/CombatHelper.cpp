@@ -25,8 +25,10 @@ bool Combat::isFoe(Unit* unit) {
 Foe* Combat::createFoe(const std::string& foeId) {
   // add more here
   if (foeId == "FoxFoe") return new FoxFoe();
-  if (foeId == "RazzBerry") return new RazzBerry();
+  if (foeId == "Grape") return new Grape();
   if (foeId == "BlueBerry") return new BlueBerry();
+  if (foeId == "WildBerry") return new WildBerry();
+  if (foeId == "BerryWizard") return new BerryWizard();
   return nullptr;
 }
 
@@ -38,6 +40,8 @@ Action* Combat::createAction(const std::string& actionId, int amount) {
   if (actionId == "BoostAtk") return new BoostAtk(amount);
   if (actionId == "BoostDef") return new BoostDef(amount);
   if (actionId == "Heal") return new Heal(amount);
+  if (actionId == "Charge") return new Charge(amount);
+  if (actionId == "ChargeStrike") return new ChargeStrike(amount);
   return nullptr;
 }
 
@@ -45,6 +49,7 @@ Token* Unit::createToken(const std::string& tokenId, int stack) {
   if (tokenId == "Poison") return new Poison(stack, tokenTextures[0]);
   if (tokenId == "AtkBoost") return new AtkBoost(stack, tokenTextures[1]);
   if (tokenId == "DefBoost") return new DefBoost(stack, tokenTextures[2]);
+  if (tokenId == "Warning") return new Warning(stack, tokenTextures[3]);
 }
 
 

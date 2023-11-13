@@ -122,7 +122,6 @@ void Combat::update(Game& game) {
     game.dialogQueue.push(currentUnit->actionDialouge);
     if (currentUnit->energy < 1) {
       animationDuration += currentUnit->onTurnEnd(combatConcluded);
-
       while(!game.dialogQueue.empty()) game.dialogQueue.pop();
       currentUnit->actionDialouge = "";
 
@@ -145,6 +144,10 @@ void Combat::update(Game& game) {
       game.dialogQueue.push(currentUnit->actionDialouge);
       fprintf(stderr, "actionDialouge: %s\n", currentUnit->actionDialouge.c_str());
 
+      if (currentUnit->selectedAction->targetType == "charge") {
+        fprintf(stderr, "it gets to him\n");
+        currentUnit->chargedTarget = targets;
+      }
       //reseting values for next decided action
       currentUnit->selectedAction = nullptr;
       currentUnit->selectedTargets = {};

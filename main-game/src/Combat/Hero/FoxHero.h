@@ -23,11 +23,8 @@ class FoxHero : public Hero {
       baseEnergy = 1;
       energy;
 
-      actionList.push_back({"DoNothing",0});
       actionList.push_back({"Strike",0});
-      actionList.push_back({"InflictPoison",3});
-      actionList.push_back({"Heal",5});
-      actionList.push_back({"BoostAtk",3});
-      actionList.push_back({"BoostDef",3});
+      actionList.push_back({"Charge",3});
+      //actionList.push_back({"Item",0});
     };
 };

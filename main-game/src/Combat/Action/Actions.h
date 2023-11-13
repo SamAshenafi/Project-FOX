@@ -6,3 +6,5 @@
 #include "Heal.h"
 #include "BoostAtk.h"
 #include "BoostDef.h"
+#include "Charge.h"
+#include "ChargeStrike.h"

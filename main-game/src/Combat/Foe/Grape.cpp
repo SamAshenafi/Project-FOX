@@ -1,9 +1,9 @@
-#include "RazzBerry.h"
+#include "Grape.h"
 #include "../Action/Actions.h"
 #include <raylib.h>
 #include <vector>
 
-void RazzBerry::decideAction(Combat combat) {
+void Grape::decideAction(Combat combat) {
   if (actions.empty()) {
     fprintf(stderr, "no actions for enemy AI\n");
     // return nullptr;
@@ -40,7 +40,7 @@ void RazzBerry::decideAction(Combat combat) {
   // return selectedAction;
 };
 
-std::vector<Unit*> RazzBerry::decideTarget(std::vector<Unit*> targets) {
+std::vector<Unit*> Grape::decideTarget(std::vector<Unit*> targets) {
   if (targets.empty()){
     return {};
   }
