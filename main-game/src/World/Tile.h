@@ -71,7 +71,4 @@ class DoorTile : public Tile {
       int tileY,
       bool isBlockMovement
       );
-    // Depending on what we have art-wise, we can either have doors open, and change their sprite,
-    // Or we can delete them, so we only need one sprite
-    void open();
 };

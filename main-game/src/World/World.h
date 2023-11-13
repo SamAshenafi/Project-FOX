@@ -60,7 +60,14 @@ class World : public GameState {
     void sortGameObjects();
     void removeEntity(const std::string& tileId);
 
+    void transitionRoom(TransitionTile* transition);
+
   private:
+    int transitionTimer = -1;
+    TransitionTile* destination = nullptr;
+    Player* transitionPlayer = nullptr;
+    void transitionHelper();
+
     void setGridFromString(std::string roomInfo);
     void initializeWorld(std::string roomId);
 };

@@ -5,10 +5,11 @@
 MainMenu::MainMenu()
 {
   start_img = LoadTexture("assets/MainMenuBackground.png");
-  font = LoadFontEx("assets/font.ttf", 80, 0, 0);  // Try sizes between 40 and 60
-  titlefont = LoadFontEx("assets/TitleFont.ttf", 130, 0, 0);  // Same here 
+  font = LoadFontEx("assets/font.ttf", 60, 0, 0);  
+  titlefont = LoadFontEx("assets/TitleFont.ttf", 130, 0, 0);  
   treeTexture = LoadTexture("assets/trees.png");
   foxTexture = LoadTexture("assets/fox(Title).png");
+  exitButtonTexture = LoadTexture("assets/ExitButton.png");
 
   bounceHeight = 10.0f;
   bounceSpeed = 5.0f;
@@ -19,24 +20,33 @@ MainMenu::MainMenu()
   treePosition = {-20 * 0.6, 230 * 0.6};
   treePosition2 = {1100 * 0.6, 300 * 0.6};
   scaleFactor = 8.0f;
-  int totalFoxFrames = 6; // Total number of frames in the fox animation
+  int totalFoxFrames = 6; 
   foxFrameWidth = foxTexture.width / totalFoxFrames;
   foxFrameHeight = foxTexture.height;
   foxFrameRec = {0.0f, 0.0f, static_cast<float>(foxFrameWidth), static_cast<float>(foxFrameHeight)};
   foxPosition = {static_cast<float>(-foxFrameWidth), static_cast<float>(screenHeight) / 2.0f - 100};
   foxSpeed = 80.0f;
   foxReachedCenter = false;
-  exitButton = {static_cast<float>(screenWidth - 120), 20.0f, 100.0f, 40.0f};
-  exitButtonText = "Exit";
+  popupWidth = 300;
+  popupHeight = 200;
+  // Exit Button
+  float buttonScale = 0.2f;
+  float buttonWidth = exitButtonTexture.width * buttonScale;
+  float buttonHeight = exitButtonTexture.height * buttonScale;
+  float marginRight = 3.0f;
+  float marginTop = 3.0f;
+  exitButton = {screenWidth - buttonWidth - marginRight, marginTop, buttonWidth, buttonHeight};
+  yesButton = {(screenWidth - popupWidth) / 2 + 50, (screenHeight - popupHeight) / 2 + 100, 80, 50};
+  noButton = {(screenWidth + popupWidth) / 2 - 150, (screenHeight - popupHeight) / 2 + 100, 80, 50};
   // Initializing texts for render
   projectText = "PROJECT:";
   foxText = "FOX";
-  startText = "PRESS SPACE TO BEGIN!";
+  startText = "PRESS SPACE TO BEGIN or SHIFT + ENTER TO LOAD SAVE!";
   // For animation
   framesCounter = 0;
-  appStartTime = GetTime();
+  menuStartTime = GetTime();
   foxReachedCenter = false;
-  titlePosY = -50; // Initial position off-screen
+  titlePosY = -50; 
 }
 
 MainMenu::~MainMenu()
@@ -46,12 +56,20 @@ MainMenu::~MainMenu()
   UnloadFont(titlefont);
   UnloadTexture(treeTexture);
   UnloadTexture(foxTexture);
+  UnloadTexture(exitButtonTexture);
 }
 
 void MainMenu::render(Game &game)
 {
   BeginDrawing();
 
+  if (game.gameOver) renderGameOver(game);
+  else renderMain(game);
+
+  EndDrawing();
+}
+
+void MainMenu::renderMain(Game& game) {
   // Background image
   Rectangle sourceRec = {0.0f, 0.0f, static_cast<float>(start_img.width), static_cast<float>(start_img.height)};
   Rectangle destRecBG = {0.0f, 0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight)};
@@ -69,66 +87,126 @@ void MainMenu::render(Game &game)
 
   // Text elements
   // Title text
- Vector2 projectTextSize = MeasureTextEx(titlefont, projectText.c_str(), titlefont.baseSize, 0);
-Vector2 foxTextSize = MeasureTextEx(titlefont, foxText.c_str(), titlefont.baseSize, 0);
-float titlePosX = (screenWidth - (projectTextSize.x + foxTextSize.x + 10)) / 2;  // Adjusted to reduce space between texts
-DrawTextEx(titlefont, projectText.c_str(), {titlePosX, titlePosY}, titlefont.baseSize, 0, WHITE);
-DrawTextEx(titlefont, foxText.c_str(), {titlePosX + projectTextSize.x + 10, titlePosY}, titlefont.baseSize, 0, ORANGE);
+  Vector2 projectTextSize = MeasureTextEx(titlefont, projectText.c_str(), titlefont.baseSize, 0);
+  Vector2 foxTextSize = MeasureTextEx(titlefont, foxText.c_str(), titlefont.baseSize, 0);
+  float titlePosX = (screenWidth - (projectTextSize.x + foxTextSize.x + 10)) / 2;
+  DrawTextEx(titlefont, projectText.c_str(), {titlePosX, titlePosY}, titlefont.baseSize, 0, WHITE);
+  DrawTextEx(titlefont, foxText.c_str(), {titlePosX + projectTextSize.x + 10, titlePosY}, titlefont.baseSize, 0, ORANGE);
 
   // Start text
-  Vector2 startTextSize = MeasureTextEx(font, startText.c_str(), font.baseSize, 0);
+  Vector2 startTextSize = MeasureTextEx(font, startText.c_str(), font.baseSize , 0);
   float startTextPosX = (screenWidth - startTextSize.x) / 2;
-  float startTextPosY = screenHeight / 2 + 180; // Adjust Y-position as needed
+  float startTextPosY = screenHeight / 2 + 180;
   if (foxReachedCenter && (framesCounter / 30) % 2)
   { // Blinking effect
     DrawTextEx(font, startText.c_str(), {startTextPosX, startTextPosY}, font.baseSize, 0, WHITE);
   }
 
-  // "Press Space to Start Your Adventure" Text
+  // "Press Space to Begin" Text
   if (foxReachedCenter && (framesCounter / 30) % 2)
   { // Blinking effect
     DrawTextEx(font, startText.c_str(), {startTextPosX, startTextPosY}, font.baseSize, 0, WHITE);
   }
 
   // Exit button
-  DrawRectangleRec(exitButton, GRAY);
-  Vector2 buttonTextSize = MeasureTextEx(font, exitButtonText, font.baseSize, 1);
-  Vector2 buttonTextPosition = {exitButton.x + (exitButton.width - buttonTextSize.x) / 2, exitButton.y + (exitButton.height - buttonTextSize.y) / 2};
-  DrawTextEx(font, exitButtonText, buttonTextPosition, font.baseSize, 1, WHITE);
+  sourceRec.x = 0.0f;
+  sourceRec.y = 0.0f;
+  sourceRec.width = (float)exitButtonTexture.width;
+  sourceRec.height = (float)exitButtonTexture.height;
 
-  // TODO: put your render for start menu/screen here
+  // Draw the exit button texture
+  DrawTexturePro(exitButtonTexture, sourceRec, exitButton, (Vector2){0, 0}, 0.0f, WHITE);
+  // confirmation screen
+  if (showConfirmationScreen)
+  {
+    // background
+    DrawRectangle((screenWidth - popupWidth) / 2, (screenHeight - popupHeight) / 2, popupWidth, popupHeight, LIGHTGRAY);
+
+    int textWidth = MeasureText(confirmationText.c_str(), 20);
+    DrawText(confirmationText.c_str(), (screenWidth - textWidth) / 2, (screenHeight - popupHeight) / 2 + 40, 20, BLACK);
+
+    // Yes button popup
+    DrawRectangleRec(yesButton, DARKGRAY);
+    DrawText(yesButtonText, yesButton.x + (yesButton.width - MeasureText(yesButtonText, 20)) / 2, yesButton.y + (yesButton.height - 20) / 2, 20, WHITE);
+
+    // No button popup
+    DrawRectangleRec(noButton, DARKGRAY);
+    DrawText(noButtonText, noButton.x + (noButton.width - MeasureText(noButtonText, 20)) / 2, noButton.y + (noButton.height - 20) / 2, 20, WHITE);
+  }
+}
+
+void MainMenu::renderGameOver(Game& game) {
   ClearBackground(DARKGRAY);
-  if(game.gameOver) {
+  if (game.gameOver)
+  {
     DrawText(
-      "GAME OVER!\n press Space to return to main menu.",
+      "GAME OVER!\n Press Space to return to main menu\n Or Press Shift+Enter to load your last save.",
       game.settings.screenWidth / 2 - 50,
       game.settings.screenHeight / 2, 20,
       RAYWHITE
       );
   }
-  EndDrawing();
 }
 
 void MainMenu::processInput(Game& game) {
   if (IsKeyPressed(KEY_SPACE)) {
-    if (game.gameOver) game.gameOver = false;
+    if (game.gameOver) {
+      game.gameOver = false;
+      framesCounter = 0;
+      menuStartTime = GetTime();
+    }
     else {
       game.startNewGame();
     }
   }
-  else if(IsKeyPressed(KEY_LEFT_BRACKET)) {
-    fprintf(stderr, "%s\n", "[ was pressed");
+  else if ((IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)) && IsKeyPressed(KEY_ENTER)) {
     fprintf(stderr, "%s\n", "loaded from savedata-01.json");
     game.gameOver = false;
+    game.startNewGame();
     game.loadSave("savedata-01");
-    game.changeState(game.world);
+  }
+
+  if (showConfirmationScreen)
+  {
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+      Vector2 mousePosition = GetMousePosition();
+
+      // Handle "Yes" button click
+      if (CheckCollisionPointRec(mousePosition, yesButton))
+      {
+        CloseWindow(); // Close the application
+      }
+
+      // Handle "No" button click
+      if (CheckCollisionPointRec(mousePosition, noButton))
+      {
+        showConfirmationScreen = false; // Close the popup
+      }
+    }
+  }
+  else
+  {
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+    {
+      Vector2 mousePosition = GetMousePosition();
+      if (CheckCollisionPointRec(mousePosition, exitButton))
+      {
+        // If the exit button is clicked
+        showConfirmationScreen = true;
+      }
+    }
   }
 }
 
 void MainMenu::update(Game &game)
 {
-  framesCounter++;
+  ++framesCounter;
+  if (game.gameOver) updateGameOver(game);
+  else updateMain(game);
+}
 
+void MainMenu::updateMain(Game& game) {
   // Tree Animation
   int currentFrame = (framesCounter / 30) % 2; // Adjust the speed if necessary
   frameRec.x = (float)currentFrame * (float)frameWidth;
@@ -154,7 +232,7 @@ void MainMenu::update(Game &game)
   }
 
   // Title Bounce Animation
-  double elapsedTime = GetTime() - appStartTime;
+  double elapsedTime = GetTime() - menuStartTime;
   float finalYPosition = screenHeight / 2 - 225; // Final Y-position for the title before bouncing
 
   if (elapsedTime < 3)
@@ -179,4 +257,8 @@ void MainMenu::update(Game &game)
     float bounceOffset = sinf(bounceTime * bounceSpeed) * bounceHeight;
     titlePosY = finalYPosition + bounceOffset; // Apply bounce effect
   }
+}
+
+void MainMenu::updateGameOver(Game& game) {
+
 }

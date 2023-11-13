@@ -12,7 +12,7 @@ class Player : public Entity {
   public:
     std::string facing;
 
-    // For stopping movement during dialogue
+    // For stopping movement during dialogue and such
     bool movable;
 
     Player(
@@ -31,6 +31,8 @@ class Player : public Entity {
     // Shared
     void render(int gridWidth, int gridHeight);
     void update();
+
+    void takeItems(Inventory itemsToTake);
 
   private:
     // Animation duration

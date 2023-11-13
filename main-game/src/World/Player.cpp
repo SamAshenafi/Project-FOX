@@ -62,7 +62,6 @@ void Player::move(int newX, int newY) {
 
 void Player::update() {
   if (animationDuration > 0) {
-    // fprintf(stderr, "[ANIMATION]: %d\n", animationDuration);
     animationDuration -= 1;
     return;
   }
@@ -94,4 +93,10 @@ void Player::update() {
 
 void Player::resetAnimationDuration() {
   animationDuration += 10;
+}
+
+void Player::takeItems(Inventory itemsToTake) {
+  for (const auto& item : itemsToTake.GetItems()) {
+    inventory.AddItem(item.first, item.second);
+  }
 }

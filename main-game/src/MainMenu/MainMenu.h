@@ -5,7 +5,7 @@
 class MainMenu : public GameState {
    private:
     bool isNewGame = true;
-    double appStartTime;  // Declaration for app start time
+    double menuStartTime;  
     Texture2D start_img;
     Font font;
     Font titlefont;
@@ -18,8 +18,8 @@ class MainMenu : public GameState {
     Vector2 foxPosition;
     int foxFrameWidth;
     int foxFrameHeight;
-    bool foxReachedCenter;  // Declaration for fox reached center
-    int framesCounter;      // Declaration for frames counter
+    bool foxReachedCenter;  
+    int framesCounter;      
     float bounceHeight;
     float bounceSpeed;
     float bounceTime;
@@ -27,17 +27,20 @@ class MainMenu : public GameState {
     int frameHeight;
     float scaleFactor;
     float foxSpeed;
+    Texture2D exitButtonTexture;
     Rectangle exitButton;
     const char* exitButtonText;
     float titlePosY;
-
-    // Newly added member variables for positioning and text
     Vector2 treePosition;
     Vector2 treePosition2;
-    // Variables for dynamic text and positions in render method
     std::string projectText;
     std::string foxText;
     std::string startText;
+
+    void updateGameOver(Game& game);
+    void renderGameOver(Game& game);
+    void updateMain(Game& game);
+    void renderMain(Game& game);
 
   public:
     int screenWidth = 1920 / 2;
@@ -48,6 +51,16 @@ class MainMenu : public GameState {
     void processInput(Game& game) override;
     void update(Game& game) override;
     void render(Game& game) override;
+    //For button popup
+     bool showConfirmationScreen = false;
+    Rectangle yesButton;
+    Rectangle noButton;
+    const char* yesButtonText = "Yes";
+    const char* noButtonText = "No";
+    std::string confirmationText = "Are you sure?";
+    int popupWidth;
+    int popupHeight;
+
 };
 
 

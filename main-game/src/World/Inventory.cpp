@@ -6,7 +6,7 @@ void Inventory::AddItem(const std::string& itemId) {
 }
 
 void Inventory::AddItem(const std::string& itemId, int quantity) {
-  if (quantity < 1) fprintf(stderr, "Tried to add negative number of items\n");
+  if (quantity < 1) fprintf(stderr, "Tried to add non-positive number of items\n");
   else items[itemId] += quantity;
 }
 
