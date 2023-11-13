@@ -65,6 +65,7 @@ void Player::update() {
     animationDuration -= 1;
     return;
   }
+  else if (!movable) slowAnimation();
   else resetAnimationDuration();
   if (animationFrame > 0) animationFrame -= 1;
   else animationFrame = 2;
@@ -93,6 +94,9 @@ void Player::update() {
 
 void Player::resetAnimationDuration() {
   animationDuration += 10;
+}
+void Player::slowAnimation() {
+  animationDuration += 30;
 }
 
 void Player::takeItems(Inventory itemsToTake) {
