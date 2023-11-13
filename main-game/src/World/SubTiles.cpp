@@ -46,9 +46,10 @@ NpcTile::NpcTile(
       jsonFile >> root;
       // Parse NPC data
       std::string name = root["name"].get<std::string>();
-      std::string text = root["text"].get<std::string>();
-      // Add to second output string
-      tileText = name + ": " + text;
+
+      for (const std::string& dialogueLine : root["text"]) {
+        dialogueLines.push_back(name + ": " + dialogueLine.c_str());
+      }
     }
     catch (const std::exception& e) {
       fprintf(stderr, "%s JSON parsing failed: %s\n", id, e.what());
@@ -63,6 +64,10 @@ NpcTile::NpcTile(
   // xScale = 0.8;
   // yScale = 1.2;
   // sprite = Helper::loadTexture("sprite path here");
+}
+
+std::vector<std::string> NpcTile::getDialogue() {
+  return dialogueLines;
 }
 
 std::pair<std::string, std::string> NpcTile::interact() {

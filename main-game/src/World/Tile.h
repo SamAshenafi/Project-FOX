@@ -42,6 +42,8 @@ class CombatTile : public Tile {
 };
 
 class NpcTile : public Tile {
+  std::vector<std::string> dialogueLines;
+
   public:
     NpcTile(
       const std::string& tileId,
@@ -51,6 +53,7 @@ class NpcTile : public Tile {
       );
 
     std::pair<std::string, std::string> interact() override;
+    std::vector<std::string> getDialogue();
 };
 
 class ChestTile : public Tile {

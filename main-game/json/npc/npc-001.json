@@ -1,4 +1,6 @@
 {
-    "name": "[NPC NAME]",
-    "text": "[Text Explaining Story]\nPress Shift+p to save."
+  "name": "[NPC NAME]",
+  "text": [
+    "[Text Explaining Story]"
+  ]
 }
