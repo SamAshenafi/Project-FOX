@@ -206,7 +206,7 @@ void World::setNarrationFinished() {
 // ----------- Narration Class
 
 void NarrationInfo::addLine(const std::string& dialogueLine) {
-  dialogueLines.push_back(dialogueLine);
+  dialogueLines.push_back("Narrator: " + dialogueLine);
 }
 
 void NarrationInfo::playNarrationLines(Game& game) {

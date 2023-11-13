@@ -48,7 +48,7 @@ NpcTile::NpcTile(
       std::string name = root["name"].get<std::string>();
 
       for (const std::string& dialogueLine : root["text"]) {
-        dialogueLines.push_back(dialogueLine.c_str());
+        dialogueLines.push_back(name + ": " + dialogueLine.c_str());
       }
     }
     catch (const std::exception& e) {
