@@ -9,6 +9,7 @@ class MainMenu : public GameState {
     Texture2D start_img;
     Font font;
     Font titlefont;
+    Font winFont;
     Texture2D treeTexture;
     Texture2D foxTexture;
     Rectangle frameRec;

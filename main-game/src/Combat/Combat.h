@@ -91,4 +91,6 @@ class Combat : public GameState {
     );
     Texture2D loadTexture(std::string filePath);
     void loadTokenTextures();
+    
+    Texture2D backgroundImage;
 };

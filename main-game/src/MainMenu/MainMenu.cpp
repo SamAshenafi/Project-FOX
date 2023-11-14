@@ -5,8 +5,9 @@
 MainMenu::MainMenu()
 {
   start_img = LoadTexture("assets/MainMenuBackground.png");
-  font = LoadFontEx("assets/font.ttf", 60, 0, 0);  
+  font = LoadFontEx("assets/font.ttf", 50, 0, 0);  
   titlefont = LoadFontEx("assets/TitleFont.ttf", 130, 0, 0);  
+  winFont = LoadFontEx("assets/YouWin.ttf", 100, 0, 0);
   treeTexture = LoadTexture("assets/trees.png");
   foxTexture = LoadTexture("assets/fox(Title).png");
   exitButtonTexture = LoadTexture("assets/ExitButton.png");
@@ -54,6 +55,7 @@ MainMenu::~MainMenu()
   UnloadTexture(start_img);
   UnloadFont(font);
   UnloadFont(titlefont);
+  UnloadFont(winFont);
   UnloadTexture(treeTexture);
   UnloadTexture(foxTexture);
   UnloadTexture(exitButtonTexture);
@@ -99,13 +101,13 @@ void MainMenu::renderMain(Game& game) {
   float startTextPosY = screenHeight / 2 + 180;
   if (foxReachedCenter && (framesCounter / 30) % 2)
   { // Blinking effect
-    DrawTextEx(font, startText.c_str(), {startTextPosX, startTextPosY}, font.baseSize, 0, WHITE);
+    DrawTextEx(font, startText.c_str(), {startTextPosX, startTextPosY}, font.baseSize, 0, BLACK);
   }
 
   // "Press Space to Begin" Text
   if (foxReachedCenter && (framesCounter / 30) % 2)
   { // Blinking effect
-    DrawTextEx(font, startText.c_str(), {startTextPosX, startTextPosY}, font.baseSize, 0, WHITE);
+    DrawTextEx(font, startText.c_str(), {startTextPosX, startTextPosY}, font.baseSize, 0, BLACK);
   }
 
   // Exit button
@@ -138,21 +140,43 @@ void MainMenu::renderMain(Game& game) {
 void MainMenu::renderGameOver(Game& game) {
   ClearBackground(DARKGRAY);
   if(game.gameWin){
-    DrawText(
-      "You've beaten Project: FOX!\n Press Space to return to main menu\n Or Press Shift+Enter to load your last save.",
-      game.settings.screenWidth / 2 - 50,
-      game.settings.screenHeight / 2, 20,
-      RAYWHITE
-      );
+    // Draw the main menu background image
+    Rectangle sourceRec = {0.0f, 0.0f, static_cast<float>(start_img.width), static_cast<float>(start_img.height)};
+    Rectangle destRecBG = {0.0f, 0.0f, static_cast<float>(screenWidth), static_cast<float>(screenHeight)};
+    Vector2 origin = {0.0f, 0.0f};
+    DrawTexturePro(start_img, sourceRec, destRecBG, origin, 0.0f, WHITE);
+
+  const char* winMessage = "YOU WIN!";
+    Vector2 winMessageSize = MeasureTextEx(winFont, winMessage, winFont.baseSize, 0);
+    DrawTextEx(winFont, winMessage, {(screenWidth - winMessageSize.x) / 2, (screenHeight - winMessageSize.y) / 2}, winFont.baseSize, 0, WHITE);
+
+     if ((framesCounter / 30) % 2) { 
+      DrawTextEx(winFont, winMessage, {(screenWidth - winMessageSize.x) / 2, (screenHeight - winMessageSize.y) / 2}, winFont.baseSize, 0, ORANGE);
+    }
+    const char* returnInstructions = "Press Space To Return To Main Menu Or Shift+Enter To Load Your Last Save";
+    Vector2 returnInstructionsSize = MeasureTextEx(font, returnInstructions, 45, 0);
+    float returnInstructionsPosX = (screenWidth - returnInstructionsSize.x) / 2;
+    float returnInstructionsPosY = screenHeight - returnInstructionsSize.y - 30; 
+
+    DrawTextEx(font, returnInstructions, {returnInstructionsPosX, returnInstructionsPosY}, 45, 0, BLACK);
+    
   }
   else if (game.gameOver)
   {
-    DrawText(
-      "GAME OVER!\n Press Space to return to main menu\n Or Press Shift+Enter to load your last save.",
-      game.settings.screenWidth / 2 - 50,
-      game.settings.screenHeight / 2, 20,
-      RAYWHITE
-      );
+    const char* gameOverMessage = "GAME OVER!";
+    Vector2 gameOverMessageSize = MeasureTextEx(font, gameOverMessage, font.baseSize, 0);
+    DrawTextEx(font, gameOverMessage, {(screenWidth - gameOverMessageSize.x) / 2, screenHeight / 2}, font.baseSize, 0, RAYWHITE);
+
+     if ((framesCounter / 30) % 2) { 
+      DrawTextEx(winFont, gameOverMessage, {(screenWidth - gameOverMessageSize.x) / 2, (screenHeight - gameOverMessageSize.y) / 2}, winFont.baseSize, 0, RAYWHITE);
+    }
+
+    const char* returnInstructions = "Press Space To Return To Main Menu Or Shift+Enter To Load Your Last Save";
+    Vector2 returnInstructionsSize = MeasureTextEx(font, returnInstructions, 45, 0);
+    float returnInstructionsPosX = (screenWidth - returnInstructionsSize.x) / 2;
+    float returnInstructionsPosY = screenHeight - returnInstructionsSize.y - 30; 
+
+    DrawTextEx(font, returnInstructions, {returnInstructionsPosX, returnInstructionsPosY}, 45, 0, WHITE);
   }
 }
 
