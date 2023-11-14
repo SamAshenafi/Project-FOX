@@ -16,7 +16,7 @@ class Unit;
 class Combat : public GameState {
 
   public:
-    Combat(std::string combatId, Inventory playerInventory); // constructor
+    Combat(std::string combatId, Inventory playerInventory, Game& game); // constructor
     ~Combat() override; // destructor
 
     void processInput(Game& game) override;
@@ -28,7 +28,7 @@ class Combat : public GameState {
     Texture2D bg;
 
     std::vector<Unit*> unitsFromJSON = {};
-    void loadBattle(const std::string& battleId);
+    void loadBattle(const std::string& battleId, Game& game);
 
     std::queue<Unit*> turnQueue = {};
     std::vector<Unit*> heroes = {};

@@ -137,7 +137,15 @@ void MainMenu::renderMain(Game& game) {
 
 void MainMenu::renderGameOver(Game& game) {
   ClearBackground(DARKGRAY);
-  if (game.gameOver)
+  if(game.gameWin){
+    DrawText(
+      "You've beaten Project: FOX!\n Press Space to return to main menu\n Or Press Shift+Enter to load your last save.",
+      game.settings.screenWidth / 2 - 50,
+      game.settings.screenHeight / 2, 20,
+      RAYWHITE
+      );
+  }
+  else if (game.gameOver)
   {
     DrawText(
       "GAME OVER!\n Press Space to return to main menu\n Or Press Shift+Enter to load your last save.",
@@ -162,6 +170,7 @@ void MainMenu::processInput(Game& game) {
   else if ((IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT)) && IsKeyPressed(KEY_ENTER)) {
     fprintf(stderr, "%s\n", "loaded from savedata-01.json");
     game.gameOver = false;
+    game.gameWin = true;
     game.startNewGame();
     game.loadSave("savedata-01");
   }

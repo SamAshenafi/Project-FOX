@@ -22,7 +22,11 @@ void Combat::update(Game& game) {
         // TODO: implement loot and exp gain
         // should delete tile/flag the tile as defeated
         if(!game.dialogQueue.empty()) game.dialogQueue.pop();
-        game.changeState(game.world);
+        if(game.gameWin) {
+          game.gameOver = true;
+          game.changeState(new MainMenu());
+        } 
+        else game.changeState(game.world);
         return;
       }
 
@@ -39,6 +43,7 @@ void Combat::update(Game& game) {
           // will likely consist of taken to a screen before being brough to the main menu
           if(!game.dialogQueue.empty()) game.dialogQueue.pop();
           game.gameOver = true;
+          game.gameWin = false;
           game.changeState(new MainMenu());
           return;
       }

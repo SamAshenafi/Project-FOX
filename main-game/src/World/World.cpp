@@ -56,7 +56,7 @@ void World::update(Game& game) {
 }
 
 void World::enterCombat(Game& game, const std::string& battleId) {
-  GameState* combat = new Combat(battleId, playerInventory);
+  GameState* combat = new Combat(battleId, playerInventory, game);
   game.changeState(combat);
 }
 

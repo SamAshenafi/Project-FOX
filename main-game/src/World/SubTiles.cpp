@@ -13,13 +13,13 @@ CombatTile::CombatTile(
   // Additional constructor functionality to add to base constructor
 
   // Rendering values
-  // offsetX = 0.8;
-  // offsetY = 1.1;
-  // spriteWidth = 16;
-  // spriteHeight = 14;
-  // xScale = 0.8;
-  // yScale = 1.2;
-  // sprite = Helper::loadTexture("sprite path here");
+  offsetX = 0;
+  offsetY = 1;
+  spriteWidth = 192; // 96 * 2
+  spriteHeight = 240; // 80 * 3
+  xScale = 6;
+  yScale = 8;
+  sprite = Helper::loadTexture("Overworld_Enemy.png");
 }
 
 std::pair<std::string, std::string> CombatTile::interact() {
@@ -41,11 +41,12 @@ NpcTile::NpcTile(
   const std::string fullFilePath = npcFilePath + id + jsonFileType;
   nlohmann::json root;
   std::ifstream jsonFile(fullFilePath);
+  std::string name;
   if (jsonFile.is_open()) {
     try {
       jsonFile >> root;
       // Parse NPC data
-      std::string name = root["name"].get<std::string>();
+      name = root["name"].get<std::string>();
 
       for (const std::string& dialogueLine : root["text"]) {
         dialogueLines.push_back(name + ": " + dialogueLine.c_str());
@@ -57,13 +58,13 @@ NpcTile::NpcTile(
   }
 
   // Rendering values
-  // offsetX = 0.8;
-  // offsetY = 1.1;
-  // spriteWidth = 16;
-  // spriteHeight = 14;
-  // xScale = 0.8;
-  // yScale = 1.2;
-  // sprite = Helper::loadTexture("sprite path here");
+  offsetX = 0;
+  offsetY = 1;
+  spriteWidth = 192; // 96 * 2
+  spriteHeight = 240; // 80 * 3
+  xScale = 6;
+  yScale = 8;
+  sprite = Helper::loadTexture(name + ".png");
 }
 
 std::vector<std::string> NpcTile::getDialogue() {

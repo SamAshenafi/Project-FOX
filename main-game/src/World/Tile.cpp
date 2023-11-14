@@ -33,14 +33,14 @@ void Tile::render(int gridWidth, int gridHeight) {
     return;
   }
   else if (tileType == "npc") {
-    color = GREEN;
-    // renderHelper(gridWidth, gridHeight);
-    // return;
+    // color = GREEN;
+    renderHelper(gridWidth, gridHeight);
+    return;
   }
   else if (tileType == "battle") {
-    color = RED;
-    // renderHelper(gridWidth, gridHeight);
-    // return;
+    // color = RED;
+    renderHelper(gridWidth, gridHeight);
+    return;
   }
   DrawRectangle(
       x * gridWidth,

@@ -5,11 +5,11 @@
 #include <raylib.h>
 #include <string>
 
-Combat::Combat(std::string combatId, Inventory playerInventory) {
+Combat::Combat(std::string combatId, Inventory playerInventory, Game& game) {
   // combatInventory = playerInventory;
   combatInventory.AddItem("bronze_sword",1);
   combatInventory.AddItem("healing_potion",1);
-  loadBattle(combatId);
+  loadBattle(combatId, game);
 }
 
 Combat::~Combat() {
@@ -40,7 +40,7 @@ void Combat::render(Game& game) {
   EndDrawing();
 }
 
-void Combat::loadBattle(const std::string& battleId) {
+void Combat::loadBattle(const std::string& battleId, Game& game) {
   const std::string battleFilePath = "./json/battle/";
   const std::string jsonFileType = ".json";
   const std::string fullFilePath = battleFilePath + battleId + jsonFileType;
@@ -60,6 +60,8 @@ void Combat::loadBattle(const std::string& battleId) {
       // Parse Enemies
       for (const auto& foeData : root["enemies"]) {
         std::string foeId = foeData["id"].get<std::string>();
+
+        if (foeId == "BerryWizard") game.gameWin = true;
 
         Foe* newFoe = createFoe(foeId);
         if (newFoe != nullptr) {

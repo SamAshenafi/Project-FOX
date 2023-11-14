@@ -11,6 +11,7 @@ Game::Game() {
 
   // set initial game state
   gameOver = false;
+  gameWin = false;
   GameState* newState = new MainMenu();
   currentState = newState;
 }

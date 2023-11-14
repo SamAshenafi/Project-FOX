@@ -59,6 +59,7 @@ class Game {
     int gold = 0;
     std::vector<std::string> items;
     bool gameOver;
+    bool gameWin;
 
 
     // Exploration* exploration;
