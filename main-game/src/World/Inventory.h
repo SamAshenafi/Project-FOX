@@ -14,6 +14,7 @@ private:
 public:
     void AddItem(const std::string& itemId);
     void AddItem(const std::string& itemId, int quantity);
+    void RemoveItem(const std::string& itemId);
     void UseItem(const std::string& itemId);
 
     // Keys
@@ -26,6 +27,9 @@ public:
 
     const std::unordered_map<std::string, int>& GetItems() const {
         return items;
+    }
+    const int GetItem(std::string i) {
+        return items[i];
     }
 };
 

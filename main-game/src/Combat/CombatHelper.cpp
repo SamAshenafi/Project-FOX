@@ -36,6 +36,7 @@ Action* Combat::createAction(const std::string& actionId, int amount) {
   // add more here
   if (actionId == "DoNothing") return new DoNothing();
   if (actionId == "Strike") return new Strike();
+  if (actionId == "Item") return new Item();
   if (actionId == "InflictPoison") return new InflictPoison(amount);
   if (actionId == "BoostAtk") return new BoostAtk(amount);
   if (actionId == "BoostDef") return new BoostDef(amount);
@@ -43,6 +44,33 @@ Action* Combat::createAction(const std::string& actionId, int amount) {
   if (actionId == "Charge") return new Charge(amount);
   if (actionId == "ChargeStrike") return new ChargeStrike(amount);
   return nullptr;
+}
+
+Action* Combat::getItemAction(Inventory combatInventory) {
+  if (combatInventory.GetItem(highlightedItem) > 0) {
+    const auto& itemProperties = ItemAssets::items.at(highlightedItem);
+    switch(itemProperties.type) {
+      case ItemType::HEALING:
+            targets.push_back(currentUnit);
+            selected = 0;
+            combatInventory.RemoveItem(highlightedItem);
+            return new Heal(itemProperties.value);
+      case ItemType::DAMAGE:
+            availableTargets = foes;
+            numberOfTargets = 1;
+            selected = 0;
+            combatInventory.RemoveItem(highlightedItem);
+            return new Strike(itemProperties.value);
+      case ItemType::NEUTRAL:
+            currentUnit->actionDialouge += "Not a Valid Item for Combat";
+            return nullptr;
+    }
+  }
+  else {
+    currentUnit->actionDialouge += "You are out of " + itemList[selected];
+    fprintf(stderr, "You are out of %d\n", itemList[selected]);
+    return nullptr;
+  }
 }
 
 Token* Unit::createToken(const std::string& tokenId, int stack) {

@@ -157,6 +157,7 @@ class Unit {
     // }
 
     Texture2D sprite;
+    bool item = false;
 
     //helper function for rendering
     void RenderSprite(

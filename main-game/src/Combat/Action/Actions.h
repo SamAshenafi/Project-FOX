@@ -8,3 +8,4 @@
 #include "BoostDef.h"
 #include "Charge.h"
 #include "ChargeStrike.h"
+#include "Item.h"

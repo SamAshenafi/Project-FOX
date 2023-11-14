@@ -126,15 +126,30 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
     while (actionBox.size() > 4) actionBox.pop_back();
 
     int pos = 0;
-    for(std::string actions : actionBox) {
-      DrawText(
-      actions.c_str(),
-      screenWidth - (screenWidth*0.96 - 20),  // X position of the text
-      screenHeight - (screenHeight*0.38 - (25*pos)),  // Y position of the text
-      28,  // Font size
-      WHITE
-      );
-      pos++;
+    if(currentUnit->item) {
+      for(std::string item : itemList) {
+        std::string itemText = item + "     " + std::to_string(combatInventory.GetItem(item));
+        DrawText(
+          itemText.c_str(),
+          screenWidth - (screenWidth*0.96 - 20),  // X position of the text
+          screenHeight - (screenHeight*0.38 - (25*pos)),  // Y position of the text
+          28,  // Font size
+          WHITE
+          );
+          pos++;
+      }
+    }
+    else {
+      for(std::string actions : actionBox) {
+          DrawText(
+          actions.c_str(),
+          screenWidth - (screenWidth*0.96 - 20),  // X position of the text
+          screenHeight - (screenHeight*0.38 - (25*pos)),  // Y position of the text
+          28,  // Font size
+          WHITE
+          );
+        pos++;
+      }
     }
 
     Action* action = currentUnit->getAction();

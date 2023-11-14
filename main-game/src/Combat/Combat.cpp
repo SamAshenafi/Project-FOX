@@ -5,17 +5,10 @@
 #include <raylib.h>
 #include <string>
 
-Combat::Combat(std::string combatId) {
-  // currentRound = 0;
-  // units = {};
-  // units.push_back(Unit("unit1", 1, 1, 1));
-  // units.push_back(Unit("unit2", 1, 1, 3));
-  // units.push_back(Unit("unit3", 1, 1, 7));
-  // std::sort(units.begin(), units.end(), [](const Unit& a, const Unit& b) {
-  //     return a.initiative > b.initiative;
-  //     });
-
-  // std::string currentBattleId = "001";
+Combat::Combat(std::string combatId, Inventory playerInventory) {
+  // combatInventory = playerInventory;
+  combatInventory.AddItem("bronze_sword",1);
+  combatInventory.AddItem("healing_potion",1);
   loadBattle(combatId);
 }
 
@@ -24,16 +17,11 @@ Combat::~Combat() {
 }
 
 void Combat::render(Game& game) {
-  // TODO:
   BeginDrawing();
-  // ClearBackground(RAYWHITE);
   ClearBackground(DARKGRAY);
 
   int screenWidth = game.settings.screenWidth;
-  int screenHeight = game.settings.screenHeight;
-
-  //Renders Background for battle 
-  // Could use similar algorithm for drawing the background image in World.cpp
+  int screenHeight = game.settings.screenHeight;\
 
   // Renders Menu Boxes containing selectable actions
   // Menu contains (1) actions and can scroll through them

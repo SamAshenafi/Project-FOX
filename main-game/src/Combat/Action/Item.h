@@ -1,17 +1,15 @@
 #pragma once
 #include "Action.h"
+#include "../Token/AtkBoost.h"
+// #include "../Token/Tokens.h"
 
-class Strike : public Action {
+class Item : public Action {
   public:
-    // Strike() {
+    // InflictPoison() {
     //   energyCost = 1;
     // }
-    Strike();
-    ~Strike();
-
-    Strike(int value);
-
-    int tempBoost = 0;
+    Item();
+    ~Item();
 
     int perform(Unit* user, std::vector<Unit*> targets, Game& game) override;
 };

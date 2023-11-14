@@ -10,6 +10,11 @@ void Inventory::AddItem(const std::string& itemId, int quantity) {
   else items[itemId] += quantity;
 }
 
+void Inventory::RemoveItem(const std::string& itemId) {
+  if (items[itemId] <= 0) items[itemId] = 0;
+  items[itemId]--;
+}
+
 void Inventory::UseItem(const std::string& itemId) {
     auto it = items.find(itemId);
     if (it != items.end() && it->second > 0) {

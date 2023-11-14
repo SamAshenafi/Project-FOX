@@ -11,31 +11,26 @@ void Combat::processInput(Game& game) {
       // game.changeState("world");
       game.changeState(game.world);
       break;
-    // delete this section?
-    // case KEY_N:
-    //   fprintf(stderr, "%s\n", "n was pressed");
-    //   // if (currentUnit != nullptr) {
-    //   //   if (isHero(currentUnit)) {
-    //   //     if (highlightedAction != nullptr) {
-    //   //       fprintf(stderr, "%s\n", "do nothing action is executed");
-    //   //       currentUnit->selectedAction = highlightedAction;
-    //   //       highlightedAction = nullptr;
-    //   //     }
-    //   //     else {
-    //   //       fprintf(stderr, "%s\n", "no action is selected. Please select one by pressing p for now.");
-    //   //     }
-    //   //   }
-    //   // }
-    //   break;
+
+
     case KEY_P:
       fprintf(stderr, "%s\n", "p was pressed");
-      if(!game.dialogQueue.empty()) game.dialogQueue.pop();
-      if(isHero(currentUnit) && !(availableTargets.empty())) {
+      if(!game.dialogQueue.empty()) game.dialogQueue.pop();      
+      
+      if (currentUnit->item) {
+        if (highlightedItem == "") selected = 0;
+        else selected = (selected + 1) % (itemList.size());
+        fprintf(stderr, "%s is currently highlighted\n", itemList[selected].c_str());
+        highlightedItem = itemList[selected];
+      }
+      
+      else if(isHero(currentUnit) && !(availableTargets.empty())) {
         if (highlightedTarget == nullptr) selected = 0;
         else selected = (selected + 1) % (availableTargets.size());
         fprintf(stderr, "%s is currently highlighted\n", availableTargets[selected]->id.c_str());
         highlightedTarget = availableTargets[selected];
       }
+
       else if (isHero(currentUnit) && availableTargets.empty()) {
         if (highlightedAction == nullptr) selected = 0;
         else selected = (selected + 1) % (currentUnit->actions.size());
@@ -47,9 +42,16 @@ void Combat::processInput(Game& game) {
         fprintf(stderr, "Unit w/ id: %s is not a hero\n", currentUnit->id.c_str());
       }
       break;
+
+
     case KEY_O:
       fprintf(stderr, "%s\n", "O was pressed");
-      if (!(availableTargets.empty()) && highlightedTarget != nullptr) {
+      if (currentUnit->item) {
+        currentUnit->item = false;
+        currentUnit->selectedAction = getItemAction(combatInventory);
+        highlightedItem = "";
+      }
+      else if (!currentUnit->item && !(availableTargets.empty()) && highlightedTarget != nullptr) {
         numberOfTargets--;
         if (numberOfTargets <= 0) {
           currentUnit->selectedTargets.push_back(highlightedTarget);
@@ -65,7 +67,13 @@ void Combat::processInput(Game& game) {
           availableTargets.erase(availableTargets.begin()+(selected-1));
         }
       }
-      else if (highlightedAction != nullptr) {
+      else if (!currentUnit->item && highlightedAction != nullptr) {
+        if (highlightedAction->targetType == "item") {
+          fprintf(stderr, "Action selected: %s\n", currentUnit->actionList[selected].first.c_str());
+          currentUnit->item = true;
+          selected = 0;
+        }
+
         if (highlightedAction->targetType == "enemy") {
           fprintf(stderr, "Action selected: %s\n", currentUnit->actionList[selected].first.c_str());
           currentUnit->selectedAction = highlightedAction;
@@ -101,12 +109,18 @@ void Combat::processInput(Game& game) {
         fprintf(
             stderr,
             "%s\n",
-            "no action/target is selected. Select by pressing p."
+            "no action/target/item is selected. Select by pressing p."
             );
         game.dialogQueue.push("no action/target is selected. Select by pressing p");
       }
       break;
+
+
     case KEY_L:
+      if (currentUnit->item){
+        currentUnit->item = false;
+        selected = 0;
+      }
       if (!(availableTargets.empty()) && highlightedTarget != nullptr) {
         if (availableTargets.size() != foes.size()) {
           numberOfTargets++;

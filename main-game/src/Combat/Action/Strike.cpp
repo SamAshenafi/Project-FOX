@@ -11,11 +11,19 @@ Strike::Strike() {
 Strike::~Strike() {
 }
 
+Strike::Strike(int value) {
+  targetType = "enemy";
+  animationDuration = 92;
+  tempBoost = value;
+}
+
 int Strike::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
   user->actionDialouge += "Strikes the target(s) ";
   for (Unit* target : targets) {
 
     // perform algorithm
+    user->bonusAtk += tempBoost;
+
     int damage;
     if (user->getAtk() <= target->getDef()) damage = 0;
     else damage = (user->getAtk() - target->getDef());
@@ -23,6 +31,8 @@ int Strike::perform(Unit* user, std::vector<Unit*> targets, Game& game) {
 
     user->actionDialouge += target->id + " -" 
                          + std::to_string(user->getAtk() - target->getDef()) + ", ";
+
+    user->bonusAtk -= tempBoost;
 
     fprintf(
       stderr,

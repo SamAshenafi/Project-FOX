@@ -16,7 +16,7 @@ class Unit;
 class Combat : public GameState {
 
   public:
-    Combat(std::string combatId); // constructor
+    Combat(std::string combatId, Inventory playerInventory); // constructor
     ~Combat() override; // destructor
 
     void processInput(Game& game) override;
@@ -27,15 +27,13 @@ class Combat : public GameState {
 
     Texture2D bg;
 
-    // Placeholder for making loadBattle()
     std::vector<Unit*> unitsFromJSON = {};
     void loadBattle(const std::string& battleId);
 
-    // std::vector<Unit> units;
-    // std::vector<Unit*> turnQueue = {};
     std::queue<Unit*> turnQueue = {};
     std::vector<Unit*> heroes = {};
     std::vector<Unit*> foes = {};
+    Inventory combatInventory;
 
     // int currentUnitIndex;
     // bool isRoundOver;
@@ -47,10 +45,13 @@ class Combat : public GameState {
     int selected = 0;
     int numberOfTargets;
     Action* highlightedAction = nullptr;
+
     std::vector<Unit*> targets = {};
     Unit* highlightedTarget = nullptr;
     std::vector<Unit*> availableTargets = {};
     std::vector<Unit*> previousAvailable = {};
+
+    std::string highlightedItem = "";
 
     bool isRoundOver = false;;
     bool combatConcluded = false;
@@ -75,6 +76,11 @@ class Combat : public GameState {
     std::vector<Unit*> unitsVanquished (std::vector<Unit*> units);
     Foe* createFoe(const std::string& foeId);
     Action* createAction(const std::string& actionId, int amount);
+    Action* getItemAction(Inventory combatInventory);
+    std::vector<std::string> itemList = {
+      "bronze_sword",
+      "healing_potion"
+    };
     
     void RenderUI(int screenWidth,int screenHeight);
     void RenderUnits(

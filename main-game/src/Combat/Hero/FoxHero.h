@@ -25,6 +25,6 @@ class FoxHero : public Hero {
 
       actionList.push_back({"Strike",0});
       actionList.push_back({"Charge",3});
-      //actionList.push_back({"Item",0});
+      actionList.push_back({"Item",0});
     };
 };
