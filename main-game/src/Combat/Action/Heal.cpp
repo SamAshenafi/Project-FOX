@@ -21,7 +21,7 @@ int Heal::perform(Unit* user, std::vector<Unit*> targets,  Game& game) {
     
     
     // perform algorithm for the action
-    if(target->getMaxHp() >= target->hp + amount) target->hp += amount;
+    if(target->getMaxHp() > target->hp + amount) target->hp += amount;
     else target->hp = target->getMaxHp();
 
     //will need to modigy for actions containing multiple
