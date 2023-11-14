@@ -1,8 +1,6 @@
 #include "Player.h"
 
-void Player::processInput(Game& game) {
-  World* world = dynamic_cast<World*>(game.world);
-
+void Player::processInput(Game& game, World& world) {
   if (IsKeyPressed(KEY_SPACE)) {
     if (movable) {
     int targetX = x;
@@ -25,7 +23,7 @@ void Player::processInput(Game& game) {
       return;
     }
 
-    for (Entity* entity : dynamic_cast<World*>(game.world)->entities) {
+    for (Entity* entity : world.entities) {
       bool isAtTile =
         entity->x == targetX &&
         entity->y == targetY
@@ -40,9 +38,9 @@ void Player::processInput(Game& game) {
           std::string tileText = tileData.second;
           if (tileType == "battle") {
             fprintf(stderr, "Entering Combat\n");
-            world->enterCombat(game, tile->id);
-            world->removeEntity(tile->id);
-            world->currentRoom->removeTile(tile->id);
+            world.enterCombat(game, tile->id);
+            world.removeEntity(tile->id);
+            world.currentRoom->removeTile(tile->id);
             }
           else if (tileType == "npc") {
             for (const std::string& dialogueLine : dynamic_cast<NpcTile*>(entity)->getDialogue()) {
@@ -53,8 +51,8 @@ void Player::processInput(Game& game) {
             inventory.addKeys(tile->inventory.getKeys());
             takeItems(tile->inventory);
 
-            world->removeEntity(tile->id);
-            world->currentRoom->removeTile(tile->id);
+            world.removeEntity(tile->id);
+            world.currentRoom->removeTile(tile->id);
             game.dialogQueue.push(tileText);
           }
           else if (tileType == "door") {
@@ -63,9 +61,9 @@ void Player::processInput(Game& game) {
               // Remove one key from the player
               inventory.removeKey();
               // Remove door
-              world->removeEntity(tile->id);
-              world->currentRoom->removeTile(tile->id);
-              world->grid[tile->x][tile->y] = 0;
+              world.removeEntity(tile->id);
+              world.currentRoom->removeTile(tile->id);
+              world.grid[tile->x][tile->y] = 0;
             }
             else {
               game.dialogQueue.push("Cannot unlock door! No keys!");
@@ -99,7 +97,7 @@ void Player::processInput(Game& game) {
 
       std::queue<std::pair<int, int>>().swap(pathQueue); // empty the queue
       // pathQueue = {};
-      findShortestPath(*world, x, y, targetX, targetY);
+      findShortestPath(world, x, y, targetX, targetY);
       if (!pathQueue.empty()) {
         animationDuration = 0;
       }
@@ -139,13 +137,13 @@ void Player::processInput(Game& game) {
 
     // Check if the new position is out of bounds
     bool isOutOfBound = newX < 0 ||
-      newX >= world->columns ||
+      newX >= world.columns ||
       newY < 0 ||
-      newY >= world->rows;
+      newY >= world.rows;
     if (isOutOfBound) {
       fprintf(stderr, "out of bound: %d, %d\n", newX, newY);
     }
-    else if (world->grid[newX][newY] == 1) {
+    else if (world.grid[newX][newY] == 1) {
       // no movement, terrain or tile block
       return;
     }
@@ -153,21 +151,21 @@ void Player::processInput(Game& game) {
       // NOTE: player's depth/y may have changed. If so we need to sort the GameObjects vector
       if (y != newY) {
         move(newX, newY);
-        world->sortGameObjects();
+        world.sortGameObjects();
       }
       else move(newX, newY);
       resetAnimationDuration();
-      for (TransitionTile* transition : dynamic_cast<World*>(game.world)->transitionTiles) {
+      for (TransitionTile* transition : world.transitionTiles) {
         bool isAtTransition =
           transition->x == this->x &&
           transition->y == this->y
           ;
         if (isAtTransition) {
-          world->transitionRoom(transition);
+          world.transitionRoom(transition);
           return;
         }
       }
-      for (Entity* entity : dynamic_cast<World*>(game.world)->entities) {
+      for (Entity* entity : world.entities) {
         bool isAtTile =
           entity->x == x &&
           entity->y == y
@@ -182,9 +180,9 @@ void Player::processInput(Game& game) {
           std::string tileText = tileData.second;
           if (tileType == "battle") {
             fprintf(stderr, "Entering Combat\n");
-            world->enterCombat(game, tile->id);
-            world->removeEntity(tile->id);
-            world->currentRoom->removeTile(tile->id);
+            world.enterCombat(game, tile->id);
+            world.removeEntity(tile->id);
+            world.currentRoom->removeTile(tile->id);
           }
         }
       }

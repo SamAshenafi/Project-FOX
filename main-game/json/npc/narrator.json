@@ -1,23 +1,30 @@
 [
   {
-    "roomId": "05-06",
+    "roomId": "01-01",
     "narrationLines": [
       "Welcome to Project Fox!\nPress Space to advance the dialogue",
       "[Exposition information]",
       "Use the directional keys or WASD to move around,\nand press Space to interact with things",
+      "Also remember players, click both shift and p to save game,\nand click both shift and enter to load your saved game! ",
       "Press U any time to replay the narration for the current area.\nHave fun!"
     ]
   },
   {
-    "roomId": "05-07",
+    "roomId": "01-02",
     "narrationLines": [
-      "Placeholder Text"
+      "Isn't that the wizard castle? Be careful! I heard he's kinda strong!"
     ]
   },
   {
-    "roomId": "05-09",
+    "roomId": "01-03",
     "narrationLines": [
-      "Placeholder Text"
+      "Take out the mobs and head up to and fight the wizard!"
+    ]
+  },
+  {
+    "roomId": "01-04",
+    "narrationLines": [
+      "Look it's the wizard! Defeat him in order to win the game!"
     ]
   }
 ]

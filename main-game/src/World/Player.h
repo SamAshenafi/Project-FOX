@@ -25,7 +25,7 @@ class Player : public Entity {
 
     std::queue<std::pair<int, int>> pathQueue = {};
 
-    void processInput(Game&);
+    void processInput(Game&, World&);
     void move(int newX, int newY);
 
     // Shared
