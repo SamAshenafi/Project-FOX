@@ -82,13 +82,16 @@ Token* Unit::createToken(const std::string& tokenId, int stack) {
 
 
 std::vector<Unit*> Combat::unitsVanquished(std::vector<Unit*> units) {
+  int i = 0;
+  std::vector<Unit*> newUnits = {};
   for (Unit* unit : units) {
-    if(unit->hp <= 0){
-      units.erase(units.begin());
+    if(unit->hp > 0){
+      newUnits.push_back(unit);
       // if(isFoe(unit)) {
       //   // add code for the loot/exp the foe holds
       // }
+      i++;
     }
   }
-  return units;
+  return newUnits;
 }

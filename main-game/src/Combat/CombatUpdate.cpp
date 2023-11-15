@@ -156,13 +156,13 @@ void Combat::update(Game& game) {
       fprintf(stderr, "actionDialouge: %s\n", currentUnit->actionDialouge.c_str());
 
       if (currentUnit->selectedAction->targetType == "charge") {
-        fprintf(stderr, "it gets to him\n");
         currentUnit->chargedTarget = targets;
       }
       //reseting values for next decided action
       currentUnit->selectedAction = nullptr;
       currentUnit->selectedTargets = {};
       highlightedAction = nullptr;
+      highlightedTarget = nullptr;
       numberOfTargets = NULL;
       targets = {};
       availableTargets = {};
