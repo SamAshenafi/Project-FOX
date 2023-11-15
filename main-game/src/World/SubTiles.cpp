@@ -134,11 +134,11 @@ DoorTile::DoorTile(
   // Additional constructor functionality to add to base constructor
 
   // Rendering values
-  // offsetX = 0.8;
-  // offsetY = 1.1;
-  // spriteWidth = 16;
-  // spriteHeight = 14;
-  // xScale = 0.8;
-  // yScale = 1.2;
-  // sprite = Helper::loadTexture("sprite path here");
+  offsetX = 0;
+  offsetY = 0;
+  spriteWidth = 400;
+  spriteHeight = 400;
+  xScale = 8;
+  yScale = 10;
+  sprite = Helper::loadTexture("door.png");
 }
