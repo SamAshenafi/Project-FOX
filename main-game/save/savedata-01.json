@@ -2,12 +2,17 @@
   "WorldData": {
     "Players": [
       {
-        "Inventory": [],
-        "Keys": 0,
-        "facing": "left",
+        "Inventory": [
+          {
+            "id": "bronze_sword",
+            "quantity": 1
+          }
+        ],
+        "Keys": 1,
+        "facing": "right",
         "id": "player-01",
-        "x": 16,
-        "y": 7
+        "x": 12,
+        "y": 3
       }
     ],
     "Rooms": [
@@ -30,22 +35,10 @@
         "roomInfo": "w2e2w7e2w7e1w2e1w4e8w4e2w3e12e1e6w3e18w2e1w1e2e1e16w4e3e15w6e1e16w5e2w1e16w6e12w1e1e1e2w4e6w1e3w2e1w1e1w21",
         "specialTiles": [
           [
-            "battle-001",
-            true,
-            7,
-            4
-          ],
-          [
             "npc-002",
             true,
             5,
             5
-          ],
-          [
-            "chest-001",
-            true,
-            13,
-            3
           ],
           [
             "door",
@@ -85,6 +78,6 @@
         ]
       }
     ],
-    "currentRoomId": "01-01"
+    "currentRoomId": "01-02"
   }
 }

@@ -24,4 +24,5 @@ struct Room {
     Texture2D background;
 
     void removeTile(const std::string& tileId);
+    void removeDoor(int doorX, int doorY);
 };

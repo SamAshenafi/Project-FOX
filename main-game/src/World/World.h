@@ -69,6 +69,7 @@ class World : public GameState {
 
     void sortGameObjects();
     void removeEntity(const std::string& tileId);
+    void removeDoor(int doorX, int doorY);
 
     void transitionRoom(TransitionTile* transition);
     void startNarration(std::string roomId);

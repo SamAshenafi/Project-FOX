@@ -33,6 +33,27 @@ void World::removeEntity(const std::string& tileId) {
   entities.erase(foundEntity);
 }
 
+void World::removeDoor(int doorX, int doorY) {
+  auto entityIt = entities.begin();
+  // Delete the door and all adjacent doors
+  while (entityIt != entities.end()) {
+    int checkX = (*entityIt)->x;
+    int checkY = (*entityIt)->y;
+    if (  (*entityIt)->id == "door" &&
+        (
+          ( checkX == doorX + 1 && checkY == doorY     ) ||
+          ( checkX == doorX - 1 && checkY == doorY     ) ||
+          ( checkX == doorX     && checkY == doorY + 1 ) ||
+          ( checkX == doorX     && checkY == doorY - 1 ) ||
+          ( checkX == doorX     && checkY == doorY     )
+        ) ) {
+      grid[checkX][checkY] = 0;
+      entityIt = entities.erase(entityIt);
+    }
+    else ++entityIt;
+  }
+}
+
 Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
   // variables for constructing new room
   std::string roomInfo = source["roomInfo"];

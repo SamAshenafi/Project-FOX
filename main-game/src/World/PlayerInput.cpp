@@ -41,11 +41,13 @@ void Player::processInput(Game& game, World& world) {
             world.enterCombat(game, tile->id);
             world.removeEntity(tile->id);
             world.currentRoom->removeTile(tile->id);
+            break;
             }
           else if (tileType == "npc") {
             for (const std::string& dialogueLine : dynamic_cast<NpcTile*>(entity)->getDialogue()) {
               game.dialogQueue.push(dialogueLine);
             }
+            break;
           }
           else if (tileType == "chest") {
             inventory.addKeys(tile->inventory.getKeys());
@@ -54,6 +56,7 @@ void Player::processInput(Game& game, World& world) {
             world.removeEntity(tile->id);
             world.currentRoom->removeTile(tile->id);
             game.dialogQueue.push(tileText);
+            break;
           }
           else if (tileType == "door") {
             if (inventory.hasKey()) {
@@ -61,13 +64,15 @@ void Player::processInput(Game& game, World& world) {
               // Remove one key from the player
               inventory.removeKey();
               // Remove door
-              world.removeEntity(tile->id);
-              world.currentRoom->removeTile(tile->id);
-              world.grid[tile->x][tile->y] = 0;
+              int doorX = tile->x,
+                  doorY = tile->y;
+              world.removeDoor(doorX, doorY);
+              world.currentRoom->removeDoor(doorX, doorY);
             }
             else {
               game.dialogQueue.push("Cannot unlock door! No keys!");
             }
+            break;
           }
         }
       }

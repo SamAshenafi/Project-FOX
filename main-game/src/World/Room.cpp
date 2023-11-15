@@ -22,3 +22,23 @@ void Room::removeTile(const std::string& tileId) {
   auto foundTile = std::find_if(tiles.begin(), tiles.end(), found);
   tiles.erase(foundTile);
 }
+
+void Room::removeDoor(int doorX, int doorY) {
+  auto tileIt = tiles.begin();
+  // Delete the door and all adjacent doors
+  while (tileIt !=  tiles.end()) {
+    int checkX = (*tileIt)->x;
+    int checkY = (*tileIt)->y;
+    if (  (*tileIt)->id == "door" &&
+        (
+          ( checkX == doorX + 1 && checkY == doorY     ) ||
+          ( checkX == doorX - 1 && checkY == doorY     ) ||
+          ( checkX == doorX     && checkY == doorY + 1 ) ||
+          ( checkX == doorX     && checkY == doorY - 1 ) ||
+          ( checkX == doorX     && checkY == doorY     )
+        ) ) {
+      tileIt = tiles.erase(tileIt);
+    }
+    else ++tileIt;
+  }
+}
