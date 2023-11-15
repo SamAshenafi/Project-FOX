@@ -74,4 +74,5 @@ class DoorTile : public Tile {
       int tileY,
       bool isBlockMovement
       );
+    void render(int gridWidth, int gridHeight) override;
 };

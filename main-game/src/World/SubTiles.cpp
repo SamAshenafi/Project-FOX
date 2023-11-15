@@ -134,11 +134,31 @@ DoorTile::DoorTile(
   // Additional constructor functionality to add to base constructor
 
   // Rendering values
-  offsetX = 0;
-  offsetY = 0;
   spriteWidth = 400;
   spriteHeight = 400;
-  xScale = 8;
-  yScale = 10;
   sprite = Helper::loadTexture("door.png");
+}
+
+void DoorTile::render(int gridWidth, int gridHeight) {
+  Rectangle src = {
+    static_cast<float>(0),
+    static_cast<float>(0),
+    static_cast<float>(spriteWidth),
+    static_cast<float>(spriteHeight)
+  };
+  Rectangle dest = {
+    static_cast<float>(x * gridWidth),
+    static_cast<float>(y * gridHeight),
+    static_cast<float>(gridWidth),
+    static_cast<float>(gridHeight),
+  };
+  DrawTexturePro(
+      sprite,
+      src,
+      dest,
+      {0, 0},
+      0.0,
+      WHITE
+      );
+  return;
 }
