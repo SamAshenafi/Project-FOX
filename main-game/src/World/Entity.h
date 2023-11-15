@@ -16,8 +16,8 @@ class Entity {
     // Use this to render
     int animationFrame = 0;
     int animationRow = 0;
-    int spriteWidth = 200; // Default value for preventing problems
-    int spriteHeight = 250; // Default value for preventing problems
+    int spriteWidth = 50; // Default value for preventing problems
+    int spriteHeight = 50; // Default value for preventing problems
     float offsetX = 0;
     float offsetY = 0;
     float xScale = 1;
