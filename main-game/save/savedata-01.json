@@ -8,11 +8,11 @@
             "quantity": 1
           }
         ],
-        "Keys": 1,
+        "Keys": 2,
         "facing": "right",
         "id": "player-01",
         "x": 12,
-        "y": 3
+        "y": 7
       }
     ],
     "Rooms": [
@@ -39,18 +39,6 @@
             true,
             5,
             5
-          ],
-          [
-            "door",
-            true,
-            11,
-            0
-          ],
-          [
-            "door",
-            true,
-            12,
-            0
           ]
         ],
         "transitionTiles": [
@@ -76,8 +64,49 @@
             7
           ]
         ]
+      },
+      {
+        "room": "01-03",
+        "roomInfo": "w18e1w19e1w2e16w1e1w2e16w1e1w2e16w1e1w2e16w1e1w2e16w1e1w2e7e1e2e1e5e1e1w2e18w2e18w3e16w11e2w9",
+        "specialTiles": [
+          [
+            "door",
+            true,
+            18,
+            3
+          ],
+          [
+            "door",
+            true,
+            18,
+            5
+          ]
+        ],
+        "transitionTiles": [
+          [
+            "01-04",
+            18,
+            0,
+            18,
+            11
+          ],
+          [
+            "01-02",
+            9,
+            11,
+            11,
+            0
+          ],
+          [
+            "01-02",
+            10,
+            11,
+            12,
+            0
+          ]
+        ]
       }
     ],
-    "currentRoomId": "01-02"
+    "currentRoomId": "01-03"
   }
 }
