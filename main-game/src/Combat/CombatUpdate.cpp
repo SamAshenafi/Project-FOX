@@ -26,7 +26,13 @@ void Combat::update(Game& game) {
           game.gameOver = true;
           game.changeState(new MainMenu());
         } 
-        else game.changeState(game.world);
+        else {
+          game.changeState(game.world);
+          if (rewardKey) {
+            game.dialogQueue.push("You got a key!\n");
+            dynamic_cast<World*>(game.world)->player->inventory.addKeys(1);
+          }
+        }
         return;
       }
 

@@ -4,5 +4,6 @@
         "id": "BerryWizard"
       }
       ],
-      "conditions": ["rain", "night"]
+      "conditions": ["rain", "night"],
+      "keyReward": false
 }

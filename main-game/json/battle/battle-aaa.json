@@ -10,5 +10,6 @@
       "id": "wolf"
     }
   ],
-  "conditions": ["rain", "night"]
+  "conditions": ["rain", "night"],
+  "keyReward": false
 }

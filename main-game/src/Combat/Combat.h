@@ -93,4 +93,6 @@ class Combat : public GameState {
     void loadTokenTextures();
     
     Texture2D backgroundImage;
+  private:
+    bool rewardKey;
 };

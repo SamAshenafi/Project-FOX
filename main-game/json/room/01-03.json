@@ -14,6 +14,18 @@
             false,
             10,
             3
+         ],
+         [
+          "door",
+          true,
+          18,
+          3
+         ],
+         [
+          "door",
+          true,
+          18,
+          5
          ]
       ],
       "transitionTiles": [

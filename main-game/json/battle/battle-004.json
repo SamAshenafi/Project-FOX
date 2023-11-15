@@ -7,5 +7,6 @@
         "id": "WildBerry"
       }
       ],
-      "conditions": ["rain", "night"]
+      "conditions": ["rain", "night"],
+      "keyReward": true
 }

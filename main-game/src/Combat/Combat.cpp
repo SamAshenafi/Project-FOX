@@ -65,6 +65,8 @@ void Combat::loadBattle(const std::string &battleId, Game &game)
       // Empty the output vector
       unitsFromJSON.clear();
 
+      rewardKey = root["keyReward"];
+
       // Parse Enemies
       for (const auto &foeData : root["enemies"])
       {
