@@ -14,6 +14,6 @@ void World::processInput(Game& game) {
     }
   }
   else if (game.dialogQueue.empty() && IsKeyPressed(KEY_U)) {
-    startNarration();
+    startNarration(currentRoom->roomId);
   }
 }

@@ -73,7 +73,7 @@ Room* World::buildRoom(const std::string& roomId, nlohmann::json source) {
   }
   // Construct new room and add it to the rooms vector
   Room* roomToBuild = new Room(roomId, roomInfo, roomTiles, roomTransitions, roomBackground);
-  startNarration();
+  startNarration(roomId);
   return roomToBuild;
 }
 
@@ -199,12 +199,18 @@ void World::initializeNarrationData() {
   }
 }
 
-void World::startNarration() {
-  narrationPlaying = true;
+void World::startNarration(std::string roomId) {
+  // Only run narration if there is narration for the room
+  if (narratorData.find(roomId) != narratorData.end()) {
+    timeToNarrate = true;
+    narrationPlaying = true;
+  }
+  // Initialize narrator rendering values
 }
 
-void World::setNarrationFinished() {
+void World::endNarration() {
   narrationPlaying = false;
+  // Clean up narrator rendering values
 }
 
 // ----------- Narration Class

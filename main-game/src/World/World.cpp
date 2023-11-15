@@ -51,7 +51,13 @@ void World::update(Game& game) {
     return;
   }
   if (narrationPlaying) playNarrationSequence(game);
-  if (!game.dialogQueue.empty()) player->movable = false;
+  if (game.dialogQueue.empty()) {
+    if (timeToNarrate) {
+      (narratorData.at(currentRoom->roomId))->playNarrationLines(game);
+      timeToNarrate = false;
+    }
+  }
+  else player->movable = false;
   player->update();
 }
 
@@ -74,7 +80,10 @@ void World::transitionHelper(Game& game) {
 }
 
 void World::playNarrationSequence(Game& game) {
-  std::string roomId = currentRoom->roomId;
-  if (narratorData.find(roomId) != narratorData.end()) (narratorData.at(roomId))->playNarrationLines(game);
-  setNarrationFinished();
+  // end the narration sequence if there is nothing left in the dialogue queue
+  if (game.dialogQueue.empty()) {
+      endNarration();
+      return;
+  }
+  // Otherwise, update the rendering values for the narrator
 }

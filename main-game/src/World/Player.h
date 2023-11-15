@@ -43,4 +43,7 @@ class Player : public Entity {
     void resetAnimationDuration();
     void slowAnimation();
     void findShortestPath(World& world, int startX, int startY, int targetX, int targetY);
+
+    // Others
+    // void deleteDoor(World& world, Tile* doorTile);
 };

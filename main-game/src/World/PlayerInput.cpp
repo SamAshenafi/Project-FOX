@@ -74,7 +74,9 @@ void Player::processInput(Game& game, World& world) {
     }
     else if (!game.dialogQueue.empty()) {
       game.dialogQueue.pop();
-      if (game.dialogQueue.empty()) movable = true;
+      if (game.dialogQueue.empty()) {
+        movable = true;
+      }
     }
   }
 

@@ -104,3 +104,7 @@ void Player::takeItems(Inventory itemsToTake) {
     inventory.AddItem(item.first, item.second);
   }
 }
+
+// void Player::deleteDoor(World& world, Tile* doorTile) {
+
+// }

@@ -5,7 +5,7 @@
       "specialTiles": [
          [
             "npc-003",
-            false,
+            true,
             15,
             2
          ],

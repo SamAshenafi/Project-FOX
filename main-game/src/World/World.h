@@ -71,8 +71,8 @@ class World : public GameState {
     void removeEntity(const std::string& tileId);
 
     void transitionRoom(TransitionTile* transition);
-    void startNarration();
-    void setNarrationFinished();
+    void startNarration(std::string roomId);
+    void endNarration();
 
   private:
     int transitionTimer = -1;
@@ -86,6 +86,7 @@ class World : public GameState {
     // -- Narrator data
     std::unordered_map<std::string, NarrationInfo*> narratorData; // Maps room id's to narration info
     bool narrationPlaying = false;
+    bool timeToNarrate = false;
     void initializeNarrationData();
     void playNarrationSequence(Game& game);
 };
