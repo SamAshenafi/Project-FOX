@@ -203,13 +203,13 @@ void World::startNarration(std::string roomId) {
   // Only run narration if there is narration for the room
   if (narratorData.find(roomId) != narratorData.end()) {
     timeToNarrate = true;
-    narrationPlaying = true;
   }
   // Initialize narrator rendering values
 }
 
 void World::endNarration() {
   narrationPlaying = false;
+  timeToNarrate = false;
   // Clean up narrator rendering values
 }
 

@@ -50,14 +50,15 @@ void World::update(Game& game) {
     --transitionTimer;
     return;
   }
-  if (narrationPlaying) playNarrationSequence(game);
   if (game.dialogQueue.empty()) {
     if (timeToNarrate) {
       (narratorData.at(currentRoom->roomId))->playNarrationLines(game);
       timeToNarrate = false;
+      narrationPlaying = true;
     }
   }
   else player->movable = false;
+  if (narrationPlaying) playNarrationSequence(game);
   player->update();
 }
 
