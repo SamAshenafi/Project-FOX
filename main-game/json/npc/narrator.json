@@ -11,20 +11,20 @@
       "Use the directional keys or WASD to move around,\nand press Space to interact with things.",
       "Also, players, remember! Click both shift and p to save game,\nand click both shift and enter to load your saved game! ",
       "Press U any time to replay the narration for the current area.",
-      "Now go and stop that wizard, save the foxes and cursed fruits,\nand don't forget to have fun!"
+      "Now go and stop that wizard, save the animals and cursed fruits,\nand don't forget to have fun!"
     ]
   },
   {
     "roomId": "01-02",
     "narrationLines": [
-      "Isn't that the wizard castle? Be careful! He's powerful!\nThat monkey may be able to help!"
+      "Isn't that the wizard's castle? Be careful! He's powerful!\nThat monkey up ahead may be able to help!"
     ]
   },
   {
     "roomId": "01-03",
     "narrationLines": [
       "Oh no! The wizard has some of his mind-controlled minions guarding\nthe keys to the stairway.",
-      "You have to beat them to get upstairs to stop the wizard!"
+      "Defeat them to get upstairs to stop the wizard!"
     ]
   },
   {

@@ -167,10 +167,6 @@ void MainMenu::renderGameOver(Game& game) {
     Vector2 gameOverMessageSize = MeasureTextEx(font, gameOverMessage, font.baseSize, 0);
     DrawTextEx(font, gameOverMessage, {(screenWidth - gameOverMessageSize.x) / 2, screenHeight / 2}, font.baseSize, 0, RAYWHITE);
 
-     if ((framesCounter / 30) % 2) { 
-      DrawTextEx(winFont, gameOverMessage, {(screenWidth - gameOverMessageSize.x) / 2, (screenHeight - gameOverMessageSize.y) / 2}, winFont.baseSize, 0, RAYWHITE);
-    }
-
     const char* returnInstructions = "Press Space To Return To Main Menu Or Shift+Enter To Load Your Last Save";
     Vector2 returnInstructionsSize = MeasureTextEx(font, returnInstructions, 45, 0);
     float returnInstructionsPosX = (screenWidth - returnInstructionsSize.x) / 2;
