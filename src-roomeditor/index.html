@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON editor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="export-container">
+        <button onclick="exportToJson()">Export to JSON</button>
+    </div>
+<!-- Sidebar for input controls -->
+<div class="sidebar">
+    
+    <!-- Room ID Input -->
+    <div class="input-container">
+        <label for="roomId">Room ID:</label>
+        <input type="text" id="roomId" placeholder="Enter room ID">
+    </div>
+    
+    <!-- Tile Type Selector -->
+    <h3>Select Tile Type:</h3>
+    <select id="tileType" onchange="showEnemyOptions()">
+        <option value="wall">Wall</option>
+        <option value="enemy">Enemy</option>
+        <option value="npc">NPC</option>
+        <option value="chest">Chest</option>
+        <option value="Empty">Empty</option>
+        <option value="transition">Transition Tile</option>
+    </select>
+    
+    <!-- Enemy Options -->
+    <div id="enemyOptions" style="display: none;">
+        <label for="enemyId">Enemy ID:</label>
+        <input type="text" id="enemyId" placeholder="Enter enemy ID">
+        <label for="blocked">Blocked:</label>
+        <input type="checkbox" id="blocked">
+    </div>
+    
+    <!-- Chest Options -->
+    <div id="chestOptions" style="display: none;">
+        <label for="chestId">Chest ID:</label>
+        <input type="text" id="chestId" placeholder="Enter chest ID">
+        <label for="blocked">Blocked:</label>
+        <input type="checkbox" id="blockedChest">
+    </div>
+    
+    <!-- NPC Options -->
+    <div id="npcOptions" style="display: none;">
+        <label for="npcId">NPC ID:</label>
+        <input type="text" id="npcId" placeholder="Enter npc ID">
+        <label for="blocked">Blocked:</label>
+        <input type="checkbox" id="blockedNPC">
+    </div>
+    
+    <!-- Transition Options -->
+    <div id="transitionOptions" style="display: none;">
+        <label for="destination">Destination ID:</label>
+        <input type="text" id="destination" placeholder="Enter room ID">
+        <label for="destinationX">Destination X:</label>
+        <input type="text" id="destinationX" placeholder="Enter X">
+        <label for="destinationY">Destination Y:</label>
+        <input type="text" id="destinationY" placeholder="Enter Y">
+    </div>
+    <div class="import-container">
+        <div>
+        <input type="text" id="importString" placeholder="Insert room string here">
+        <button onclick="importString(document.getElementById('importString').value)">Set room to string</button>
+        </div>
+        <div>
+        <input type="file" id="jsonInput" onchange="importJson()" accept=".json"style="display: none;">
+        <label for="jsonInput" class="file-upload-btn">Choose File</label>
+        </div>
+    </div>
+</div>
+
+<!-- Grid Table Container -->
+<div class="center-container">
+    <div class="table-container">
+        <table>
+            <tbody id="gridTable">
+                <!-- Rows and cells will be generated here -->
+            </tbody>
+        </table>
+        <button onclick="clearGrid()">Reset</button>
+    </div>
+</div>
+
+
+
+
+<!-- Script Tag -->
+<script src="script.js"></script>
+
+</body>
+</html>

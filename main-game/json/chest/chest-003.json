@@ -1,0 +1,13 @@
+{
+    "items": [
+        {
+          "id": "stick",
+          "quantity": 1
+        },
+        {
+            "id": "rock",
+            "quantity": 2
+        }
+      ],
+    "keys": 0
+}
