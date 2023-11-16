@@ -2,17 +2,12 @@
   "WorldData": {
     "Players": [
       {
-        "Inventory": [
-          {
-            "id": "bronze_sword",
-            "quantity": 1
-          }
-        ],
-        "Keys": 2,
+        "Inventory": [],
+        "Keys": 0,
         "facing": "right",
         "id": "player-01",
-        "x": 12,
-        "y": 7
+        "x": 7,
+        "y": 5
       }
     ],
     "Rooms": [
@@ -29,84 +24,8 @@
             6
           ]
         ]
-      },
-      {
-        "room": "01-02",
-        "roomInfo": "w2e2w7e2w7e1w2e1w4e8w4e2w3e12e1e6w3e18w2e1w1e2e1e16w4e3e15w6e1e16w5e2w1e16w6e12w1e1e1e2w4e6w1e3w2e1w1e1w21",
-        "specialTiles": [
-          [
-            "npc-002",
-            true,
-            5,
-            5
-          ]
-        ],
-        "transitionTiles": [
-          [
-            "01-03",
-            11,
-            0,
-            9,
-            11
-          ],
-          [
-            "01-03",
-            12,
-            0,
-            10,
-            11
-          ],
-          [
-            "01-01",
-            0,
-            7,
-            19,
-            7
-          ]
-        ]
-      },
-      {
-        "room": "01-03",
-        "roomInfo": "w18e1w19e1w2e16w1e1w2e16w1e1w2e16w1e1w2e16w1e1w2e16w1e1w2e7e1e2e1e5e1e1w2e18w2e18w3e16w11e2w9",
-        "specialTiles": [
-          [
-            "door",
-            true,
-            18,
-            3
-          ],
-          [
-            "door",
-            true,
-            18,
-            5
-          ]
-        ],
-        "transitionTiles": [
-          [
-            "01-04",
-            18,
-            0,
-            18,
-            11
-          ],
-          [
-            "01-02",
-            9,
-            11,
-            11,
-            0
-          ],
-          [
-            "01-02",
-            10,
-            11,
-            12,
-            0
-          ]
-        ]
       }
     ],
-    "currentRoomId": "01-03"
+    "currentRoomId": "01-01"
   }
 }

@@ -18,7 +18,7 @@ void World::loadRoom(const std::string& roomId) {
   Room* roomToLoad = findRoom(roomId);
   // If the room does not exist, construct it
   if (roomToLoad == nullptr) {
-    fprintf(stderr, "Creating new Room...\n");
+    // fprintf(stderr, "Creating new Room...\n");
     const std::string saveFilePath = "./json/room/";
     const std::string jsonFileType = ".json";
     const std::string fullFilePath = saveFilePath + roomId + jsonFileType;
@@ -37,10 +37,10 @@ void World::loadRoom(const std::string& roomId) {
       }
     }
   }
-  else fprintf(stderr, "Room already exists\n");
+  // else fprintf(stderr, "Room already exists\n");
 
   setRoom(roomToLoad);
-  fprintf(stderr, "Successful loadRoom\n");
+  // fprintf(stderr, "Successful loadRoom\n");
 }
 
 
@@ -55,6 +55,9 @@ void World::update(Game& game) {
       (narratorData.at(currentRoom->roomId))->playNarrationLines(game);
       timeToNarrate = false;
       narrationPlaying = true;
+    }
+    else if (finalBattle) {
+      enterCombat(game, finalBattleId);
     }
   }
   else player->movable = false;
@@ -87,4 +90,11 @@ void World::playNarrationSequence(Game& game) {
       return;
   }
   // Otherwise, update the rendering values for the narrator
+}
+
+void World::finalBattleSequence(Game& game) {
+  finalBattle = true;
+  game.dialogQueue.push("Evil Wizard: Fen? You are here to challenge me?");
+  game.dialogQueue.push("Evil Wizard: You will never defeat me! I have all the power!\nEven a fox cannot defeat me!");
+  game.dialogQueue.push("Evil Wizard: I will destroy you!");
 }

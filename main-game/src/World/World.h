@@ -75,6 +75,9 @@ class World : public GameState {
     void startNarration(std::string roomId);
     void endNarration();
 
+    void finalBattleSequence(Game& game);
+    const std::string finalBattleId = "battle-005";
+
   private:
     int transitionTimer = -1;
     TransitionTile* destination = nullptr;
@@ -90,4 +93,6 @@ class World : public GameState {
     bool timeToNarrate = false;
     void initializeNarrationData();
     void playNarrationSequence(Game& game);
+
+    bool finalBattle = false;
 };

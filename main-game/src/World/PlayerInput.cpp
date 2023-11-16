@@ -37,7 +37,10 @@ void Player::processInput(Game& game, World& world) {
           std::string tileType = tileData.first;
           std::string tileText = tileData.second;
           if (tileType == "battle") {
-            fprintf(stderr, "Entering Combat\n");
+            if (tile->id == world.finalBattleId) {
+              world.finalBattleSequence(game);
+              break;
+            }
             world.enterCombat(game, tile->id);
             world.removeEntity(tile->id);
             world.currentRoom->removeTile(tile->id);
@@ -186,7 +189,7 @@ void Player::processInput(Game& game, World& world) {
           std::string tileType = tileData.first;
           std::string tileText = tileData.second;
           if (tileType == "battle") {
-            fprintf(stderr, "Entering Combat\n");
+            // fprintf(stderr, "Entering Combat\n");
             world.enterCombat(game, tile->id);
             world.removeEntity(tile->id);
             world.currentRoom->removeTile(tile->id);
