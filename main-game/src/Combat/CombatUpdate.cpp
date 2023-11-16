@@ -21,6 +21,7 @@ void Combat::update(Game& game) {
           }
         // TODO: implement loot and exp gain
         // should delete tile/flag the tile as defeated
+        dynamic_cast<World*>(game.world)->player->inventory = combatInventory;
         if(!game.dialogQueue.empty()) game.dialogQueue.pop();
         if(game.gameWin) {
           game.gameOver = true;

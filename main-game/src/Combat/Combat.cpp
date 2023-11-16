@@ -8,9 +8,7 @@
 Combat::Combat(std::string combatId, Inventory playerInventory, Game &game)
     : backgroundImage(LoadTexture("assets/CombatBackground.png")) // Load the background image
 {
-  // combatInventory = playerInventory;
-  combatInventory.AddItem("bronze_sword", 1);
-  combatInventory.AddItem("healing_potion", 1);
+  combatInventory = playerInventory;
   loadBattle(combatId, game);
 }
 
