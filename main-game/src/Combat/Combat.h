@@ -79,7 +79,8 @@ class Combat : public GameState {
     Action* getItemAction(Inventory combatInventory);
     std::vector<std::string> itemList = {
       "bronze_sword",
-      "healing_potion"
+      "healing_potion",
+      "stick"
     };
     
     void RenderUI(int screenWidth,int screenHeight);

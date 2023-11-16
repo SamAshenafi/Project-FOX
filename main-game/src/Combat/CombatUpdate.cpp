@@ -164,6 +164,7 @@ void Combat::update(Game& game) {
       currentUnit->selectedTargets = {};
       highlightedAction = nullptr;
       highlightedTarget = nullptr;
+      highlightedItem = "";
       numberOfTargets = NULL;
       targets = {};
       availableTargets = {};
