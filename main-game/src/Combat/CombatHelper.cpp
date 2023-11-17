@@ -46,20 +46,20 @@ Action* Combat::createAction(const std::string& actionId, int amount) {
   return nullptr;
 }
 
-Action* Combat::getItemAction(Inventory combatInventory) {
-  if (combatInventory.GetItem(highlightedItem) > 0) {
+Action* Combat::getItemAction(Inventory* combatInventory) {
+  if (combatInventory->GetItem(highlightedItem) > 0) {
     const auto& itemProperties = ItemAssets::items.at(highlightedItem);
     switch(itemProperties.type) {
       case ItemType::HEALING:
             targets.push_back(currentUnit);
             selected = 0;
-            combatInventory.RemoveItem(highlightedItem);
+            combatInventory->RemoveItem(highlightedItem);
             return new Heal(itemProperties.value);
       case ItemType::DAMAGE:
             availableTargets = foes;
             numberOfTargets = 1;
             selected = 0;
-            combatInventory.RemoveItem(highlightedItem);
+            combatInventory->RemoveItem(highlightedItem);
             return new Strike(itemProperties.value);
       case ItemType::NEUTRAL:
             currentUnit->actionDialouge += "Not a Valid Item for Combat";

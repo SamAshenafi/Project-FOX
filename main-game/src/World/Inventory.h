@@ -9,9 +9,10 @@
 class Inventory {
 private:
     std::unordered_map<std::string, int> items; // Map of item IDs to quantities
-    int keys = 0;
+    int keys;
 
 public:
+    Inventory();
     void AddItem(const std::string& itemId);
     void AddItem(const std::string& itemId, int quantity);
     void RemoveItem(const std::string& itemId);

@@ -5,7 +5,7 @@
 #include <raylib.h>
 #include <string>
 
-Combat::Combat(std::string combatId, Inventory playerInventory, Game &game)
+Combat::Combat(std::string combatId, Inventory* playerInventory, Game &game)
     : backgroundImage(LoadTexture("assets/CombatBackground.png")) // Load the background image
 {
   combatInventory = playerInventory;

@@ -128,7 +128,7 @@ void Combat::RenderUI(int screenWidth, int screenHeight)
     int pos = 0;
     if(currentUnit->item) {
       for(std::string item : itemList) {
-        std::string itemText = item + "     " + std::to_string(combatInventory.GetItem(item));
+        std::string itemText = item + "     " + std::to_string(combatInventory->GetItem(item));
         DrawText(
           itemText.c_str(),
           screenWidth - (screenWidth*0.96 - 20),  // X position of the text

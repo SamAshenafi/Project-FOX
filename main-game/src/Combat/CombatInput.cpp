@@ -6,13 +6,6 @@ void Combat::processInput(Game& game) {
   // TODO:
   int keyPressed = GetKeyPressed();
   switch (keyPressed) {
-    case KEY_C:
-      fprintf(stderr, "%s\n", "c was pressed");
-      // game.changeState("world");
-      game.changeState(game.world);
-      break;
-
-
     case KEY_P:
       fprintf(stderr, "%s\n", "p was pressed");
       if(!game.dialogQueue.empty()) game.dialogQueue.pop();      

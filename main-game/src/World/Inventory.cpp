@@ -1,6 +1,10 @@
 #include "Inventory.h"
 #include <iostream>
 
+Inventory::Inventory() {
+  setKeys(0);
+}
+
 void Inventory::AddItem(const std::string& itemId) {
     items[itemId]++;
 }

@@ -16,7 +16,7 @@ class Unit;
 class Combat : public GameState {
 
   public:
-    Combat(std::string combatId, Inventory playerInventory, Game& game); // constructor
+    Combat(std::string combatId, Inventory* playerInventory, Game& game); // constructor
     ~Combat() override; // destructor
 
     void processInput(Game& game) override;
@@ -33,7 +33,7 @@ class Combat : public GameState {
     std::queue<Unit*> turnQueue = {};
     std::vector<Unit*> heroes = {};
     std::vector<Unit*> foes = {};
-    Inventory combatInventory;
+    Inventory* combatInventory;
 
     // int currentUnitIndex;
     // bool isRoundOver;
@@ -76,7 +76,7 @@ class Combat : public GameState {
     std::vector<Unit*> unitsVanquished (std::vector<Unit*> units);
     Foe* createFoe(const std::string& foeId);
     Action* createAction(const std::string& actionId, int amount);
-    Action* getItemAction(Inventory combatInventory);
+    Action* getItemAction(Inventory* combatInventory);
     std::vector<std::string> itemList = {
       "bronze_sword",
       "healing_potion",
